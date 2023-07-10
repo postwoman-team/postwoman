@@ -73,7 +73,7 @@ class Request
 
   def faraday_call
     Faraday.run_request(http_method.downcase, url, params, @faraday_args[:headers])
-  rescue
+  rescue StandardError
     puts 'Faraday requisition failed'.red
   end
 end

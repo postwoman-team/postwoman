@@ -14,10 +14,10 @@ load_loaders
 Readline.completion_append_character = ' '
 Readline.completion_proc = Autocompletion.generate_proc
 
-
 def create_loader_base_unless_exists
   path = 'loaders/base.rb'
   return if File.exist?(path)
+
   File.open(path, 'w') do |f|
     f.write(File.read('templates/loader_base.rb'))
   end

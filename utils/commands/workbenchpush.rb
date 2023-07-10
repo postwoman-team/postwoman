@@ -11,14 +11,14 @@ module Commands
     def last_request_to_worbench
       return if args.positionals.length == 1
       return puts 'Cant pull desired values because no requests were made at the moment.'.yellow if Env.requests.empty?
+
       request = Env.requests[-1]
 
-      case
-      when request.response_json?
-        body = request.parsed_body
-      else
-        body = Nori.new.parse(request.body)
-      end
+      body = if request.response_json?
+               request.parsed_body
+             else
+               Nori.new.parse(request.body)
+             end
 
       args.positionals[1..].each do |positional|
         if find_key_value_recursive(body, positional)
@@ -36,18 +36,16 @@ module Commands
       end
 
       hash.each do |_, value|
-        if value.class == Hash
+        if value.instance_of?(Hash)
           subhash = value
           return true if find_key_value_recursive(subhash, key)
-        elsif value.class == Array
+        elsif value.instance_of?(Array)
           value.each do |array_element|
-            if array_element.class == Hash
-              return true if find_key_value_recursive(array_element, key)
-            end
+            return true if array_element.instance_of?(Hash) && find_key_value_recursive(array_element, key)
           end
         end
       end
-      return false
+      false
     end
 
     def pairs_to_workbench

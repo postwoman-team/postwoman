@@ -6,8 +6,7 @@ module Commands
       @args = args
     end
 
-    def execute
-    end
+    def execute; end
 
     private
 
@@ -35,6 +34,7 @@ module Commands
 
     def print_workbench
       return print_table('Currently empty') if Env.workbench.empty?
+
       print_hash(Env.workbench)
     end
 
@@ -82,7 +82,7 @@ module Commands
       rows.each do |row|
         linebroken = row.last.to_s.scan(/.{1,#{break_at}}/)
         if row.length == 1
-          new_rows += linebroken.map { |line| [line]}
+          new_rows += linebroken.map { |line| [line] }
         else
           new_rows << [row.first, linebroken.first]
           linebroken[1..].each do |line|

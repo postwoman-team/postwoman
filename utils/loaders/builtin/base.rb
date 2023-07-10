@@ -2,6 +2,7 @@ module Loaders
   module Builtin
     class Base
       attr_reader :args, :env
+
       @@trait_variables = {}
 
       def initialize(args)
@@ -38,6 +39,7 @@ module Loaders
       def checked_url
         parsed_url = URI.parse(url)
         return parsed_url if parsed_url.class != URI::Generic
+
         error("Invalid url from loader: #{url}")
       end
 
@@ -47,22 +49,22 @@ module Loaders
       end
 
       def params_with_args
-        env.reduce(params) do |final_params, (k,v)|
+        env.reduce(params) do |final_params, (k, v)|
           next final_params unless final_params.has_key?(k)
+
           final_params.merge(k => v)
         end
       end
 
-      def method_missing(m, *args, &block)
+      def method_missing(m, *_args)
         return env[m] if env.keys.include?(m)
+
         puts "Tried to call missing method '#{m}' but failed.".yellow
       end
 
       def add_traits_to_env
         @@trait_variables.each do |trait, variables|
-          if args.has_key?(trait) || trait == :default
-            @env = variables.merge(args.pairs)
-          end
+          @env = variables.merge(args.pairs) if args.has_key?(trait) || trait == :default
         end
       end
 

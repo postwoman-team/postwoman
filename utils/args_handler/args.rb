@@ -1,6 +1,7 @@
 module ArgsHandler
   class Args
     attr_reader :positionals, :pairs, :flags
+
     def initialize(positionals, pairs, flags)
       @positionals = positionals
       @pairs = pairs
@@ -8,7 +9,8 @@ module ArgsHandler
     end
 
     def [](key)
-      return positionals[key+1] if key.class == Integer
+      return positionals[key + 1] if key.instance_of?(Integer)
+
       pairs[key]
     end
 
@@ -29,22 +31,21 @@ module ArgsHandler
     end
 
     def command
-      case
-      when raw_command_in(%w(c connect r))
+      if raw_command_in(%w[c connect r])
         'run'
-      when raw_command_in(%w(byebug bb dbg))
+      elsif raw_command_in(%w[byebug bb dbg])
         'debug'
-      when raw_command == 'wb'
+      elsif raw_command == 'wb'
         'workbench'
-      when raw_command == 'wbp'
+      elsif raw_command == 'wbp'
         'workbenchpush'
-      when raw_command == 'l'
+      elsif raw_command == 'l'
         'last'
-      when raw_command == 'exit'
+      elsif raw_command == 'exit'
         'quit'
-      when raw_command_in(%w(nh eh edithelper))
+      elsif raw_command_in(%w[nh eh edithelper])
         'newhelper'
-      when raw_command_in(%w(n e edit))
+      elsif raw_command_in(%w[n e edit])
         'new'
       else
         raw_command
@@ -58,7 +59,7 @@ module ArgsHandler
         no_loader_payload: 'nl',
         activate_byebug: 'bb',
         apply_workbench: 'wb'
-        }[name.to_sym]
+      }[name.to_sym]
       flags.include?(wanted_flag)
     end
 

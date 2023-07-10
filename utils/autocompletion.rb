@@ -8,19 +8,18 @@ class Autocompletion
       completions = []
       loader_names.each do |name|
         next if name == str
-        if name.start_with?(str)
-          completions << name
-        end
+
+        completions << name if name.start_with?(str)
       end
       completions.sort
     end
   end
 
   def self.camelcase(string)
-    string.gsub(/::/, '/').
-    gsub(/([A-Z]+)([A-Z][a-z])/,'\1_\2').
-    gsub(/([a-z\d])([A-Z])/,'\1_\2').
-    tr("-", "_").
-    downcase
+    string.gsub(/::/, '/')
+          .gsub(/([A-Z]+)([A-Z][a-z])/, '\1_\2')
+          .gsub(/([a-z\d])([A-Z])/, '\1_\2')
+          .tr('-', '_')
+          .downcase
   end
 end

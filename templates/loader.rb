@@ -1,4 +1,3 @@
-
 module Loaders
   class DoNotChangeThisClassName < Base
     private
