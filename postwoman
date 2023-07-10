@@ -1,0 +1,33 @@
+#!/usr/bin/env ruby
+
+def load_loaders
+  Dir[File.dirname(__FILE__) + '/loaders/**/*.rb'].each { |file| load file }
+end
+
+Dir[File.dirname(__FILE__) + '/utils/**/*.rb'].each { |file| require file }
+
+load_loaders
+
+Readline.completion_append_character = ' '
+Readline.completion_proc = Autocompletion.generate_proc
+
+history = open('.postwoman_history', &:read).split("\n")
+Readline::HISTORY.push(*history)
+
+
+def handle_history(line)
+  unless Readline::HISTORY.to_a.empty?
+    return Readline::HISTORY.pop if /^\s*$/ =~ line
+    return Readline::HISTORY.pop if Readline::HISTORY.to_a[-2] == line
+  end
+
+  File.write('.postwoman_history', "#{line}\n", mode: 'a')
+end
+
+while line = Readline.readline('> ', true)
+  handle_history(line)
+
+  args = ArgsHandler.parse(line)
+  load_loaders
+  attempt_command(args)
+end

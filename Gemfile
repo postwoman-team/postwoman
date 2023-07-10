@@ -1,0 +1,15 @@
+source 'https://rubygems.org'
+gem 'awesome_print'
+gem 'byebug'
+gem 'colorize'
+gem 'faraday'
+gem 'json'
+gem 'nokogiri'
+gem 'readline'
+gem 'terminal-table'
+gem 'racc'
+gem 'strscan'
+gem 'nori'
+
+# not mandatory
+gem 'cpf_cnpj'
