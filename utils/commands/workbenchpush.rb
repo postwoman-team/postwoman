@@ -1,5 +1,11 @@
 module Commands
   class Workbenchpush < Base
+    ALIASES = %w[wbp]
+    DESCRIPTION = "Brings wanted key-values from last request to workbench. Works for responses in XML and JSON. Searches recursively until first match."
+    ARGS = [
+      ['wanted_keys', '(Can stack) The keys you want to be pulled.']
+    ]
+
     def execute
       pairs_to_workbench
       last_request_to_worbench

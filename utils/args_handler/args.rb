@@ -2,6 +2,14 @@ module ArgsHandler
   class Args
     attr_reader :positionals, :pairs, :flags
 
+    FLAGS = {
+      no_headers: 'nh',
+      no_body: 'nb',
+      no_loader_payload: 'nl',
+      activate_binding_pry: 'bb',
+      apply_workbench: 'wb'
+    }
+
     def initialize(positionals, pairs, flags)
       @positionals = positionals
       @pairs = pairs
@@ -30,36 +38,18 @@ module ArgsHandler
       positionals.first
     end
 
-    def command
-      if raw_command_in(%w[c connect r])
-        'run'
-      elsif raw_command_in(%w[byebug bb dbg])
-        'debug'
-      elsif raw_command == 'wb'
-        'workbench'
-      elsif raw_command == 'wbp'
-        'workbenchpush'
-      elsif raw_command == 'l'
-        'last'
-      elsif raw_command == 'exit'
-        'quit'
-      elsif raw_command_in(%w[nh eh edithelper])
-        'newhelper'
-      elsif raw_command_in(%w[n e edit])
-        'new'
-      else
-        raw_command
+    def command_klass
+      fetch_command_names.each do |command_name|
+        command_klass = Commands.class_eval(command_name)
+        same_name = command_klass.name.split('::')[1].downcase == raw_command
+        same_name_as_alias = command_klass::ALIASES.include?(raw_command)
+        return command_klass if same_name || same_name_as_alias
       end
+      false
     end
 
     def flag?(name)
-      wanted_flag = {
-        no_headers: 'nh',
-        no_body: 'nb',
-        no_loader_payload: 'nl',
-        activate_byebug: 'bb',
-        apply_workbench: 'wb'
-      }[name.to_sym]
+      wanted_flag = FLAGS[name.to_sym]
       flags.include?(wanted_flag)
     end
 

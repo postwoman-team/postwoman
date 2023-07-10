@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 gem 'awesome_print'
-gem 'byebug'
+gem 'pry'
 gem 'colorize'
 gem 'dotenv'
 gem 'faraday'

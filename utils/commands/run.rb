@@ -1,5 +1,11 @@
 module Commands
   class Run < Base
+    ALIASES = %w[c connect r]
+    DESCRIPTION = 'Runs a loader, making a request using the setted payload. Pairs overwrite params.'
+    ARGS=[
+      ['loader_name', "Wanted loader's name."]
+    ]
+
     def execute
       loader_name = camelize(args[0])
 

@@ -23,7 +23,6 @@ def create_loader_base_unless_exists
   end
 end
 
-# history = open('.postwoman_history', &:read).split("\n")
 history = File.open('.postwoman_history', 'a+').readlines.map(&:chomp)
 
 Readline::HISTORY.push(*history)
@@ -39,7 +38,7 @@ end
 
 create_loader_base_unless_exists
 
-while line = Readline.readline('> ', true)
+while(line = Readline.readline('> ', true))
   handle_history(line)
 
   args = ArgsHandler.parse(line)

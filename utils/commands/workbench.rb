@@ -1,5 +1,13 @@
 module Commands
   class Workbench < Base
+    ALIASES = %w[wb]
+    DESCRIPTION = "Access workbench, printing it. May be called alone or with args to modify it. Pairs set values."
+    ARGS = [
+      ['subcommand', '[d]delete (followed by target key), [cp]copy (followed by target key and new key), [rn]rename (followed by target key and new name)'],
+      ['target_key', 'Only on subcommands'],
+      ['new_name', 'Only on subcommand [rename]']
+    ]
+
     def execute
       subcommand = args[0]
       case subcommand

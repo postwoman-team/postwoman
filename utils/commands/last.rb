@@ -1,5 +1,11 @@
 module Commands
   class Last < Base
+    ALIASES = %w[l]
+    DESCRIPTION = 'Displays the last request made.'
+    ARGS=[
+      ['index', 'Index of the wanted request(1 for last, 2 for second last, etc.).']
+    ]
+
     def execute
       index = (args[0]&.to_i || 1) * -1
       return puts 'Indexes start on #1 ;)'.yellow if index.zero?

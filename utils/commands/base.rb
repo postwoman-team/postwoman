@@ -8,6 +8,23 @@ module Commands
 
     def execute; end
 
+    def self.help_rows
+      command_name = name.split('::')[1].upcase
+      [
+        ["#{command_name.green} (#{self::ALIASES.join(', ')})".green],
+        ["> #{command_name.downcase} #{self::ARGS.map {|(name, _)| "<#{name}>"}.join(' ')}".gray],
+        *args_rows,
+        [self::DESCRIPTION]
+      ]
+    end
+
+    def self.args_rows
+      return [] if self::ARGS.empty?
+      self::ARGS.map do |(name, description)|
+        ["#{name.yellow} > #{description}"]
+      end
+    end
+
     private
 
     def display_request(request)
@@ -24,7 +41,7 @@ module Commands
       end
 
       print_table("Status: #{request.pretty_status}", "#{request.url}")
-      byebug if args.flag?(:activate_byebug)
+      binding.pry if args.flag?(:activate_binding_pry)
     end
 
     def print_payload(payload)

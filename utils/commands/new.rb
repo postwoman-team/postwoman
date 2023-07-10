@@ -1,5 +1,11 @@
 module Commands
   class New < Base
+    ALIASES = %w[n e edit]
+    DESCRIPTION = "Creates new loader, unless it already exists. Also opens the loader on you default editor."
+    ARGS = [
+      ['name', 'Loaders name in snake case.']
+    ]
+
     def execute
       name = args[0]
       path = "loaders/#{name}.rb"

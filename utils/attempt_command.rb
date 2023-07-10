@@ -1,13 +1,9 @@
 def attempt_command(args)
   return unless args.command?
 
-  command_names = (Commands.constants - [:Base]).map(&:to_s)
-  command = args.command
-  command[0] = command[0].upcase
+  command_names = fetch_command_names
+  command_klass = args.command_klass
+  return puts "#{args.raw_command}: not found" unless command_klass
 
-  if command_names.include?(command)
-    Commands.class_eval(command).new(args).execute
-  else
-    puts "#{args.raw_command}: not found"
-  end
+  command_klass.new(args).execute
 end
