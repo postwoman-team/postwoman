@@ -11,9 +11,10 @@ load_loaders
 Readline.completion_append_character = ' '
 Readline.completion_proc = Autocompletion.generate_proc
 
-history = open('.postwoman_history', &:read).split("\n")
-Readline::HISTORY.push(*history)
+# history = open('.postwoman_history', &:read).split("\n")
+history = File.open('.postwoman_history', 'a+').readlines.map(&:chomp)
 
+Readline::HISTORY.push(*history)
 
 def handle_history(line)
   unless Readline::HISTORY.to_a.empty?
