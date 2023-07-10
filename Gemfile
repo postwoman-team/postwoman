@@ -10,6 +10,7 @@ gem 'terminal-table'
 gem 'racc'
 gem 'strscan'
 gem 'nori'
+gem 'dotenv'
 
 # not mandatory
 gem 'cpf_cnpj'

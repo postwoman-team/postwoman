@@ -98,11 +98,11 @@ module Commands
     end
 
     def edit_loader(name)
-      `code loaders/#{name}.rb`
+      system("#{ENV['EDITOR']} loaders/#{name}.rb")
     end
 
     def edit_helper(name)
-      `code loaders/utils/#{name}.rb`
+      system("#{ENV['EDITOR']} loaders/utils/#{name}.rb")
     end
 
     def new_or_edit(file_name, path, default_content, label)
@@ -117,10 +117,7 @@ module Commands
         end
       end
 
-      `code #{path}`
-
-      puts 'Press any key when done'.gray
-      gets
+      system("#{ENV['EDITOR']} #{path}")
     end
   end
 end

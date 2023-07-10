@@ -1,6 +1,9 @@
 #!/usr/bin/env ruby
+require File.dirname(__FILE__) + '/utils/dependencies.rb'
+ENV.merge!(Dotenv.load)
 
 def load_loaders
+  load 'loaders/base.rb'
   Dir[File.dirname(__FILE__) + '/loaders/**/*.rb'].each { |file| load file }
 end
 

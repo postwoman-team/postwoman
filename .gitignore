@@ -1,3 +1,4 @@
 loaders/*.rb
 .byebug_history
 .postwoman_history
+.env
