@@ -23,7 +23,8 @@ module Loaders
       end
 
       def self.trait(name, values)
-        @@trait_variables[name] = values
+        @@trait_variables[name] = {} unless @@trait_variables.has_key?(name)
+        @@trait_variables[name].merge!(values)
       end
 
       def failed?
@@ -64,7 +65,7 @@ module Loaders
 
       def add_traits_to_env
         @@trait_variables.each do |trait, variables|
-          @env = variables.merge(args.pairs) if args.has_key?(trait) || trait == :default
+          @env = variables.merge(env) if args.has_key?(trait) || trait == :default
         end
       end
 
