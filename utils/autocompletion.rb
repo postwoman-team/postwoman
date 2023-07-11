@@ -1,10 +1,10 @@
 class Autocompletion
   def self.generate_proc
-    loader_names = (Loaders.constants - [:Builtin]).map do |name|
-      camelcase(name.to_s)
-    end
-
     proc do |str|
+      loader_names = (Loaders.constants - [:Builtin, :Utils]).map do |name|
+        camelcase(name.to_s)
+      end
+
       completions = []
       loader_names.each do |name|
         next if name == str

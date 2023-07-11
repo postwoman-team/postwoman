@@ -17,7 +17,7 @@ module Loaders
         {
           http_method: http_method,
           url: checked_url,
-          params: params_with_args,
+          params: params_with_env,
           headers: headers
         }
       end
@@ -49,10 +49,9 @@ module Loaders
         @failed = true
       end
 
-      def params_with_args
+      def params_with_env
         env.reduce(params) do |final_params, (k, v)|
           next final_params unless final_params.has_key?(k)
-
           final_params.merge(k => v)
         end
       end
