@@ -1,8 +1,7 @@
 module Commands
   class Help < Base
-    ALIASES = %w[h]
-    DESCRIPTION = 'Shows this message.'
-    ARGS = []
+    ALIASES = %w[h].freeze
+    DESCRIPTION = 'Shows this message.'.freeze
 
     def execute
       help_page = args[0]

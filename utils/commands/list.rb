@@ -1,8 +1,7 @@
 module Commands
   class List < Base
-    ALIASES = %w[ls all loaders]
-    DESCRIPTION = "Lists all loaders"
-    ARGS = []
+    ALIASES = %w[ls all loaders].freeze
+    DESCRIPTION = 'Lists all loaders'.freeze
 
     def execute
       loaders = fetch_loader_names.map do |loader_name|

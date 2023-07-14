@@ -1,10 +1,10 @@
 module Commands
   class Last < Base
-    ALIASES = %w[l]
-    DESCRIPTION = 'Displays the last request made.'
-    ARGS=[
-      ['index', 'Index of the wanted request(1 for last, 2 for second last, etc.).']
-    ]
+    ALIASES = %w[l].freeze
+    DESCRIPTION = 'Displays the last request made.'.freeze
+    ARGS = {
+      index: 'Index of the wanted request(1 for last, 2 for second last, etc.).'
+    }.freeze
 
     def execute
       index = (args[0]&.to_i || 1) * -1

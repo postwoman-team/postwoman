@@ -1,10 +1,10 @@
 module Commands
   class New < Base
-    ALIASES = %w[n e edit]
-    DESCRIPTION = "Creates new loader, unless it already exists. Also opens the loader on you default editor."
-    ARGS = [
-      ['name', 'Loaders name in snake case.']
-    ]
+    ALIASES = %w[n e edit].freeze
+    DESCRIPTION = "Creates new loader, unless it already exists. Also opens the loader on you default editor.".freeze
+    ARGS = {
+      name: 'Loaders name in snake case.'
+    }.freeze
 
     def execute
       name = args[0]

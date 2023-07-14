@@ -1,5 +1,9 @@
 module Commands
   class Base
+    ALIASES = [].freeze
+    DESCRIPTION = ''.freeze
+    ARGS = {}.freeze
+
     attr_reader :args
 
     def initialize(args)
@@ -12,7 +16,7 @@ module Commands
       command_name = name.split('::')[1].upcase
       [
         ["#{command_name.green} (#{self::ALIASES.join(', ')})".green],
-        ["> #{command_name.downcase} #{self::ARGS.map {|(name, _)| "<#{name}>"}.join(' ')}".gray],
+        ["- #{command_name.downcase} #{self::ARGS.map {|name, _| "<#{name.to_s}>"}.join(' ')}".gray],
         *args_rows,
         [self::DESCRIPTION]
       ]
@@ -20,8 +24,8 @@ module Commands
 
     def self.args_rows
       return [] if self::ARGS.empty?
-      self::ARGS.map do |(name, description)|
-        ["#{name.yellow} > #{description}"]
+      self::ARGS.map do |name, description|
+        ["#{name.to_s.yellow} > #{description}"]
       end
     end
 

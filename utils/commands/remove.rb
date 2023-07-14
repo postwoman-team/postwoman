@@ -1,10 +1,10 @@
 module Commands
   class Remove < Base
-    ALIASES = %w[rm delete del]
-    DESCRIPTION = "Delete loader"
-    ARGS = [
-      ['name', 'Loaders name']
-    ]
+    ALIASES = %w[rm delete del].freeze
+    DESCRIPTION = 'Delete loader'.freeze
+    ARGS = {
+      name: 'Loaders name'
+    }.freeze
 
     def execute
       loader_name = args[0]
