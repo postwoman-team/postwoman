@@ -18,6 +18,7 @@ def load_loaders
 end
 
 create_loader_base_unless_exists
+Dir[File.dirname(__FILE__) + '/../utils/**/base.rb'].each { |file| require_relative file }
 Dir[File.dirname(__FILE__) + '/../utils/**/*.rb'].each { |file| require_relative file }
 load_loaders
 ENV.merge!(Dotenv.load)
