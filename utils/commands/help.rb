@@ -5,7 +5,7 @@ module Commands
 
     def execute
       help_page = args[0]
-      welcome_page if help_page.nil?
+
       case help_page
       when 'commands'
         commands_page
