@@ -1,4 +1,6 @@
-def attempt_command(args)
+def attempt_command(line)
+  args = ArgsHandler.parse(line)
+
   return unless args.command?
 
   command_names = fetch_command_names

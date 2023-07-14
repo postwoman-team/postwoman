@@ -11,6 +11,7 @@ gem 'racc'
 gem 'readline'
 gem 'strscan'
 gem 'terminal-table'
+gem 'rspec'
 
 # not mandatory
 gem 'cpf_cnpj'

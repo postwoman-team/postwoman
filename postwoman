@@ -1,15 +1,5 @@
 #!/usr/bin/env ruby
 require File.dirname(__FILE__) + '/utils/dependencies.rb'
-ENV.merge!(Dotenv.load)
-
-def load_loaders
-  load 'loaders/base.rb'
-  Dir[File.dirname(__FILE__) + '/loaders/**/*.rb'].each { |file| load file }
-end
-
-Dir[File.dirname(__FILE__) + '/utils/**/*.rb'].each { |file| require file }
-
-load_loaders
 
 Readline.completion_append_character = ' '
 Readline.completion_proc = Autocompletion.generate_proc
@@ -41,7 +31,6 @@ create_loader_base_unless_exists
 while(line = Readline.readline('> ', true))
   handle_history(line)
 
-  args = ArgsHandler.parse(line)
   load_loaders
-  attempt_command(args)
+  attempt_command(line)
 end
