@@ -114,10 +114,6 @@ module Commands
       new_rows
     end
 
-    def camelize(string)
-      string.split('_').collect(&:capitalize).join
-    end
-
     def edit_loader(name)
       system("#{ENV['EDITOR']} loaders/#{name}.rb")
     end
@@ -138,7 +134,19 @@ module Commands
         end
       end
 
+      open_in_editor(path)
+    end
+
+    def open_in_editor(path)
+      return puts "Could not open loader because default editor isn't set.".yellow if ENV['EDITOR'].nil?
       system("#{ENV['EDITOR']} #{path}")
+    end
+
+    def obrigatory_positional_arg(index)
+      value = args[index]
+      positional_names = self.class::ARGS.keys
+      return puts("Missing ##{index + 1} positional argument: #{positional_names[index]}".red) unless value
+      value
     end
   end
 end

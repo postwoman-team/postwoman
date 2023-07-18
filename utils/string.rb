@@ -5,3 +5,7 @@ def snakecase(string)
         .tr('-', '_')
         .downcase
 end
+
+def camelize(string)
+  string.split('_').collect(&:capitalize).join
+end

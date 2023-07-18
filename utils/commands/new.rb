@@ -7,7 +7,7 @@ module Commands
     }.freeze
 
     def execute
-      name = args[0]
+      name = obrigatory_positional_arg(0) || return
       path = "loaders/#{name}.rb"
 
       template = File.read('templates/loader.rb')
