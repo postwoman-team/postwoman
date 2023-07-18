@@ -16,7 +16,7 @@ def handle_history(line)
   File.write('.postwoman_history', "#{line}\n", mode: 'a')
 end
 
-while(line = Readline.readline('> ', true))
+while (line = Readline.readline('> ', true))
   handle_history(line)
 
   load_loaders

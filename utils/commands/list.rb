@@ -7,6 +7,7 @@ module Commands
       loaders = fetch_loader_names.map do |loader_name|
         snakecased = snakecase(loader_name)
         next snakecased.yellow if snakecased == 'base'
+
         snakecased
       end.join(' ')
       puts loaders

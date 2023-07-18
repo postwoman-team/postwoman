@@ -12,6 +12,7 @@ module Commands
 
       return puts "Could not find loader #{loader_name}".yellow unless File.exist?(path)
       return puts "Please don't delete base.".yellow if loader_name == 'base'
+
       File.delete(path)
       puts "Successfully removed loader #{loader_name}".green
     end

@@ -66,7 +66,7 @@ module Commands
       rows = []
       fetch_command_names.each do |command_name|
         rows += Commands.class_eval(command_name).help_rows
-        rows += [[" "]]
+        rows += [[' ']]
       end
       print_table(*rows)
     end

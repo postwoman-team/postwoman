@@ -1,30 +1,29 @@
 require 'spec_helper'
 
-
 describe 'New command' do
   it 'creates new loader with template and opens on default editor unless loader already exists' do
-    template = <<-TEXT
-module Loaders
-  class Testing < Base
-    private
+    template = <<~TEXT
+      module Loaders
+        class Testing < Base
+          private
 
-    def http_method
-      :GET
-    end
+          def http_method
+            :GET
+          end
 
-    def url
-      ''
-    end
+          def url
+            ''
+          end
 
-    def params
-      {}
-    end
+          def params
+            {}
+          end
 
-    def headers
-      default_headers
-    end
-  end
-end
+          def headers
+            default_headers
+          end
+        end
+      end
     TEXT
 
     ENV['EDITOR'] = 'emacs'
@@ -52,7 +51,7 @@ end
   end
 
   it 'outputs error message if loader name is not provided' do
-    expected_output = "Missing #1 positional argument: name".red + "\n"
+    expected_output = 'Missing #1 positional argument: name'.red + "\n"
     expect { attempt_command('new') }.to output(expected_output).to_stdout
   end
 
