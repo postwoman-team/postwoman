@@ -1,7 +1,8 @@
 ## Postwoman
 
-Postwoman é uma plataforma de APIs 100% CLI.
-[English](README-EN.md)
+Postwoman é uma plataforma de APIs 100% CLI. **Esta ferramenta ainda está em uma fase muito inicial de desenvolvimento, e bugs são frequentes.**
+
+[EN](README-EN.md)
 
 ### Como instalar
 - Clone o repositório
