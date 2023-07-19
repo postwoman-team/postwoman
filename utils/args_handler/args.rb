@@ -22,8 +22,8 @@ module ArgsHandler
       pairs[key]
     end
 
-    def has_key?(key)
-      pairs.has_key?(key)
+    def key?(key)
+      pairs.key?(key)
     end
 
     def command?

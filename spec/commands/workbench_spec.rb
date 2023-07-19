@@ -47,7 +47,7 @@ describe 'Workbench command' do
         └──────────────┴──────┘
       TEXT
 
-      expect { attempt_command("workbench d other_int int") }.to output(expected_output).to_stdout
+      expect { attempt_command('workbench d other_int int') }.to output(expected_output).to_stdout
       expect(Env.workbench[:int]).to eq(nil)
       expect(Env.workbench[:nil]).to eq(nil)
       expect(Env.workbench[:other_int]).to eq(nil)
@@ -60,7 +60,7 @@ describe 'Workbench command' do
       Env.workbench[:d] = 4
 
       expected_output = <<~TEXT
-        #{"Key idontexist not found on workbench".yellow}
+        #{'Key idontexist not found on workbench'.yellow}
         ┌───┬───┐
         │ a │ 3 │
         │ c │ 4 │
@@ -68,7 +68,7 @@ describe 'Workbench command' do
         └───┴───┘
       TEXT
 
-      expect { attempt_command("workbench d b idontexist") }.to output(expected_output).to_stdout
+      expect { attempt_command('workbench d b idontexist') }.to output(expected_output).to_stdout
       expect(Env.workbench[:a]).to eq(3)
       expect(Env.workbench[:c]).to eq(4)
       expect(Env.workbench[:d]).to eq(4)
@@ -81,7 +81,7 @@ describe 'Workbench command' do
       Env.workbench[:d] = 4
 
       expected_output = <<~TEXT
-        #{"This subcommand should be called with positionals".yellow}
+        #{'This subcommand should be called with positionals'.yellow}
         ┌───┬───┐
         │ a │ 3 │
         │ b │ 8 │
@@ -90,7 +90,7 @@ describe 'Workbench command' do
         └───┴───┘
       TEXT
 
-      expect { attempt_command("workbench d") }.to output(expected_output).to_stdout
+      expect { attempt_command('workbench d') }.to output(expected_output).to_stdout
       expect(Env.workbench[:a]).to eq(3)
       expect(Env.workbench[:b]).to eq(8)
       expect(Env.workbench[:c]).to eq(4)
@@ -115,7 +115,7 @@ describe 'Workbench command' do
         └───┴───┘
       TEXT
 
-      expect { attempt_command("workbench cp a e") }.to output(expected_output).to_stdout
+      expect { attempt_command('workbench cp a e') }.to output(expected_output).to_stdout
       expect(Env.workbench[:a]).to eq(3)
       expect(Env.workbench[:b]).to eq(8)
       expect(Env.workbench[:c]).to eq(4)
@@ -138,7 +138,7 @@ describe 'Workbench command' do
         └───┴───┘
       TEXT
 
-      expect { attempt_command("workbench cp a c") }.to output(expected_output).to_stdout
+      expect { attempt_command('workbench cp a c') }.to output(expected_output).to_stdout
       expect(Env.workbench[:a]).to eq(3)
       expect(Env.workbench[:b]).to eq(8)
       expect(Env.workbench[:c]).to eq(3)
@@ -161,7 +161,7 @@ describe 'Workbench command' do
         └───┴───┘
       TEXT
 
-      expect { attempt_command("workbench cp a") }.to output(expected_output).to_stdout
+      expect { attempt_command('workbench cp a') }.to output(expected_output).to_stdout
       expect(Env.workbench[:a]).to eq(3)
       expect(Env.workbench[:b]).to eq(8)
       expect(Env.workbench[:c]).to eq(4)
@@ -185,7 +185,7 @@ describe 'Workbench command' do
         └───┴───┘
       TEXT
 
-      expect { attempt_command("workbench cp") }.to output(expected_output).to_stdout
+      expect { attempt_command('workbench cp') }.to output(expected_output).to_stdout
       expect(Env.workbench[:a]).to eq(3)
       expect(Env.workbench[:b]).to eq(8)
       expect(Env.workbench[:c]).to eq(4)
@@ -208,7 +208,7 @@ describe 'Workbench command' do
         └───┴───┘
       TEXT
 
-      expect { attempt_command("workbench cp inexistent a") }.to output(expected_output).to_stdout
+      expect { attempt_command('workbench cp inexistent a') }.to output(expected_output).to_stdout
       expect(Env.workbench[:a]).to eq(3)
       expect(Env.workbench[:b]).to eq(8)
       expect(Env.workbench[:c]).to eq(4)
@@ -232,7 +232,7 @@ describe 'Workbench command' do
         └─────────┴───┘
       TEXT
 
-      expect { attempt_command("workbench rn a new_key") }.to output(expected_output).to_stdout
+      expect { attempt_command('workbench rn a new_key') }.to output(expected_output).to_stdout
       expect(Env.workbench[:new_key]).to eq(3)
       expect(Env.workbench[:b]).to eq(8)
       expect(Env.workbench[:c]).to eq(4)
@@ -256,7 +256,7 @@ describe 'Workbench command' do
         └───┴───┘
       TEXT
 
-      expect { attempt_command("workbench rn a b") }.to output(expected_output).to_stdout
+      expect { attempt_command('workbench rn a b') }.to output(expected_output).to_stdout
       expect(Env.workbench[:a]).to eq(3)
       expect(Env.workbench[:b]).to eq(8)
       expect(Env.workbench[:c]).to eq(4)
@@ -279,7 +279,7 @@ describe 'Workbench command' do
         └───┴───┘
       TEXT
 
-      expect { attempt_command("workbench rn a") }.to output(expected_output).to_stdout
+      expect { attempt_command('workbench rn a') }.to output(expected_output).to_stdout
       expect(Env.workbench[:a]).to eq(3)
       expect(Env.workbench[:b]).to eq(8)
       expect(Env.workbench[:c]).to eq(4)
@@ -303,7 +303,7 @@ describe 'Workbench command' do
         └───┴───┘
       TEXT
 
-      expect { attempt_command("workbench rn") }.to output(expected_output).to_stdout
+      expect { attempt_command('workbench rn') }.to output(expected_output).to_stdout
       expect(Env.workbench[:a]).to eq(3)
       expect(Env.workbench[:b]).to eq(8)
       expect(Env.workbench[:c]).to eq(4)
@@ -326,7 +326,7 @@ describe 'Workbench command' do
         └───┴───┘
       TEXT
 
-      expect { attempt_command("workbench rn inexistent e") }.to output(expected_output).to_stdout
+      expect { attempt_command('workbench rn inexistent e') }.to output(expected_output).to_stdout
       expect(Env.workbench[:a]).to eq(3)
       expect(Env.workbench[:b]).to eq(8)
       expect(Env.workbench[:c]).to eq(4)

@@ -23,7 +23,7 @@ module Loaders
       end
 
       def self.trait(name, values)
-        @@trait_variables[name] = {} unless @@trait_variables.has_key?(name)
+        @@trait_variables[name] = {} unless @@trait_variables.key?(name)
         @@trait_variables[name].merge!(values)
       end
 
@@ -51,7 +51,7 @@ module Loaders
 
       def params_with_env
         env.reduce(params) do |final_params, (k, v)|
-          next final_params unless final_params.has_key?(k)
+          next final_params unless final_params.key?(k)
 
           final_params.merge(k => v)
         end
@@ -65,7 +65,7 @@ module Loaders
 
       def add_traits_to_env
         @@trait_variables.each do |trait, variables|
-          @env = variables.merge(env) if args.has_key?(trait) || trait == :default
+          @env = variables.merge(env) if args.key?(trait) || trait == :default
         end
       end
 

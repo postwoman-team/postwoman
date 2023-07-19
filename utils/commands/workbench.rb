@@ -32,8 +32,8 @@ module Commands
       original_key = obrigatory_positional_arg(1, 'key to rename')&.to_sym
       new_name = obrigatory_positional_arg(2, 'new name')&.to_sym
       return unless original_key && new_name
-      return puts("Key '#{original_key}' does not exist on workbench".red) unless workbench.has_key?(original_key)
-      return puts("Key '#{new_name}' already exists on workbench".red) if workbench.has_key?(new_name)
+      return puts("Key '#{original_key}' does not exist on workbench".red) unless workbench.key?(original_key)
+      return puts("Key '#{new_name}' already exists on workbench".red) if workbench.key?(new_name)
 
       workbench[new_name] = workbench[original_key]
       workbench.delete(original_key)
@@ -43,7 +43,7 @@ module Commands
       copy_key = obrigatory_positional_arg(1, 'key to copy')&.to_sym
       resulting_key = obrigatory_positional_arg(2, 'resulting key')&.to_sym
       return unless copy_key && resulting_key
-      return puts("Key '#{copy_key}' does not exist on workbench".red) unless workbench.has_key?(copy_key)
+      return puts("Key '#{copy_key}' does not exist on workbench".red) unless workbench.key?(copy_key)
 
       workbench[resulting_key] = workbench[copy_key]
     end
@@ -53,7 +53,7 @@ module Commands
 
       puts 'This subcommand should be called with positionals'.yellow if keys.empty?
       keys.map(&:to_sym).each do |key|
-        puts "Key #{key} not found on workbench".yellow unless workbench.has_key?(key)
+        puts "Key #{key} not found on workbench".yellow unless workbench.key?(key)
         workbench.delete(key)
       end
     end
