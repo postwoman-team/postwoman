@@ -55,7 +55,7 @@ module Commands
 
     def when_not_hidden(title, hide_flag)
       if hide_flag
-        print_table("#{title} (Hidden)".gray)
+        print_table("#{title.uncolorize} (Hidden)".gray)
         return
       end
 

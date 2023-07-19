@@ -7,9 +7,10 @@ module Commands
     }.freeze
 
     def execute
-      loader_name = camelize(args[0])
+      loader_name_arg = obrigatory_positional_arg(0) || return
+      loader_name = camelize(loader_name_arg)
 
-      return puts('No loader found: '.red + loader_name) unless loader_exist?(loader_name)
+      return puts("No loader found: '#{loader_name}'".red) unless loader_exist?(loader_name)
 
       begin
         loader = Loaders.class_eval(loader_name).new(args)
