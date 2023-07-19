@@ -3,11 +3,12 @@ module Commands
     ALIASES = %w[n e edit].freeze
     DESCRIPTION = 'Creates new loader, unless it already exists. Also opens the loader on you default editor.'.freeze
     ARGS = {
-      name: 'Loaders name in snake case.'
+      name: 'Loaders name in snake case. The terms must be divided by underscore(_), and must not start with a number.',
     }.freeze
 
     def execute
-      name = obrigatory_positional_arg(0) || return
+      name = obrigatory_positional_arg(0)&.downcase || return
+      return puts("Invalid loader name '#{name}'.".red) unless is_loader_name?(name)
       path = "loaders/#{name}.rb"
 
       template = File.read('templates/loader.rb')

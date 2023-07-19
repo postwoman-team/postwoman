@@ -55,6 +55,35 @@ describe 'New command' do
     expect { attempt_command('new') }.to output(expected_output).to_stdout
   end
 
+  it 'treats loader name to be downcased' do
+    ENV['EDITOR'] = 'emacs'
+
+    allow(File).to receive(:exist?).with('loaders/testing2.rb').and_return(true)
+    allow_any_instance_of(Commands::New).to receive(:system).with('emacs loaders/testing2.rb')
+    expect(File).to_not receive(:open)
+    expect(File).to_not receive(:write)
+
+    expected_output = "Editing loader\n"
+    expect { attempt_command('new Testing2') }.to output(expected_output).to_stdout
+  end
+
+  context 'outputs error message if loader name is not valid because' do
+    it 'uses kebab case' do
+      expected_output = "Invalid loader name 'im-bad-kebab-case'.".red + "\n"
+      expect { attempt_command('new im-bad-kebab-case') }.to output(expected_output).to_stdout
+    end
+
+    it 'starts terms with numbers' do
+      expected_output = "Invalid loader name 'wrong_1'.".red + "\n"
+      expect { attempt_command('new wrong_1') }.to output(expected_output).to_stdout
+    end
+
+    it 'has invalid characters' do
+      expected_output = "Invalid loader name 'wrong!'.".red + "\n"
+      expect { attempt_command('new wrong!') }.to output(expected_output).to_stdout
+    end
+  end
+
   it 'outputs warning message if default editor is not set' do
     ENV['EDITOR'] = nil
     allow(File).to receive(:exist?).with('loaders/testing.rb').and_return(true)
