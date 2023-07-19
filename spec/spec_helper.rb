@@ -5,5 +5,10 @@ RSpec.configure do |config|
     c.syntax = :expect
   end
 
+  config.before(:each) do
+    Env.requests.clear
+    Env.workbench.clear
+  end
+
   config.mock_framework = :rspec
 end

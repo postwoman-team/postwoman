@@ -51,7 +51,7 @@ describe 'New command' do
   end
 
   it 'outputs error message if loader name is not provided' do
-    expected_output = 'Missing #1 positional argument: name'.red + "\n"
+    expected_output = "Missing #1 positional argument: 'name'".red + "\n"
     expect { attempt_command('new') }.to output(expected_output).to_stdout
   end
 

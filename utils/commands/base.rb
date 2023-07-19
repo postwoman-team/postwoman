@@ -16,7 +16,7 @@ module Commands
       command_name = name.split('::')[1].upcase
       [
         ["#{command_name.green} (#{self::ALIASES.join(', ')})".green],
-        ["- #{command_name.downcase} #{self::ARGS.map { |name, _| "<#{name}>" }.join(' ')}".gray],
+        ["> #{command_name.downcase} #{self::ARGS.map { |name, _| "<#{name}>" }.join(' ')}".gray],
         *args_rows,
         [self::DESCRIPTION]
       ]
@@ -26,7 +26,7 @@ module Commands
       return [] if self::ARGS.empty?
 
       self::ARGS.map do |name, description|
-        ["#{name.to_s.yellow} > #{description}"]
+        ["#{name.to_s.yellow} → #{description}"]
       end
     end
 
@@ -144,10 +144,11 @@ module Commands
       system("#{ENV['EDITOR']} #{path}")
     end
 
-    def obrigatory_positional_arg(index)
-      value = args[index]
+    def obrigatory_positional_arg(index, custom_name = nil)
       positional_names = self.class::ARGS.keys
-      return puts("Missing ##{index + 1} positional argument: #{positional_names[index]}".red) unless value
+      name = custom_name || positional_names[index]
+      value = args[index]
+      return puts("Missing ##{index + 1} positional argument: '#{name}'".red) unless value
 
       value
     end
