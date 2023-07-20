@@ -22,11 +22,11 @@ module StartUp
       |
     TEXT
 
-    puts "#{logo.chomp} #{random_ai_sentence}".magenta
+    puts "#{logo.chomp} #{random_sentence}".magenta
     puts("Type 'help' for more information")
   end
 
-  def self.random_ai_sentence
+  def self.random_sentence
     [
       "A 100% CLI API platform.",
       "Pull requests are always welcome!",
