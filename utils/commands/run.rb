@@ -15,7 +15,8 @@ module Commands
       begin
         loader = Loaders.class_eval(loader_name).new(args)
         loader_payload = loader.load
-      rescue StandardError => e
+      rescue Exception => e
+        puts "Your loader '#{loader_name}' raised an exception:".red
         puts e.full_message
         return
       end

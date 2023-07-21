@@ -383,17 +383,77 @@ describe 'Run command' do
     expect { attempt_command('run base -nb') }.to output(expected_output).to_stdout
   end
 
-  it 'prints out error if loader does not exist' do
-    expected_output = <<~TEXT
-      #{"No loader found: 'MyLoader'".red}
-    TEXT
-    expect { attempt_command('run my_loader') }.to output(expected_output).to_stdout
-  end
+  context 'prints out error' do
+    it 'if loader does not exist' do
+      expected_output = <<~TEXT
+        #{"No loader found: 'MyLoader'".red}
+      TEXT
+      expect { attempt_command('run my_loader') }.to output(expected_output).to_stdout
+    end
 
-  it 'outputs error message if loader name is not provided' do
-    expected_output = <<~TEXT
-      #{"Missing #1 positional argument: 'loader_name'".red}
-    TEXT
-    expect { attempt_command('run') }.to output(expected_output).to_stdout
+    it 'if loader name is not provided' do
+      expected_output = <<~TEXT
+        #{"Missing #1 positional argument: 'loader_name'".red}
+      TEXT
+      expect { attempt_command('run') }.to output(expected_output).to_stdout
+    end
+
+    it 'if loader couldnt be loaded properly' do
+      class MockLoader
+      end
+
+      expected_output = <<~TEXT
+        #{"Your loader 'MockLoader' raised an exception:".red}
+        /home/hikari/projetos/postwoman/utils/commands/run.rb:16:in `initialize': #{"wrong number of arguments (given 1, expected 0) (ArgumentError)".bold}
+                from /home/hikari/projetos/postwoman/utils/commands/run.rb:16:in `new'
+                from /home/hikari/projetos/postwoman/utils/commands/run.rb:16:in `execute'
+                from /home/hikari/projetos/postwoman/utils/attempt_command.rb:10:in `attempt_command'
+                from /home/hikari/projetos/postwoman/spec/commands/run_spec.rb:411:in `block (4 levels) in <top (required)>'
+                from /home/hikari/.rvm/gems/ruby-3.0.0/gems/rspec-expectations-3.12.3/lib/rspec/matchers/built_in/output.rb:150:in `capture'
+                from /home/hikari/.rvm/gems/ruby-3.0.0/gems/rspec-expectations-3.12.3/lib/rspec/matchers/built_in/output.rb:20:in `matches?'
+                from /home/hikari/.rvm/gems/ruby-3.0.0/gems/rspec-expectations-3.12.3/lib/rspec/expectations/handler.rb:51:in `block in handle_matcher'
+                from /home/hikari/.rvm/gems/ruby-3.0.0/gems/rspec-expectations-3.12.3/lib/rspec/expectations/handler.rb:27:in `with_matcher'
+                from /home/hikari/.rvm/gems/ruby-3.0.0/gems/rspec-expectations-3.12.3/lib/rspec/expectations/handler.rb:48:in `handle_matcher'
+                from /home/hikari/.rvm/gems/ruby-3.0.0/gems/rspec-expectations-3.12.3/lib/rspec/expectations/expectation_target.rb:65:in `to'
+                from /home/hikari/.rvm/gems/ruby-3.0.0/gems/rspec-expectations-3.12.3/lib/rspec/expectations/expectation_target.rb:139:in `to'
+                from /home/hikari/projetos/postwoman/spec/commands/run_spec.rb:411:in `block (3 levels) in <top (required)>'
+                from /home/hikari/.rvm/gems/ruby-3.0.0/gems/rspec-core-3.12.2/lib/rspec/core/example.rb:263:in `instance_exec'
+                from /home/hikari/.rvm/gems/ruby-3.0.0/gems/rspec-core-3.12.2/lib/rspec/core/example.rb:263:in `block in run'
+                from /home/hikari/.rvm/gems/ruby-3.0.0/gems/rspec-core-3.12.2/lib/rspec/core/example.rb:511:in `block in with_around_and_singleton_context_hooks'
+                from /home/hikari/.rvm/gems/ruby-3.0.0/gems/rspec-core-3.12.2/lib/rspec/core/example.rb:468:in `block in with_around_example_hooks'
+                from /home/hikari/.rvm/gems/ruby-3.0.0/gems/rspec-core-3.12.2/lib/rspec/core/hooks.rb:486:in `block in run'
+                from /home/hikari/.rvm/gems/ruby-3.0.0/gems/rspec-core-3.12.2/lib/rspec/core/hooks.rb:624:in `run_around_example_hooks_for'
+                from /home/hikari/.rvm/gems/ruby-3.0.0/gems/rspec-core-3.12.2/lib/rspec/core/hooks.rb:486:in `run'
+                from /home/hikari/.rvm/gems/ruby-3.0.0/gems/rspec-core-3.12.2/lib/rspec/core/example.rb:468:in `with_around_example_hooks'
+                from /home/hikari/.rvm/gems/ruby-3.0.0/gems/rspec-core-3.12.2/lib/rspec/core/example.rb:511:in `with_around_and_singleton_context_hooks'
+                from /home/hikari/.rvm/gems/ruby-3.0.0/gems/rspec-core-3.12.2/lib/rspec/core/example.rb:259:in `run'
+                from /home/hikari/.rvm/gems/ruby-3.0.0/gems/rspec-core-3.12.2/lib/rspec/core/example_group.rb:646:in `block in run_examples'
+                from /home/hikari/.rvm/gems/ruby-3.0.0/gems/rspec-core-3.12.2/lib/rspec/core/example_group.rb:642:in `map'
+                from /home/hikari/.rvm/gems/ruby-3.0.0/gems/rspec-core-3.12.2/lib/rspec/core/example_group.rb:642:in `run_examples'
+                from /home/hikari/.rvm/gems/ruby-3.0.0/gems/rspec-core-3.12.2/lib/rspec/core/example_group.rb:607:in `run'
+                from /home/hikari/.rvm/gems/ruby-3.0.0/gems/rspec-core-3.12.2/lib/rspec/core/example_group.rb:608:in `block in run'
+                from /home/hikari/.rvm/gems/ruby-3.0.0/gems/rspec-core-3.12.2/lib/rspec/core/example_group.rb:608:in `map'
+                from /home/hikari/.rvm/gems/ruby-3.0.0/gems/rspec-core-3.12.2/lib/rspec/core/example_group.rb:608:in `run'
+                from /home/hikari/.rvm/gems/ruby-3.0.0/gems/rspec-core-3.12.2/lib/rspec/core/runner.rb:121:in `block (3 levels) in run_specs'
+                from /home/hikari/.rvm/gems/ruby-3.0.0/gems/rspec-core-3.12.2/lib/rspec/core/runner.rb:121:in `map'
+                from /home/hikari/.rvm/gems/ruby-3.0.0/gems/rspec-core-3.12.2/lib/rspec/core/runner.rb:121:in `block (2 levels) in run_specs'
+                from /home/hikari/.rvm/gems/ruby-3.0.0/gems/rspec-core-3.12.2/lib/rspec/core/configuration.rb:2070:in `with_suite_hooks'
+                from /home/hikari/.rvm/gems/ruby-3.0.0/gems/rspec-core-3.12.2/lib/rspec/core/runner.rb:116:in `block in run_specs'
+                from /home/hikari/.rvm/gems/ruby-3.0.0/gems/rspec-core-3.12.2/lib/rspec/core/reporter.rb:74:in `report'
+                from /home/hikari/.rvm/gems/ruby-3.0.0/gems/rspec-core-3.12.2/lib/rspec/core/runner.rb:115:in `run_specs'
+                from /home/hikari/.rvm/gems/ruby-3.0.0/gems/rspec-core-3.12.2/lib/rspec/core/runner.rb:89:in `run'
+                from /home/hikari/.rvm/gems/ruby-3.0.0/gems/rspec-core-3.12.2/lib/rspec/core/runner.rb:71:in `run'
+                from /home/hikari/.rvm/gems/ruby-3.0.0/gems/rspec-core-3.12.2/lib/rspec/core/runner.rb:45:in `invoke'
+                from /home/hikari/.rvm/gems/ruby-3.0.0/gems/rspec-core-3.12.2/exe/rspec:4:in `<top (required)>'
+                from /home/hikari/.rvm/gems/ruby-3.0.0/bin/rspec:23:in `load'
+                from /home/hikari/.rvm/gems/ruby-3.0.0/bin/rspec:23:in `<main>'
+                from /home/hikari/.rvm/gems/ruby-3.0.0/bin/ruby_executable_hooks:22:in `eval'
+                from /home/hikari/.rvm/gems/ruby-3.0.0/bin/ruby_executable_hooks:22:in `<main>'
+      TEXT
+
+      allow(Loaders).to receive(:class_eval).with('MockLoader').and_return(MockLoader)
+
+      expect { attempt_command('run mock_loader') }.to output(expected_output).to_stdout
+    end
   end
 end

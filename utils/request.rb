@@ -41,7 +41,7 @@ class Request
       @parsed_body = Nokogiri::XML(body, &:noblanks)
       @pretty_body = @parsed_body.to_xhtml(encoding: 'utf-8')
     when /json/
-      @parsed_body = JSON.parse(body)
+      @parsed_body = JSON.parse(body.empty? ? '{}' : body)
       @pretty_body = JSON.pretty_generate(@parsed_body)
     else
       @parsed_body = body
