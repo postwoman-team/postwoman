@@ -24,7 +24,8 @@ module Commands
       return if loader.failed?
 
       request = Request.new(loader_payload)
-      return if request.failed?
+      request.execute
+      return print_payload(request.payload) if request.failed?
 
       Env.requests << request
       display_request(request)

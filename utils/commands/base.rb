@@ -42,6 +42,7 @@ module Commands
       end
 
       when_not_hidden("#{'Body'.purple} - #{request.content_type.yellow}", args.flag?(:no_body)) do
+        puts '↓Empty' if request.pretty_body.empty?
         print_table(request.pretty_body)
       end
 
