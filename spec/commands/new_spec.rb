@@ -35,7 +35,8 @@ describe 'New command' do
     expect(file_obj).to receive(:write).with(template).once
 
     expected_output = "Creating #{'new'.green} loader\n"
-    expect { attempt_command('new testing') }.to output(expected_output).to_stdout
+    output = capture_stdout_from { attempt_command('new testing') }
+    expect(output).to eq(expected_output)
   end
 
   it 'edits existing loader on default editor if loader already exists' do
@@ -47,12 +48,14 @@ describe 'New command' do
     expect(File).to_not receive(:write)
 
     expected_output = "Editing loader\n"
-    expect { attempt_command('new testing') }.to output(expected_output).to_stdout
+    output = capture_stdout_from { attempt_command('new testing') }
+    expect(output).to eq(expected_output)
   end
 
   it 'outputs error message if loader name is not provided' do
     expected_output = "Missing #1 positional argument: 'name'".red + "\n"
-    expect { attempt_command('new') }.to output(expected_output).to_stdout
+    output = capture_stdout_from { attempt_command('new') }
+    expect(output).to eq(expected_output)
   end
 
   it 'treats loader name to be downcased' do
@@ -90,6 +93,7 @@ describe 'New command' do
     expect_any_instance_of(Commands::New).to_not receive(:system)
 
     expected_output = "Editing loader\n#{"Could not open loader because default editor isn't set.".yellow}\n"
-    expect { attempt_command('new testing') }.to output(expected_output).to_stdout
+    output = capture_stdout_from { attempt_command('new testing') }
+    expect(output).to eq(expected_output)
   end
 end

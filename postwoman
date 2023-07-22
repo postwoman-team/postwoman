@@ -1,11 +1,6 @@
 #!/usr/bin/env ruby
 require File.dirname(__FILE__) + '/utils/dependencies.rb'
-
-Readline.completion_append_character = ' '
-Readline.completion_proc = Autocompletion.generate_proc
-
-history = File.open('.postwoman_history', 'a+').readlines.map(&:chomp)
-Readline::HISTORY.push(*history)
+StartUp.execute
 
 def handle_history(line)
   unless Readline::HISTORY.to_a.empty?
