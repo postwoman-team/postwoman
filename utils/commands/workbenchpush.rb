@@ -27,7 +27,7 @@ module Commands
              end
 
       args.positionals[1..].each do |positional|
-        Searchers::Recursive.new(body).search(positional) do |pull|
+        Searchers::Recursive.new(body).search_first(positional) do |pull|
           if pull
             push_to_workbench(positional, pull)
             puts "Pulled \"#{positional}\" :>".green

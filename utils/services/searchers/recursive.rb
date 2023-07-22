@@ -7,9 +7,12 @@ module Searchers
       @hash = hash 
     end
 
+    def search_first(key)
+      search(key) { |result| return yield result }
+    end
+
     def search(key, &block)
-      yield(hash[key]) if block_given? && hash.has_key?(key)
-      return hash[key] if hash.has_key?(key)
+      yield hash[key] if block_given? && hash.has_key?(key)
 
       hash.each_value do |value|
         @hash = value 
