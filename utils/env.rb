@@ -6,6 +6,14 @@ class Env
     @@requests
   end
 
+  def self.last_request 
+    @@requests.last
+  end
+
+  def self.no_requests?
+    @@requests.empty?
+  end
+
   def self.workbench
     @@workbench
   end
