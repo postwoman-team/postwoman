@@ -28,11 +28,11 @@ module StartUp
 
   def self.random_sentence
     [
-      "A 100% CLI API platform.",
-      "Pull requests are always welcome!",
-      "DEPLOY ON FRIDAYS",
+      'A 100% CLI API platform.',
+      'Pull requests are always welcome!',
+      'DEPLOY ON FRIDAYS',
       "I'm a teapot",
-      "...but it was me, Dio!",
+      '...but it was me, Dio!'
     ].sample
   end
 end

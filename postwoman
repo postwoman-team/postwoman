@@ -17,8 +17,3 @@ while (line = Readline.readline('> ', true))
   load_loaders
   attempt_command(line)
 end
-
-
-
-
-
