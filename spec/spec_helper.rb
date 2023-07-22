@@ -1,4 +1,5 @@
 require_relative File.dirname(__FILE__) + '/../utils/dependencies.rb'
+Dir[File.dirname(__FILE__) + '/support/**/*.rb'].each { |file| require file }
 
 RSpec.configure do |config|
   config.expect_with :rspec do |c|
@@ -6,6 +7,7 @@ RSpec.configure do |config|
   end
 
   config.before(:each) do
+    config.include StdoutHelper
     Env.requests.clear
     Env.workbench.clear
   end
