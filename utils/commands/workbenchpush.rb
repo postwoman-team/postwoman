@@ -27,12 +27,13 @@ module Commands
              end
 
       args.positionals[1..].each do |positional|
-        pull = Searchers::Base.new(hash: body, key: positional).recursive_search
-        if pull
-          push_to_workbench(pull, positional)
-          puts "Pulled \"#{positional}\" :>".green
-        else
-          puts "Couldnt pull \"#{positional}\" :<".yellow
+        Searchers::Recursive.new(body).search(positional) do |pull|
+          if pull
+            push_to_workbench(positional, pull)
+            puts "Pulled \"#{positional}\" :>".green
+          else
+            puts "Couldnt pull \"#{positional}\" :<".yellow
+          end
         end
       end
     end
@@ -41,8 +42,8 @@ module Commands
       Env.workbench.merge!(args.pairs)
     end
 
-    def push_to_workbench(hash, key)
-      Env.workbench[key.to_sym] = hash[key]
+    def push_to_workbench(key, value)
+      Env.workbench[key.to_sym] = value
     end
   end
 end
