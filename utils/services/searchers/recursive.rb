@@ -1,30 +1,37 @@
 module Searchers
   class Recursive
 
-    attr_reader :hash
+    attr_reader :collection
 
-    def initialize(hash)
-      @hash = hash 
+    def initialize(collection)
+      @collection = collection
     end
 
     def search_first(key)
-      search(key) { |result| return yield result }
+      search(key) { |result| return result }
     end
 
-    def search(key, &block)
-      yield hash[key] if block_given? && hash.has_key?(key)
+    def search_results(key)
+      results = []
+      search(key) { |result| results << result }
+      results
+    end
 
-      hash.each_value do |value|
-        @hash = value 
-        return hash if value.is_a?(Hash) && search(key, &block)
+    def search(key, &block)  
+      yield collection[key] if collection_has_key?(key)
 
-        if value.is_a?(Array)
-          value.each do |element| 
-            @hash = element 
-            return hash if search(key, &block)
-          end
+      if collection.is_a?(Hash) || collection.is_a?(Array)
+        collection.each do |element|
+          @collection = element
+          search(key, &block)
         end
       end
+    end
+
+    private 
+
+    def collection_has_key?(key)
+      collection.is_a?(Hash) && collection.has_key?(key)
     end
   end
 end

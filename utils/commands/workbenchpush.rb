@@ -27,13 +27,12 @@ module Commands
              end
 
       args.positionals[1..].each do |positional|
-        Searchers::Recursive.new(body).search_first(positional) do |pull|
-          if pull
-            push_to_workbench(positional, pull)
-            puts "Pulled \"#{positional}\" :>".green
-          else
-            puts "Couldnt pull \"#{positional}\" :<".yellow
-          end
+        pull = Searchers::Recursive.new(body).search_first(positional)
+        if pull
+          push_to_workbench(positional, pull)
+          puts "Pulled \"#{positional}\" :>".green
+        else
+          puts "Couldnt pull \"#{positional}\" :<".yellow
         end
       end
     end
