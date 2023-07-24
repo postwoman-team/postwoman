@@ -20,20 +20,15 @@ module Commands
 
       request = Env.last_request
 
-      body = if request.response_json?
-               request.parsed_body
-             else
-               Nori.new.parse(request.body)
-             end
+      body = request.parsed_body
 
       args.positionals[1..].each do |positional|
         pull = Searchers::Recursive.new(body).search_first(positional)
-        if pull
-          push_to_workbench(positional, pull)
-          puts "Pulled \"#{positional}\" :>".green
-        else
-          puts "Couldnt pull \"#{positional}\" :<".yellow
-        end
+
+        return puts "Couldnt pull \"#{positional}\" :<".yellow unless pull 
+
+        push_to_workbench(positional, pull)
+        puts "Pulled \"#{positional}\" :>".green
       end
     end
 
