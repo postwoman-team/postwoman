@@ -26,6 +26,7 @@ module Searchers
           search(key, &block)
         end
       end
+      false 
     end
 
     private 
