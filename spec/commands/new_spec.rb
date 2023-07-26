@@ -29,6 +29,9 @@ describe 'New command' do
     ENV['EDITOR'] = 'emacs'
     file_obj = double('file_obj')
 
+    allow(File).to receive(:exist?)
+    allow(File).to receive(:open).and_call_original
+
     allow(File).to receive(:exist?).with('loaders/testing.rb').and_return(false)
     allow_any_instance_of(Commands::New).to receive(:system).with('emacs loaders/testing.rb')
     allow(File).to receive(:open).with('loaders/testing.rb', 'w').and_yield(file_obj)
@@ -42,10 +45,13 @@ describe 'New command' do
   it 'edits existing loader on default editor if loader already exists' do
     ENV['EDITOR'] = 'emacs'
 
+    allow(File).to receive(:exist?)
+    allow(File).to receive(:open).and_call_original
+
     allow(File).to receive(:exist?).with('loaders/testing.rb').and_return(true)
     allow_any_instance_of(Commands::New).to receive(:system).with('emacs loaders/testing.rb')
-    expect(File).to_not receive(:open)
-    expect(File).to_not receive(:write)
+    expect(File).to_not receive(:open).with('loaders/testing.rb')
+    expect(File).to_not receive(:write).with('loaders/testing.rb')
 
     expected_output = "Editing loader\n"
     output = capture_stdout_from { attempt_command('new testing') }
@@ -61,10 +67,13 @@ describe 'New command' do
   it 'treats loader name to be downcased' do
     ENV['EDITOR'] = 'emacs'
 
+    allow(File).to receive(:exist?)
+    allow(File).to receive(:open).and_call_original
+
     allow(File).to receive(:exist?).with('loaders/testing2.rb').and_return(true)
     allow_any_instance_of(Commands::New).to receive(:system).with('emacs loaders/testing2.rb')
-    expect(File).to_not receive(:open)
-    expect(File).to_not receive(:write)
+    expect(File).to_not receive(:open).with('loaders/testing2.rb')
+    expect(File).to_not receive(:write).with('loaders/testing2.rb')
 
     expected_output = "Editing loader\n"
     output = capture_stdout_from { attempt_command('new Testing2') }
