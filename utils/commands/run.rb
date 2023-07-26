@@ -7,14 +7,16 @@ module Commands
     }.freeze
 
     def execute
-      loader_name = camelize(args[0])
+      loader_name_arg = obrigatory_positional_arg(0) || return
+      loader_name = camelize(loader_name_arg)
 
-      return puts('No loader found: '.red + loader_name) unless loader_exist?(loader_name)
+      return puts("No loader found: '#{loader_name}'".red) unless loader_exist?(loader_name)
 
       begin
         loader = Loaders.class_eval(loader_name).new(args)
         loader_payload = loader.load
-      rescue StandardError => e
+      rescue Exception => e
+        puts "Your loader '#{loader_name}' raised an exception:".red
         puts e.full_message
         return
       end
@@ -22,7 +24,8 @@ module Commands
       return if loader.failed?
 
       request = Request.new(loader_payload)
-      return if request.failed?
+      request.execute
+      return print_payload(request.payload) if request.failed?
 
       Env.requests << request
       display_request(request)

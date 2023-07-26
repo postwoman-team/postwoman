@@ -3,6 +3,10 @@ class Request
 
   def initialize(faraday_args = {})
     @faraday_args = faraday_args
+    @failed = false
+  end
+
+  def execute
     @response = faraday_call
     parse_body unless failed?
   end
@@ -12,7 +16,7 @@ class Request
   end
 
   def failed?
-    response.nil?
+    @failed
   end
 
   def http_method
@@ -41,8 +45,8 @@ class Request
       @parsed_body = Nokogiri::XML(body, &:noblanks)
       @pretty_body = @parsed_body.to_xhtml(encoding: 'utf-8')
     when /json/
-      @parsed_body = JSON.parse(body)
-      @pretty_body = JSON.pretty_generate(@parsed_body)
+      @parsed_body = JSON.parse(body.empty? ? '{}' : body)
+      @pretty_body = @parsed_body.empty? ? '' : JSON.pretty_generate(@parsed_body)
     else
       @parsed_body = body
       @pretty_body = body
@@ -73,7 +77,9 @@ class Request
 
   def faraday_call
     Faraday.run_request(http_method.downcase, url, params, @faraday_args[:headers])
-  rescue StandardError
-    puts 'Faraday requisition failed'.red
+  rescue Exception => e
+    puts 'Faraday requisition failed:'.red
+    puts e.full_message
+    @failed = true
   end
 end

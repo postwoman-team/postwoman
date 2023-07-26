@@ -32,7 +32,8 @@ module StartUp
       'Pull requests are always welcome!',
       'DEPLOY ON FRIDAYS',
       "I'm a teapot",
-      '...but it was me, Dio!'
+      '...but it was me, Dio!',
+      'git push origin main -f'
     ].sample
   end
 end
