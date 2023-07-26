@@ -1,6 +1,6 @@
 module Commands
   class Workbenchpush < Base
-    ALIASES = %w[wbp]
+    ALIASES = %w[wbp].freeze
     DESCRIPTION = 'Brings wanted key-values from last request to workbench. Works for responses in XML and JSON. Searches recursively until first match.'
     ARGS = {
       wanted_keys: '(Can stack) The keys you want to be pulled.'
@@ -19,8 +19,7 @@ module Commands
       return puts 'Cant pull desired values because no requests were made at the moment.'.yellow if Env.no_requests?
 
       request = Env.last_request
-
-      body = request.parsed_body
+      body = request.body_as_hash
 
       args.positionals[1..].each do |positional|
         pull = Searchers::Recursive.new(body).search_first(positional)
