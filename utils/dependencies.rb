@@ -22,11 +22,9 @@ end
 
 def load_loader(loader_path)
   load loader_path
-  true
 rescue Exception => e
   puts "Loader '#{loader_path.split('/').last[..-4]}' has syntax errors and couldn't be loaded:".red
   puts e.full_message
-  false
 end
 
 create_loader_base_unless_exists
