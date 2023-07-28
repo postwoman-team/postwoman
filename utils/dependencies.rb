@@ -13,16 +13,20 @@ def create_loader_base_unless_exists
 end
 
 def load_loaders
-  load 'loaders/base.rb'
+  return unless load_loader('loaders/base.rb')
+
   Dir[File.dirname(__FILE__) + '/../loaders/**/*.rb'].each do |file|
-    begin
-      load file
-    rescue Exception => e
-      puts "Loader '#{file.split('/').last[..-4]}' has syntax errors and couldn't be loaded:".red
-      puts e.full_message
-      return
-    end
+    load_loader(file)
   end
+end
+
+def load_loader(loader_path)
+  load loader_path
+  true
+rescue Exception => e
+  puts "Loader '#{loader_path.split('/').last[..-4]}' has syntax errors and couldn't be loaded:".red
+  puts e.full_message
+  false
 end
 
 create_loader_base_unless_exists
