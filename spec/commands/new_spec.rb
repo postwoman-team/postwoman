@@ -28,31 +28,35 @@ describe 'New command' do
 
     ENV['EDITOR'] = 'emacs'
     file_obj = double('file_obj')
+    command = 'new testing'
+    command_obj = Commands::New.new(ArgsHandler.parse(command))
 
     allow(File).to receive(:exist?)
     allow(File).to receive(:open).and_call_original
-
-    allow(File).to receive(:exist?).with('loaders/testing.rb').and_return(false)
-    allow_any_instance_of(Commands::New).to receive(:system).with('emacs loaders/testing.rb')
-    allow(File).to receive(:open).with('loaders/testing.rb', 'w').and_yield(file_obj)
+    expect(Commands::New).to receive(:new).and_return(command_obj)
+    expect(command_obj).to receive(:system).with('emacs loaders/testing.rb')
+    expect(File).to receive(:exist?).with('loaders/testing.rb').and_return(false)
+    expect(File).to receive(:open).with('loaders/testing.rb', 'w').and_yield(file_obj)
     expect(file_obj).to receive(:write).with(template).once
 
     expected_output = <<~TEXT
       Creating #{'new'.green} loader
     TEXT
 
-    output = capture_stdout_from { attempt_command('new testing') }
+    output = capture_stdout_from { attempt_command(command) }
     expect(output).to eq(expected_output)
   end
 
   it 'edits existing loader on default editor if loader already exists' do
     ENV['EDITOR'] = 'emacs'
+    command = 'new testing'
+    command_obj = Commands::New.new(ArgsHandler.parse(command))
 
     allow(File).to receive(:exist?)
     allow(File).to receive(:open).and_call_original
-
-    allow(File).to receive(:exist?).with('loaders/testing.rb').and_return(true)
-    allow_any_instance_of(Commands::New).to receive(:system).with('emacs loaders/testing.rb')
+    expect(Commands::New).to receive(:new).and_return(command_obj)
+    expect(command_obj).to receive(:system).with('emacs loaders/testing.rb')
+    expect(File).to receive(:exist?).with('loaders/testing.rb').and_return(true)
     expect(File).to_not receive(:open).with('loaders/testing.rb')
     expect(File).to_not receive(:write).with('loaders/testing.rb')
 
@@ -60,7 +64,7 @@ describe 'New command' do
       Editing loader
     TEXT
 
-    output = capture_stdout_from { attempt_command('new testing') }
+    output = capture_stdout_from { attempt_command(command) }
     expect(output).to eq(expected_output)
   end
 
@@ -75,20 +79,24 @@ describe 'New command' do
 
   it 'treats loader name to be downcased' do
     ENV['EDITOR'] = 'emacs'
+    loader_path = 'loaders/testing2.rb'
+    command = 'new Testing2'
+    command_obj = Commands::New.new(ArgsHandler.parse(command))
 
+    expect(Commands::New).to receive(:new).and_return(command_obj)
+    expect(command_obj).to receive(:system).with('emacs loaders/testing2.rb')
     allow(File).to receive(:exist?)
     allow(File).to receive(:open).and_call_original
+    allow(File).to receive(:exist?).with(loader_path).and_return(true)
 
-    allow(File).to receive(:exist?).with('loaders/testing2.rb').and_return(true)
-    allow_any_instance_of(Commands::New).to receive(:system).with('emacs loaders/testing2.rb')
-    expect(File).to_not receive(:open).with('loaders/testing2.rb')
-    expect(File).to_not receive(:write).with('loaders/testing2.rb')
+    expect(File).to_not receive(:open).with(loader_path)
+    expect(File).to_not receive(:write).with(loader_path)
 
     expected_output = <<~TEXT
       Editing loader
     TEXT
 
-    output = capture_stdout_from { attempt_command('new Testing2') }
+    output = capture_stdout_from { attempt_command(command) }
 
     expect(output).to eq(expected_output)
   end
@@ -127,15 +135,19 @@ describe 'New command' do
 
   it 'outputs warning message if default editor is not set' do
     ENV['EDITOR'] = nil
-    allow(File).to receive(:exist?).with('loaders/testing.rb').and_return(true)
-    expect_any_instance_of(Commands::New).to_not receive(:system)
+    command = 'new testing'
+    command_obj = Commands::New.new(ArgsHandler.parse(command))
+
+    expect(Commands::New).to receive(:new).and_return(command_obj)
+    expect(command_obj).to_not receive(:system)
+    expect(File).to receive(:exist?).with('loaders/testing.rb').and_return(true)
 
     expected_output = <<~TEXT
       Editing loader
       #{"Could not open loader because default editor isn't set.".yellow}
     TEXT
 
-    output = capture_stdout_from { attempt_command('new testing') }
+    output = capture_stdout_from { attempt_command(command) }
 
     expect(output).to eq(expected_output)
   end
