@@ -9,8 +9,11 @@ gem 'nori'
 gem 'pry'
 gem 'readline'
 gem 'rspec'
+gem 'rubycritic'
+gem 'rubocop', '~> 1.55'
 gem 'strscan'
 gem 'terminal-table'
 
 # not mandatory
 gem 'cpf_cnpj'
+
