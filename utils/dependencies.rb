@@ -1,6 +1,7 @@
 require 'rubygems'
 require 'bundler/setup'
 Bundler.require
+require_relative '../utils/loaders/builtin/base'
 
 def needed_file(path, template_path)
   return if File.exist?(path)
