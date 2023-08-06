@@ -3,13 +3,13 @@ require 'rubygems'
 bundle_check = `bundle check`.chomp
 if bundle_check != "The Gemfile's dependencies are satisfied"
   puts bundle_check
-  puts "Install? [Yn]"
-  unless gets.chomp == 'n'
-    puts `bundle install`
-  else
-    puts "Exiting..."
+  puts 'Install? [Yn]'
+  if gets.chomp == 'n'
+    puts 'Exiting...'
     exit
   end
+
+  puts `bundle install`
 end
 
 require 'bundler/setup'
