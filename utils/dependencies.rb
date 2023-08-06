@@ -1,4 +1,17 @@
 require 'rubygems'
+
+bundle_check = `bundle check`.chomp
+if bundle_check != "The Gemfile's dependencies are satisfied"
+  puts bundle_check
+  puts "Install? [Yn]"
+  unless gets.chomp == 'n'
+    puts `bundle install`
+  else
+    puts "Exiting..."
+    exit
+  end
+end
+
 require 'bundler/setup'
 Bundler.require
 require_relative '../utils/loaders/builtin/base'

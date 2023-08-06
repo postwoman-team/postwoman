@@ -6,7 +6,6 @@ Postwoman is a API Platform which is 100% CLI. **This tool is still on a very ea
 - Clone this repo
 - Change your directory to the project's directory
 - Install [Ruby](https://www.ruby-lang.org/en/documentation/installation/) and Bundler
-- `$ bundle install`
 
 ### How to use
 - `$ ./postwoman`
