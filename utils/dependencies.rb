@@ -1,6 +1,5 @@
 require 'rubygems'
 require 'bundler/setup'
-require_relative '../utils/loaders/builtin/base'
 Bundler.require
 
 def needed_file(path, template_path)
