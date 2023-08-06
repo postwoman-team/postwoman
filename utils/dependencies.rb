@@ -3,12 +3,11 @@ require 'bundler/setup'
 require_relative '../utils/loaders/builtin/base'
 Bundler.require
 
-def create_loader_base_unless_exists
-  path = 'loaders/base.rb'
+def needed_file(path, template_path)
   return if File.exist?(path)
 
   File.open(path, 'w') do |f|
-    f.write(File.read('templates/loader_base.rb'))
+    f.write(File.read(template_path))
   end
 end
 
@@ -27,7 +26,9 @@ rescue Exception => e
   puts e.full_message
 end
 
-create_loader_base_unless_exists
+needed_file('loaders/base.rb', 'templates/loader_base.rb')
+needed_file('.env', 'templates/.env.example')
+
 Dir[File.dirname(__FILE__) + '/../utils/**/base.rb'].each { |file| require_relative file }
 Dir[File.dirname(__FILE__) + '/../utils/**/*.rb'].each { |file| require_relative file }
 load_loaders
