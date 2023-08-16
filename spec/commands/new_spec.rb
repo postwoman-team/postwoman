@@ -7,21 +7,13 @@ describe 'New command' do
         class Testing < Base
           private
 
-          def http_method
-            :GET
-          end
+          def http_method = :GET
 
-          def url
-            ''
-          end
+          def url = ''
 
-          def params
-            {}
-          end
+          def params = {}
 
-          def headers
-            default_headers
-          end
+          def headers = json_headers
         end
       end
     TEXT

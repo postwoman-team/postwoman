@@ -21,25 +21,25 @@ module Loaders
           params: params_with_env,
           headers: headers
         }
-      end
+
 
       def self.trait(name, values)
-        traits = self.klass_traits
+        traits = klass_traits
         traits[name] = {} unless traits.key?(name)
         traits[name].merge!(values)
       end
 
       def self.klass_traits
-        @@trait_variables[self.name] = {} unless @@trait_variables.key?(self.name)
-        @@trait_variables[self.name]
+        @@trait_variables[name] = {} unless @@trait_variables.key?(name)
+        @@trait_variables[name]
       end
 
       def self.fetch_traits
         traits = {}
-        self.ancestors.reverse[6..].each do |ancestor|
-          self.merge_traits(traits, ancestor.klass_traits)
+        ancestors.reverse[6..].each do |ancestor|
+          merge_traits(traits, ancestor.klass_traits)
         end
-        self.merge_traits(traits, self.klass_traits)
+        merge_traits(traits, klass_traits)
         traits
       end
 
@@ -88,17 +88,22 @@ module Loaders
       def add_traits_to_env
         traits.each do |trait, variables|
           next if trait == :default
-          next unless args.key?(trait) || (Env.workbench.key?(trait) && args.flag?(:apply_workbench))
+          next unless input_key?(trait)
+
           env.merge!(variables)
         end
       end
 
-      def http_method
-        :get
+      def input_key?(key)
+        args.key?(key) || (Env.workbench.key?(key) && args.flag?(:apply_workbench))
       end
 
       def url
         'http://example.org/'
+      end
+
+      def http_method
+        :get
       end
 
       def params
