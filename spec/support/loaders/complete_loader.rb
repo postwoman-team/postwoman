@@ -88,6 +88,7 @@ module Loaders
       'https://www.mysite.com/'
     end
 
+    # rubocop:disable Metrics/MethodLength
     def params
       {
         trait_params: {
@@ -115,6 +116,7 @@ module Loaders
         }
       }
     end
+    # rubocop:enable Metrics/MethodLength
 
     def headers
       {

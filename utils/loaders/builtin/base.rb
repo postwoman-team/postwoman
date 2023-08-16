@@ -21,7 +21,7 @@ module Loaders
           params: params_with_env,
           headers: headers
         }
-
+      end
 
       def self.trait(name, values)
         traits = klass_traits
