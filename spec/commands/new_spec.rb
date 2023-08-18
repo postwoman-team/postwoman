@@ -20,7 +20,7 @@ describe 'New command' do
           end
 
           def headers
-            json_headers
+            default_headers
           end
         end
       end
