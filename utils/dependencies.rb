@@ -1,4 +1,5 @@
 require 'rubygems'
+require 'io/console'
 
 def bundle_install_prompt
   bundle_check = `bundle check`.chomp
@@ -6,7 +7,6 @@ def bundle_install_prompt
 
   puts bundle_check
   print 'Install? [Yn] '
-  require 'io/console'
   if $stdin.getch == 'n'
     puts 'Exiting...'
     exit
