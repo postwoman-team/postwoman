@@ -1,31 +1,29 @@
 require 'spec_helper'
 
 describe 'Debug command' do
-  xit 'Calls binding.pry if debugger is binding.pry' do
-    ENV['DEBUGGER'] = 'bindingpry'
-    command_obj = Commands::New.new(ArgsHandler.parse('debug'))
-    allow(command_obj).to receive(:byebug) { true }
+  it 'Calls binding.pry if debugger is binding.pry' do
+    ENV['DEBUGGER'] = 'pry'
+    command_obj = Commands::Debug.new(ArgsHandler.parse('debug'))
+    command_binding = double('binding', pry: nil)
+    allow(command_obj).to receive(:binding) { command_binding }
     command_obj.execute
-    expect(Pry).to have_received(:byebug)
+    expect(command_binding).to have_received(:pry)
   end
 
   it 'Calls byebug if debugger is byebug' do
     ENV['DEBUGGER'] = 'byebug'
-    command_obj = Commands::New.new(ArgsHandler.parse('debug'))
-    allow(command_obj).to receive(:byebug) { true }
-    command_obj.execute
+    allow(Byebug).to receive(:attach)
     attempt_command('debug')
 
-    expect(command_obj).to have_received(:byebug)
+    expect(Byebug).to have_received(:attach)
   end
 
-  xit 'Calls byebug if debugger is debug' do
+  it 'Calls debug if debugger is debug' do
     ENV['DEBUGGER'] = 'debug'
-    command_obj = Commands::New.new(ArgsHandler.parse('debug'))
-    allow(command_obj).to receive(:debug) { true }
+    command_obj = Commands::Debug.new(ArgsHandler.parse('debug'))
+    command_binding = double('binding', break: nil)
+    allow(command_obj).to receive(:binding) { command_binding }
     command_obj.execute
-    attempt_command('debug')
-
-    expect(Kernel).to have_received(:byebug)
+    expect(command_binding).to have_received(:break)
   end
 end

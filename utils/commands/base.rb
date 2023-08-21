@@ -47,7 +47,7 @@ module Commands
       end
 
       print_table("Status: #{request.pretty_status}", "#{request.url}")
-      debug if args.flag?(:activate_debugger)
+      start_debug if args.flag?(:activate_debugger)
     end
 
     def workbench
@@ -102,14 +102,14 @@ module Commands
       value
     end
 
-    def debug
+    def start_debug
       case ENV['DEBUGGER']
-      when 'bindingpry'
+      when 'pry'
         binding.pry
       when 'byebug'
         byebug
       when 'debug'
-        debug
+        binding.break
       end
     end
   end

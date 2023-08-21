@@ -5,7 +5,7 @@ module Commands
 
     def execute
       last = Env.requests.last
-      debug
+      start_debug
     end
   end
 end

@@ -45,4 +45,7 @@ needed_file('.env', 'templates/.env.example')
 Dir[File.dirname(__FILE__) + '/../utils/**/base.rb'].each { |file| require_relative file }
 Dir[File.dirname(__FILE__) + '/../utils/**/*.rb'].each { |file| require_relative file }
 load_loaders
+
+
+Dotenv.overload('templates/.env.example')
 Dotenv.overload
