@@ -1,11 +1,11 @@
 module Commands
   class Debug < Base
-    ALIASES = %w[bindingpry binding.pry bp bb dbg].freeze
-    DESCRIPTION = 'Runs binding.pry in a context.'.freeze
+    ALIASES = %w[bindingpry binding.pry byebug bp bb dbg].freeze
+    DESCRIPTION = 'Runs debugger in a context that provides some useful variables and methods such as: workbench, last, etc.'.freeze
 
     def execute
       last = Env.requests.last
-      binding.pry
+      debug
     end
   end
 end

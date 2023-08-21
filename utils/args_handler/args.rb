@@ -6,7 +6,7 @@ module ArgsHandler
       no_headers: 'nh',
       no_body: 'nb',
       no_loader_payload: 'nl',
-      activate_binding_pry: 'bb',
+      activate_debugger: 'bb',
       apply_workbench: 'wb'
     }
 

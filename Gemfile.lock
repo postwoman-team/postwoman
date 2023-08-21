@@ -9,11 +9,15 @@ GEM
       descendants_tracker (~> 0.0.4)
       ice_nine (~> 0.11.0)
       thread_safe (~> 0.3, >= 0.3.1)
+    byebug (11.1.3)
     coderay (1.1.3)
     coercible (1.0.0)
       descendants_tracker (~> 0.0.1)
     colorize (1.1.0)
     cpf_cnpj (0.5.0)
+    debug (1.7.1)
+      irb (>= 1.5.0)
+      reline (>= 0.3.1)
     descendants_tracker (0.0.4)
       thread_safe (~> 0.3, >= 0.3.1)
     diff-lcs (1.5.0)
@@ -35,6 +39,8 @@ GEM
       sexp_processor (~> 4.8)
     ice_nine (0.11.2)
     io-console (0.6.0)
+    irb (1.6.2)
+      reline (>= 0.3.0)
     json (2.6.3)
     kwalify (0.7.2)
     language_server-protocol (3.17.0.3)
@@ -52,6 +58,9 @@ GEM
     pry (0.14.2)
       coderay (~> 1.1)
       method_source (~> 1.0)
+    pry-byebug (3.10.1)
+      byebug (~> 11.0)
+      pry (>= 0.13, < 0.15)
     public_suffix (5.0.3)
     racc (1.7.1)
     rainbow (3.1.1)
@@ -129,14 +138,16 @@ PLATFORMS
 
 DEPENDENCIES
   awesome_print
+  byebug
   colorize
   cpf_cnpj
+  debug
   dotenv
   faraday
   json
   nokogiri
   nori
-  pry
+  pry-byebug
   readline
   rspec
   rubocop (~> 1.55)

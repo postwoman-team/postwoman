@@ -47,7 +47,7 @@ module Commands
       end
 
       print_table("Status: #{request.pretty_status}", "#{request.url}")
-      binding.pry if args.flag?(:activate_binding_pry)
+      debug if args.flag?(:activate_debugger)
     end
 
     def workbench
@@ -100,6 +100,17 @@ module Commands
       return puts("Missing ##{index + 1} positional argument: '#{name}'".red) unless value
 
       value
+    end
+
+    def debug
+      case ENV['DEBUGGER']
+      when 'bindingpry'
+        binding.pry
+      when 'byebug'
+        byebug
+      when 'debug'
+        debug
+      end
     end
   end
 end
