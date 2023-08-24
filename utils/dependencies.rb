@@ -3,18 +3,17 @@ require 'io/console'
 
 # Prompt for installing gem dependencies if needed
 bundle_check = `bundle check`.chomp
-return unless bundle_check != "The Gemfile's dependencies are satisfied"
+if bundle_check != "The Gemfile's dependencies are satisfied"
+  puts bundle_check
+  print 'Install? [Yn] '
+  if $stdin.getch == 'n'
+    puts 'Exiting...'
+    exit
+  end
+  puts 'Installing...'
 
-puts bundle_check
-print 'Install? [Yn] '
-if $stdin.getch == 'n'
-  puts 'Exiting...'
-  exit
+  puts `bundle install`
 end
-puts 'Installing...'
-
-puts `bundle install`
-
 
 require 'bundler/setup'
 Bundler.require
