@@ -1,13 +1,15 @@
 require 'rubygems'
+require 'io/console'
 
 bundle_check = `bundle check`.chomp
 if bundle_check != "The Gemfile's dependencies are satisfied"
   puts bundle_check
-  puts 'Install? [Yn]'
-  if gets.chomp == 'n'
+  print 'Install? [Yn] '
+  if $stdin.getch == 'n'
     puts 'Exiting...'
     exit
   end
+  puts 'Installing...'
 
   puts `bundle install`
 end
