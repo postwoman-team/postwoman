@@ -1,7 +1,6 @@
 require 'rubygems'
 require 'io/console'
 
-# Prompt for installing gem dependencies if needed
 bundle_check = `bundle check`.chomp
 if bundle_check != "The Gemfile's dependencies are satisfied"
   puts bundle_check
