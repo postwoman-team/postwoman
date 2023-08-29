@@ -36,7 +36,7 @@ module Loaders
 
       def self.fetch_traits
         traits = {}
-        ancestors.reverse[6..].each do |ancestor|
+        ancestors.reverse[7..].each do |ancestor|
           merge_traits(traits, ancestor.klass_traits)
         end
         merge_traits(traits, klass_traits)
