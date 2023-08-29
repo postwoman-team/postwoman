@@ -6,13 +6,16 @@ describe 'Debug command' do
     command_obj = Commands::Debug.new(ArgsHandler.parse('debug'))
     command_binding = double('binding', pry: nil)
     allow(command_obj).to receive(:binding) { command_binding }
+
     command_obj.execute
+
     expect(command_binding).to have_received(:pry)
   end
 
   it 'Calls byebug if debugger is byebug' do
     ENV['DEBUGGER'] = 'byebug'
     allow(Byebug).to receive(:attach)
+
     attempt_command('debug')
 
     expect(Byebug).to have_received(:attach)
@@ -23,7 +26,9 @@ describe 'Debug command' do
     command_obj = Commands::Debug.new(ArgsHandler.parse('debug'))
     command_binding = double('binding', break: nil)
     allow(command_obj).to receive(:binding) { command_binding }
+
     command_obj.execute
+
     expect(command_binding).to have_received(:break)
   end
 end
