@@ -6,11 +6,16 @@ gem 'faraday'
 gem 'json'
 gem 'nokogiri'
 gem 'nori'
-gem 'pry'
+gem 'pry-byebug'
+gem 'byebug', git: 'https://github.com/molvrr/byebug.git'
+gem 'debug'
 gem 'readline'
 gem 'rspec'
+gem 'rubycritic'
+gem 'rubocop', '~> 1.55'
 gem 'strscan'
 gem 'terminal-table'
 
 # not mandatory
 gem 'cpf_cnpj'
+

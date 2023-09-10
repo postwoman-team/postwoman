@@ -42,11 +42,12 @@ module Commands
       end
 
       when_not_hidden("#{'Body'.purple} - #{request.content_type.yellow}", args.flag?(:no_body)) do
+        puts '↓Empty' if request.pretty_body.empty?
         print_table(request.pretty_body)
       end
 
       print_table("Status: #{request.pretty_status}", "#{request.url}")
-      binding.pry if args.flag?(:activate_binding_pry)
+      start_debug if args.flag?(:activate_debugger)
     end
 
     def workbench
@@ -55,7 +56,7 @@ module Commands
 
     def when_not_hidden(title, hide_flag)
       if hide_flag
-        print_table("#{title} (Hidden)".gray)
+        print_table("#{title.uncolorize} (Hidden)".gray)
         return
       end
 
@@ -99,6 +100,17 @@ module Commands
       return puts("Missing ##{index + 1} positional argument: '#{name}'".red) unless value
 
       value
+    end
+
+    def start_debug
+      case ENV['DEBUGGER']
+      when 'pry'
+        binding.pry
+      when 'byebug'
+        byebug
+      when 'debug'
+        binding.break
+      end
     end
   end
 end

@@ -9,3 +9,7 @@ end
 def camelize(string)
   string.split('_').collect(&:capitalize).join
 end
+
+def is_loader_name?(string)
+  string =~ /^[a-z][a-zA-Z0-9]*(_[a-z][a-zA-Z0-9]*)*$/
+end
