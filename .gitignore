@@ -1,6 +1,5 @@
 loaders/*.rb
 packages/**/*
-!packages
 .postwoman_history
 .byebug_history
 .env
