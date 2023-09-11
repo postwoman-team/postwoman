@@ -32,6 +32,10 @@ def load_loaders
   Dir[File.dirname(__FILE__) + '/../loaders/**/*.rb'].each do |file|
     load_loader(file)
   end
+
+  Dir[File.dirname(__FILE__) + '/../packages/**/loaders/*.rb'].each do |file|
+    load_loader(file)
+  end
 end
 
 def load_loader(loader_path)
@@ -46,6 +50,8 @@ needed_file('.env', 'templates/.env.example')
 
 Dir[File.dirname(__FILE__) + '/../utils/**/base.rb'].each { |file| require_relative file }
 Dir[File.dirname(__FILE__) + '/../utils/**/*.rb'].each { |file| require_relative file }
+Dir[File.dirname(__FILE__) + '/../packages/**/commands/base.rb'].each { |file| require_relative file }
+Dir[File.dirname(__FILE__) + '/../packages/**/commands/*.rb'].each { |file| require_relative file }
 load_loaders
 
 Dotenv.overload('templates/.env.example', '.env')
