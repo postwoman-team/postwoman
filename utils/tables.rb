@@ -42,7 +42,7 @@ def linebreak_rows(rows)
       new_rows += linebroken.map { |line| [line] }
     else
       new_rows << [row.first, linebroken.first]
-      linebroken[1..].each do |line|
+      linebroken[1..]&.each do |line|
         new_rows << ['', line]
       end
     end

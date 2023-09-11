@@ -54,16 +54,6 @@ module Commands
       Env.workbench
     end
 
-    def when_not_hidden(title, hide_flag)
-      if hide_flag
-        print_table("#{title.uncolorize} (Hidden)".gray)
-        return
-      end
-
-      print_table(title)
-      yield
-    end
-
     def edit_loader(name)
       system("#{ENV['EDITOR']} loaders/#{name}.rb")
     end

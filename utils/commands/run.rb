@@ -25,10 +25,12 @@ module Commands
 
       request = Request.new(loader_payload)
       request.execute
-      return print_payload(request.payload) if request.failed?
+      return PartialViews::Request::Payload.new(request.payload).print if request.failed?
 
       Env.requests << request
-      display_request(request)
+      PartialViews::Request::Full.new(@args, request).print
+
+      start_debug if args.flag?(:activate_debugger)
     end
 
     private
