@@ -47,6 +47,7 @@ end
 
 needed_file('loaders/base.rb', 'templates/loader_base.rb')
 needed_file('.env', 'templates/.env.example')
+Dir.mkdir('packages') unless File.exist?('packages')
 
 Dir[File.dirname(__FILE__) + '/../utils/**/base.rb'].each { |file| require_relative file }
 Dir[File.dirname(__FILE__) + '/../utils/**/*.rb'].each { |file| require_relative file }
