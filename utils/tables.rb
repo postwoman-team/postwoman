@@ -8,11 +8,6 @@ def print_table(*rows)
   puts table
 end
 
-def print_payload(payload)
-  print_table('Loader Arguments'.purple)
-  print_table(JSON.pretty_generate(payload))
-end
-
 def print_workbench
   return print_table('Currently empty') if Env.workbench.empty?
 

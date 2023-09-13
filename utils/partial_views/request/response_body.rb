@@ -25,7 +25,8 @@ module PartialViews
       end
 
       def title
-        "#{'Body'.purple} - #{@request.content_type.yellow}"
+        content_type_text = @request.content_type ? " - #{@request.content_type.yellow}" : ''
+        "#{'Body'.purple}#{content_type_text}"
       end
     end
   end

@@ -32,24 +32,6 @@ module Commands
 
     private
 
-    def display_request(request)
-      print_payload(request.payload) unless args.flag?(:no_loader_payload)
-
-      when_not_hidden('Headers'.purple, args.flag?(:no_headers)) do
-        print_table(
-          *request.headers.to_a
-        )
-      end
-
-      when_not_hidden("#{'Body'.purple} - #{request.content_type.yellow}", args.flag?(:no_body)) do
-        puts '↓Empty' if request.pretty_body.empty?
-        print_table(request.pretty_body)
-      end
-
-      print_table("Status: #{request.pretty_status}", "#{request.url}")
-      start_debug if args.flag?(:activate_debugger)
-    end
-
     def workbench
       Env.workbench
     end
