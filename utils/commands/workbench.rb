@@ -23,7 +23,7 @@ module Commands
       end
 
       pairs_to_workbench
-      print_workbench
+      PrintElement.workbench
     end
 
     private

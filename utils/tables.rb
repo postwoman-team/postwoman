@@ -8,12 +8,6 @@ def print_table(*rows)
   puts table
 end
 
-def print_workbench
-  return print_table('Currently empty') if Env.workbench.empty?
-
-  print_hash(Env.workbench)
-end
-
 def print_hash(hash)
   print_table(
     *hash.to_a.map do |(k, v)|

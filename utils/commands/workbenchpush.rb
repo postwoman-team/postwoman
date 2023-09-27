@@ -9,7 +9,7 @@ module Commands
     def execute
       pairs_to_workbench
       last_request_to_worbench
-      print_workbench
+      PrintElement.workbench
     end
 
     private
