@@ -15,6 +15,8 @@ gem 'rubycritic'
 gem 'rubocop', '~> 1.55'
 gem 'strscan'
 gem 'terminal-table'
+gem 'i18n'
+gem 'yaml'
 
 # not mandatory
 gem 'cpf_cnpj'

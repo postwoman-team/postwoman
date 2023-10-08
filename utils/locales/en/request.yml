@@ -1,0 +1,5 @@
+en:
+  request:
+    loader_arguments: 'Loader Arguments'
+    headers: 'Headers'
+    body: 'Body'

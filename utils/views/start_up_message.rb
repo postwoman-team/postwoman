@@ -1,13 +1,7 @@
-module PrintElement
+module Views
   module_function
 
   def start_up_message
-    logo = <<~TEXT
-       _  _  __|_  _ _  _ _  _  _
-      |_)(_)_\\ |\\/\\/(_)| | |(_|| |
-      |
-    TEXT
-
     random_sentence = [
       'A 100% CLI API platform.',
       'Pull requests are always welcome!',
@@ -17,7 +11,14 @@ module PrintElement
       'git push origin main -f'
     ].sample
 
-    puts "#{logo.chomp} #{random_sentence}".magenta
-    puts("Type 'help' for more information")
+    str = '<h1>'
+    str << <<~EOF
+       _  _  __|_  _ _  _ _  _  _
+      |_)(_)_\\ |\\/\\/(_)| | |(_|| |
+      | #{random_sentence}
+    EOF
+    str << '</h1>'
+    str << "Type 'help' for more information"
+    Style.apply(str)
   end
 end

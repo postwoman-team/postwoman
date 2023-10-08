@@ -25,10 +25,10 @@ module Commands
 
       request = Request.new(loader_payload)
       request.execute
-      return PrintElement::Request.failed(request) if request.failed?
+      return puts Views.request(args, request) if request.failed?
 
       Env.requests << request
-      PrintElement::Request.successful(@args, request)
+      puts Views.request(args, request)
 
       start_debug if args.flag?(:activate_debugger)
     end

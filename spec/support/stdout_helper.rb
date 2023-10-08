@@ -1,9 +1,9 @@
 module StdoutHelper
-  def capture_stdout_from
+  def unstyled_stdout_from(&block)
     original_stdout = $stdout
     $stdout = StringIO.new
-    yield
-    $stdout.string
+    block.call
+    $stdout.string.gsub(/\e\[([;\d]+)?m/, '')
   ensure
     $stdout = original_stdout
   end
