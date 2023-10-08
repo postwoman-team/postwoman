@@ -23,7 +23,7 @@ module Commands
       end
 
       pairs_to_workbench
-      PrintElement.workbench
+      puts Views.workbench
     end
 
     private

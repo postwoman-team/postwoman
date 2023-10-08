@@ -2,7 +2,7 @@ module StartUp
   def self.execute
     setup_autocompletion
     load_saved_history
-    PrintElement.start_up_message
+    puts Views.start_up_message
   end
 
   def self.setup_autocompletion

@@ -49,3 +49,5 @@ Dir[File.dirname(__FILE__) + '/../utils/**/*.rb'].each { |file| require_relative
 load_loaders
 
 Dotenv.overload('templates/.env.example', '.env')
+
+I18n.load_path += Dir[File.dirname(__FILE__) + '/../utils/locales/**/*.yml']

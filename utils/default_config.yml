@@ -1,0 +1,42 @@
+theme:
+  tags:
+    body:
+      - ''
+      - ''
+    h1:
+      - "\e[38;2;249;38;114m"
+      - "\e[m"
+    h2:
+      - "\e[38;2;102;217;239m"
+      - "\e[m"
+    highlight:
+      - "\e[38;2;174;129;255m"
+      - "\e[m"
+    disabled:
+      - "\e[38;2;121;121;121m"
+      - "\e[m"
+    success:
+      - "\e[38;2;166;226;46m"
+      - "\e[m"
+    fail:
+      - "\e[38;2;226;46;46m"
+      - "\e[m"
+    br:
+      - "\n"
+  tables:
+    space_linebroken: true
+    padding: 1
+    corners:
+      top_right: ┌
+      top_left: ┐
+      bottom_right: └
+      bottom_left: ┘
+    straight:
+      vertical: │
+      horizontal: ─
+    junctions:
+      top: ┬
+      middle: ┼
+      bottom: ┴
+
+

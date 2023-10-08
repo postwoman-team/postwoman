@@ -62,8 +62,7 @@ class Request
   end
 
   def pretty_status
-    status = "#{response.status} #{response.reason_phrase}"
-    response.success? ? status.green : status.red
+    "#{response.status} #{response.reason_phrase}"
   end
 
   def params
