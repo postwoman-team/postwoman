@@ -17,6 +17,7 @@ gem 'strscan'
 gem 'terminal-table'
 gem 'i18n'
 gem 'yaml'
+gem 'tabelinha', '~> 1.0'
 
 # not mandatory
 gem 'cpf_cnpj'

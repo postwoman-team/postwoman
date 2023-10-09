@@ -5,7 +5,7 @@ module Style
     styled = "<body>#{string}</body>"
     styled.gsub!(Regexp.union(ESCAPE_CHARACTERS.values), ESCAPE_CHARACTERS.invert)
 
-    tags = Env.config['theme']['tags']
+    tags = Env.config.dig(:theme, :tags)
 
     replace = {}
     tags.each do |tag, values|
