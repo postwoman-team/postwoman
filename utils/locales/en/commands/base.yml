@@ -1,0 +1,7 @@
+en:
+  commands:
+    base:
+      missing_positional_argument: "Missing #%{index} positional argument: '%{name}'"
+      editor_not_found: "Default editor not found to open target file."
+      editing: "Editing %{name}..."
+      creating: "Creating new %{name}..."

@@ -2,8 +2,7 @@ module Style
   module_function
 
   def apply(string)
-    styled = "<body>#{string}</body>"
-    styled.gsub!(Regexp.union(ESCAPE_CHARACTERS.values), ESCAPE_CHARACTERS.invert)
+    styled = string.gsub(Regexp.union(ESCAPE_CHARACTERS.values), ESCAPE_CHARACTERS.invert)
 
     tags = Env.config.dig(:theme, :tags)
 

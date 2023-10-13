@@ -1,0 +1,7 @@
+en:
+  commands:
+    workbench:
+      invalid_subcommand: "Invalid subcommand: '%{name}'"
+      key_not_found: "Key '%{name}' not found on workbench"
+      key_already_exists: "Key '%{name}' already exists on workbench"
+      subcommand_needs_positionals: "This subcommand should be called with positionals"

@@ -48,9 +48,9 @@ module Commands
       path = "#{path}#{file_name}.rb"
 
       if File.exist?(path)
-        puts("Editing #{label}")
+        puts Views::Commands::Base.editing(label)
       else
-        puts("Creating #{'new'.green} #{label}")
+        puts Views::Commands::Base.creating(label)
         File.open(path, 'w') do |f|
           f.write(default_content)
         end
@@ -60,7 +60,7 @@ module Commands
     end
 
     def open_in_editor(path)
-      return puts "Could not open loader because default editor isn't set.".yellow if ENV['EDITOR'].nil?
+      return puts Views::Commands::Base.editor_not_found if ENV['EDITOR'].nil?
 
       system("#{ENV['EDITOR']} #{path}")
     end
@@ -69,7 +69,7 @@ module Commands
       positional_names = self.class::ARGS.keys
       name = custom_name || positional_names[index]
       value = args[index]
-      return puts("Missing ##{index + 1} positional argument: '#{name}'".red) unless value
+      return puts Views::Commands::Base.missing_positional_argument(index + 1, name) unless value
 
       value
     end

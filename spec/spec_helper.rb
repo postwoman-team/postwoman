@@ -10,6 +10,7 @@ RSpec.configure do |config|
     config.include StdoutHelper
     Env.requests.clear
     Env.workbench.clear
+    allow(Readline).to receive(:get_screen_size) { [Float::INFINITY, Float::INFINITY] }
   end
 
   config.mock_framework = :rspec

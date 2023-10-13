@@ -66,7 +66,7 @@ describe 'Workbench command' do
 
       expect(unstyled_stdout_from { attempt_command('workbench d b idontexist') }).to eq(
         <<~TEXT
-          Key idontexist not found on workbench
+          Key 'idontexist' not found on workbench
           ┌───┬───┐
           │ a │ 3 │
           │ c │ 4 │
@@ -211,7 +211,7 @@ describe 'Workbench command' do
 
       expect(unstyled_stdout_from { attempt_command('workbench cp inexistent a') }).to eq(
         <<~TEXT
-          Key 'inexistent' does not exist on workbench
+          Key 'inexistent' not found on workbench
           ┌───┬───┐
           │ a │ 3 │
           │ b │ 8 │
@@ -334,7 +334,7 @@ describe 'Workbench command' do
 
       expect(unstyled_stdout_from { attempt_command('workbench rn inexistent e') }).to eq(
         <<~TEXT
-          Key 'inexistent' does not exist on workbench
+          Key 'inexistent' not found on workbench
           ┌───┬───┐
           │ a │ 3 │
           │ b │ 8 │
