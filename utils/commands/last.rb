@@ -12,7 +12,7 @@ module Commands
       return puts 'No requests made at the moment.'.yellow if Env.requests.empty?
       return puts "Request number ##{index * -1} is out of range.".yellow if index * -1 > Env.requests.length
 
-      display_request(Env.requests[index])
+      puts Views.request(args, Env.requests[index])
     end
   end
 end

@@ -11,6 +11,8 @@ RSpec.configure do |config|
     Env.requests.clear
     Env.workbench.clear
     allow(Readline).to receive(:get_screen_size) { [Float::INFINITY, Float::INFINITY] }
+    allow(YAML).to receive(:load_file).and_call_original
+    allow(YAML).to receive(:load_file).with('config.yml') { Hash.new }
   end
 
   config.mock_framework = :rspec
