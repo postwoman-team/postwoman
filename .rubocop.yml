@@ -1,1 +1,17 @@
 inherit_from: .rubocop_todo.yml
+
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*'
+
+Metrics/AbcSize:
+  Exclude:
+    - 'utils/views/**/*'
+
+Metrics/MethodLength:
+  Exclude:
+    - 'utils/views/**/*'
+
+Metrics/PerceivedComplexity:
+  Exclude:
+    - 'utils/views/**/*'

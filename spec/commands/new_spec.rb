@@ -68,7 +68,6 @@ describe 'New command' do
         └───────────────────┘
       TEXT
     )
-
   end
 
   it 'outputs error message if loader name is not provided' do

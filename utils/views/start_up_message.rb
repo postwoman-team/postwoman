@@ -12,11 +12,11 @@ module Views
     ].sample
 
     str = '<h1>'
-    str << <<~EOF
+    str << <<~TEXT
        _  _  __|_  _ _  _ _  _  _
       |_)(_)_\\ |\\/\\/(_)| | |(_|| |
       | #{random_sentence}
-    EOF
+    TEXT
     str << '</h1>'
     str << "Type 'help' for more information"
     Style.apply(str)

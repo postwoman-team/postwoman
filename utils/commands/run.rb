@@ -10,7 +10,6 @@ module Commands
       loader_name_arg = obrigatory_positional_arg(0) || return
       loader_name = camelize(loader_name_arg)
 
-
       return puts Views::Commands::Run.loader_not_found(loader_name) unless loader_exist?(loader_name)
 
       begin

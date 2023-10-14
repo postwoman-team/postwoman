@@ -5,7 +5,7 @@ module Views
 
       def missing_positional_argument(index, name)
         str =  '<fail>'
-        str << I18n.t('commands.base.missing_positional_argument', index: index, name: name)
+        str << I18n.t('commands.base.missing_positional_argument', index:, name:)
         str << '</fail>'
 
         Style.apply(str)
@@ -21,7 +21,7 @@ module Views
 
       def editing(name)
         str =  '<box>'
-        str << I18n.t('commands.base.editing', name: name)
+        str << I18n.t('commands.base.editing', name:)
         str << '</box>'
 
         Style.apply(str)
@@ -29,7 +29,7 @@ module Views
 
       def creating(name)
         str =  '<box><success>'
-        str << I18n.t('commands.base.creating', name: name)
+        str << I18n.t('commands.base.creating', name:)
         str << '</success></box>'
 
         Style.apply(str)

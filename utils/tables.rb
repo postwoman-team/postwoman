@@ -1,3 +1,5 @@
+# DEPRECATED: Dont use anything from this file
+
 def print_table(*rows)
   rows = [rows] if rows.first.instance_of?(String)
   rows = linebreak_rows(rows)

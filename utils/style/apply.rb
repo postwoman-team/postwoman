@@ -12,8 +12,8 @@ module Style
       replace["</#{tag}>"] = values[1] if values[1]
     end
 
-    styled.gsub!(/<box>(.*?)<\/box>/im) do
-      table([[apply($1)]])
+    styled.gsub!(%r{<box>(.*?)</box>}im) do
+      table([[apply(::Regexp.last_match(1))]])
     end
 
     styled.gsub(Regexp.union(replace.keys), replace)

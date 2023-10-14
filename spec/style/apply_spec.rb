@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Style do
   context :apply do
     it 'works successfully for wrapping tags' do
-      expect { puts 'a' } .to stdout_colored('a')
+      expect { puts 'a' }.to stdout_colored('a')
       expect(Style.apply('<h1>some text I have</h1>')).to eq("\e[38;2;249;38;114msome text I have\e[m")
     end
 
@@ -24,7 +24,7 @@ describe Style do
     end
 
     it 'auto-wraps received string in a <body>' do
-      allow(Env).to receive(:config).and_return({'theme' => {'tags' => {'body' => ['[', ']']}}})
+      allow(Env).to receive(:config).and_return({ 'theme' => { 'tags' => { 'body' => ['[', ']'] } } })
       expect(Style.apply('some text I have')).to eq('[some text I have]')
     end
   end

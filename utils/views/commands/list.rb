@@ -12,9 +12,7 @@ module Views
           snakecased
         end.join(' ')
 
-        if has_base
-          str = "<highlight>base</highlight> " + str
-        end
+        str = "<highlight>base</highlight> #{str}" if has_base
 
         Style.apply("<box>#{str}</box>")
       end

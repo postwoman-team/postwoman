@@ -25,7 +25,6 @@ describe 'Workbench command' do
         └─────────────────┘
       TEXT
     )
-
   end
 
   it 'prints out warning if unknown subcommand is passed' do
@@ -37,7 +36,6 @@ describe 'Workbench command' do
         └─────────────────┘
       TEXT
     )
-
   end
 
   context 'delete subcommand' do

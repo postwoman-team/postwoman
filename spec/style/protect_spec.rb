@@ -7,11 +7,11 @@ describe Style do
     end
 
     it 'escapes < character' do
-      expect(Style.protect('my xml is <this></this>')).to eq("my xml is &this>&/this>")
+      expect(Style.protect('my xml is <this></this>')).to eq('my xml is &this>&/this>')
     end
 
     it 'works on any object, but runs #to_s on it first' do
-      expect(Style.protect({a: 2})).to eq("{:a=>2}")
+      expect(Style.protect({ a: 2 })).to eq('{:a=>2}')
     end
   end
 end

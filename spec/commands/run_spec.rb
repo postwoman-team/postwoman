@@ -276,7 +276,7 @@ describe 'Run command' do
 
       faraday_args = [:get, URI.parse('https://api.github.com/users/hikari-desuyoo'), '{}', {}]
       allow(Faraday).to receive(:run_request).with(*faraday_args).and_return(response)
-      expect( unstyled_stdout_from { attempt_command('run base -nb -nh -nl') }).to eq(
+      expect(unstyled_stdout_from { attempt_command('run base -nb -nh -nl') }).to eq(
         <<~TEXT
           ┌──────────────────┐
           │ Headers (Hidden) │

@@ -5,14 +5,14 @@ module Views
 
       def loader_not_found(name)
         str = '<fail>'
-        str << I18n.t('commands.run.not_found', name: name)
+        str << I18n.t('commands.run.not_found', name:)
         str << '</fail>'
         Style.apply(str)
       end
 
       def loader_error(name, raised_error)
         str = '<fail>'
-        str << I18n.t('commands.run.couldnt_load', name: name)
+        str << I18n.t('commands.run.couldnt_load', name:)
         str << '</fail><br>'
         str << raised_error.full_message
         Style.apply(str)
