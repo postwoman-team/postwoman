@@ -18,6 +18,7 @@ gem 'terminal-table'
 gem 'i18n'
 gem 'yaml'
 gem 'tabelinha', '~> 1.0'
+gem 'faraday-typhoeus'
 
 # not mandatory
 gem 'cpf_cnpj'

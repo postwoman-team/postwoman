@@ -18,6 +18,8 @@ require 'bundler/setup'
 Bundler.require
 require_relative '../utils/loaders/builtin/base'
 
+Faraday.default_adapter = :typhoeus
+
 def needed_file(path, template_path)
   return if File.exist?(path)
 
