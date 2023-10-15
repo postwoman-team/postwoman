@@ -15,6 +15,7 @@ gem 'rubycritic'
 gem 'rubocop', '~> 1.55'
 gem 'strscan'
 gem 'terminal-table'
+gem 'faraday-typhoeus'
 
 # not mandatory
 gem 'cpf_cnpj'
