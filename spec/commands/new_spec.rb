@@ -132,6 +132,7 @@ describe 'New command' do
     ENV['EDITOR'] = nil
     command = 'new testing'
     command_obj = Commands::New.new(ArgsHandler.parse(command))
+    allow(File).to receive(:exist?).and_call_original
 
     expect(Commands::New).to receive(:new).and_return(command_obj)
     expect(command_obj).to_not receive(:system)
