@@ -1,6 +1,6 @@
 module Commands
   class Workbenchpush < Base
-    ALIASES = %w[wbp]
+    ALIASES = %w[wbp].freeze
     DESCRIPTION = 'Brings wanted key-values from last request to workbench. Works for responses in XML and JSON. Searches recursively until first match.'
     ARGS = {
       wanted_keys: '(Can stack) The keys you want to be pulled.'
@@ -8,54 +8,35 @@ module Commands
 
     def execute
       pairs_to_workbench
-      last_request_to_worbench
+      push_from_last_request_to_workbench
       print_workbench
     end
 
     private
 
-    def last_request_to_worbench
+    def push_from_last_request_to_workbench
       return if args.positionals.length == 1
-      return puts 'Cant pull desired values because no requests were made at the moment.'.yellow if Env.requests.empty?
+      return puts 'Cant pull desired values because no requests were made at the moment.'.yellow if Env.no_requests?
 
-      request = Env.requests[-1]
-
-      body = if request.response_json?
-               request.parsed_body
-             else
-               Nori.new.parse(request.body)
-             end
+      request = Env.last_request
+      body = request.body_as_hash
 
       args.positionals[1..].each do |positional|
-        if find_key_value_recursive(body, positional)
-          puts "Pulled \"#{positional}\" :>".green
-        else
-          puts "Couldnt pull \"#{positional}\" :<".yellow
-        end
-      end
-    end
+        pull = Searchers::Recursive.new(body).search_first(positional)
 
-    def find_key_value_recursive(hash, key)
-      if hash[key]
-        Env.workbench[key.to_sym] = hash[key]
-        return true
-      end
+        return puts "Couldnt pull \"#{positional}\" :<".yellow unless pull 
 
-      hash.each do |_, value|
-        if value.instance_of?(Hash)
-          subhash = value
-          return true if find_key_value_recursive(subhash, key)
-        elsif value.instance_of?(Array)
-          value.each do |array_element|
-            return true if array_element.instance_of?(Hash) && find_key_value_recursive(array_element, key)
-          end
-        end
+        push_to_workbench(positional, pull)
+        puts "Pulled \"#{positional}\" :>".green
       end
-      false
     end
 
     def pairs_to_workbench
       Env.workbench.merge!(args.pairs)
+    end
+
+    def push_to_workbench(key, value)
+      Env.workbench[key.to_sym] = value
     end
   end
 end

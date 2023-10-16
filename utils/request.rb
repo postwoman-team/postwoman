@@ -61,6 +61,10 @@ class Request
     response.body
   end
 
+  def body_as_hash 
+    response_json? ? parsed_body : Nori.new.parse(body)
+  end
+
   def pretty_status
     status = "#{response.status} #{response.reason_phrase}"
     response.success? ? status.green : status.red
