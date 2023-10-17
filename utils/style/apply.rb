@@ -13,7 +13,7 @@ module Style
     end
 
     styled.gsub!(%r{<box>(.*?)</box>}im) do
-      table([[apply(::Regexp.last_match(1))]])
+      table([[apply(::Regexp.last_match(1))]], protect: false)
     end
 
     styled.gsub(Regexp.union(replace.keys), replace)

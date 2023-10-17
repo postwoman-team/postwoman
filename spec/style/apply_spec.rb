@@ -15,7 +15,14 @@ describe Style do
     end
 
     it 'unescapes < character succesfully' do
-      expect(Style.apply('Look! XML: &a>&a/>')).to eq('Look! XML: <a><a/>')
+      expect(Style.apply('Look!<br><box>XML: &a>&a/></box>')).to eq(
+        <<~TEXT
+          Look!
+          ┌──────────────┐
+          │ XML: <a><a/> │
+          └──────────────┘
+        TEXT
+      )
     end
   end
 end
