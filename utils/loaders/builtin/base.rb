@@ -15,7 +15,7 @@ module Loaders
 
       def load
         {
-          http_method:,
+          http_method: http_method,
           url: checked_url,
           params: params_with_env,
           headers:

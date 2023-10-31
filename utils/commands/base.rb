@@ -50,6 +50,7 @@ module Commands
       if File.exist?(path)
         puts Views::Commands::Base.editing(label)
         return puts Views::Commands::Base.editor_not_found_error if ENV['EDITOR'].nil?
+
         return system("#{ENV['EDITOR']} #{path}")
       end
 
@@ -59,7 +60,8 @@ module Commands
       end
 
       return puts Views::Commands::Base.editor_not_found_warning if ENV['EDITOR'].nil?
-      return system("#{ENV['EDITOR']} #{path}")
+
+      system("#{ENV['EDITOR']} #{path}")
     end
 
     def obrigatory_positional_arg(index, custom_name = nil)

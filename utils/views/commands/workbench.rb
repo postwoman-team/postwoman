@@ -5,7 +5,7 @@ module Views
 
       def invalid_subcommand(name)
         str =  '<warning>'
-        str << I18n.t('commands.workbench.invalid_subcommand', name:)
+        str << I18n.t('commands.workbench.invalid_subcommand', name: name)
         str << '</warning>'
 
         Style.apply(str)
@@ -13,7 +13,7 @@ module Views
 
       def key_not_found_error(name)
         str =  '<fail>'
-        str << I18n.t('commands.workbench.key_not_found', name:)
+        str << I18n.t('commands.workbench.key_not_found', name: name)
         str << '</fail>'
 
         Style.apply(str)
@@ -21,7 +21,7 @@ module Views
 
       def key_not_found_warning(name)
         str =  '<warning>'
-        str << I18n.t('commands.workbench.key_not_found', name:)
+        str << I18n.t('commands.workbench.key_not_found', name: name)
         str << '</warning>'
 
         Style.apply(str)
@@ -29,7 +29,7 @@ module Views
 
       def key_already_exists(name)
         str =  '<fail>'
-        str << I18n.t('commands.workbench.key_already_exists', name:)
+        str << I18n.t('commands.workbench.key_already_exists', name: name)
         str << '</fail>'
 
         Style.apply(str)
