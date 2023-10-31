@@ -74,7 +74,7 @@ module Loaders
       end
 
       def url
-        'https://api.github.com/users/hikari-desuyoo'
+        'http://example.org/'
       end
 
       def params
