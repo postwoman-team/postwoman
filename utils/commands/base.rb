@@ -49,20 +49,17 @@ module Commands
 
       if File.exist?(path)
         puts Views::Commands::Base.editing(label)
-      else
-        puts Views::Commands::Base.creating(label)
-        File.open(path, 'w') do |f|
-          f.write(default_content)
-        end
+        return puts Views::Commands::Base.editor_not_found_error if ENV['EDITOR'].nil?
+        return system("#{ENV['EDITOR']} #{path}")
       end
 
-      open_in_editor(path)
-    end
+      puts Views::Commands::Base.creating(label)
+      File.open(path, 'w') do |f|
+        f.write(default_content)
+      end
 
-    def open_in_editor(path)
-      return puts Views::Commands::Base.editor_not_found if ENV['EDITOR'].nil?
-
-      system("#{ENV['EDITOR']} #{path}")
+      return puts Views::Commands::Base.editor_not_found_warning if ENV['EDITOR'].nil?
+      return system("#{ENV['EDITOR']} #{path}")
     end
 
     def obrigatory_positional_arg(index, custom_name = nil)

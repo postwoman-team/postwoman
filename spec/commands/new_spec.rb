@@ -33,13 +33,12 @@ describe 'New command' do
 
     allow(File).to receive(:exist?)
     allow(File).to receive(:open).and_call_original
-    expect(Commands::New).to receive(:new).and_return(command_obj)
     expect(command_obj).to receive(:system).with('emacs loaders/testing.rb')
     expect(File).to receive(:exist?).with('loaders/testing.rb').and_return(false)
     expect(File).to receive(:open).with('loaders/testing.rb', 'w').and_yield(file_obj)
     expect(file_obj).to receive(:write).with(template).once
 
-    expect(unstyled_stdout_from { attempt_command(command) }).to eq(
+    expect(unstyled_stdout_from { command_obj.execute }).to eq(
       <<~TEXT
         ┌────────────────────────┐
         │ Creating new loader... │
@@ -128,22 +127,47 @@ describe 'New command' do
     end
   end
 
-  it 'outputs warning message if default editor is not set' do
-    ENV['EDITOR'] = nil
-    command = 'new testing'
-    command_obj = Commands::New.new(ArgsHandler.parse(command))
-    allow(File).to receive(:exist?).and_call_original
+  context 'outputs message if default editor is not set' do
+    it 'if creating' do
+      ENV['EDITOR'] = nil
+      file_obj = double('file_obj')
+      command = 'new testing'
+      command_obj = Commands::New.new(ArgsHandler.parse(command))
 
-    expect(Commands::New).to receive(:new).and_return(command_obj)
-    expect(command_obj).to_not receive(:system)
-    expect(File).to receive(:exist?).with('loaders/testing.rb').and_return(true)
-    expect(unstyled_stdout_from { attempt_command(command) }).to eq(
-      <<~TEXT
-        ┌───────────────────┐
-        │ Editing loader... │
-        └───────────────────┘
-        Default editor not found to open target file.
-      TEXT
-    )
+      allow(File).to receive(:exist?)
+      allow(File).to receive(:open).and_call_original
+      expect(Commands::New).to receive(:new).and_return(command_obj)
+      expect(File).to receive(:exist?).with('loaders/testing.rb').and_return(false)
+      expect(File).to receive(:open).with('loaders/testing.rb', 'w').and_yield(file_obj)
+      expect(file_obj).to receive(:write).once
+
+      expect(unstyled_stdout_from { attempt_command(command) }).to eq(
+        <<~TEXT
+          ┌────────────────────────┐
+          │ Creating new loader... │
+          └────────────────────────┘
+          Default editor not found to open target file.
+        TEXT
+      )
+    end
+
+    it 'if editing' do
+      ENV['EDITOR'] = nil
+      command = 'new testing'
+      command_obj = Commands::New.new(ArgsHandler.parse(command))
+      allow(File).to receive(:exist?).and_call_original
+
+      expect(Commands::New).to receive(:new).and_return(command_obj)
+      expect(command_obj).to_not receive(:system)
+      expect(File).to receive(:exist?).with('loaders/testing.rb').and_return(true)
+      expect(unstyled_stdout_from { attempt_command(command) }).to eq(
+        <<~TEXT
+          ┌───────────────────┐
+          │ Editing loader... │
+          └───────────────────┘
+          Default editor not found to open target file.
+        TEXT
+      )
+    end
   end
 end

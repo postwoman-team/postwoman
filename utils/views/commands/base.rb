@@ -11,10 +11,18 @@ module Views
         Style.apply(str)
       end
 
-      def editor_not_found
+      def editor_not_found_warning
         str =  '<warning>'
         str << I18n.t('commands.base.editor_not_found')
         str << '</warning>'
+
+        Style.apply(str)
+      end
+
+      def editor_not_found_error
+        str =  '<fail>'
+        str << I18n.t('commands.base.editor_not_found')
+        str << '</fail>'
 
         Style.apply(str)
       end
