@@ -6,6 +6,10 @@ RSpec.configure do |config|
     c.syntax = :expect
   end
 
+  config.before(:each, :file_mocking) do
+    config.include FileMocking
+  end
+
   config.before(:each) do
     config.include StdoutHelper
     Env.requests.clear

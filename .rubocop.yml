@@ -1,5 +1,9 @@
 inherit_from: .rubocop_todo.yml
 
+AllCops:
+  Exclude:
+    - 'loaders/**/*'
+
 Metrics/BlockLength:
   Exclude:
     - 'spec/**/*'
@@ -15,3 +19,7 @@ Metrics/MethodLength:
 Metrics/PerceivedComplexity:
   Exclude:
     - 'utils/views/**/*'
+
+Style/HashSyntax:
+  Exclude:
+    - '/**/*'
