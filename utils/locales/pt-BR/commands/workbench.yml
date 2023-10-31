@@ -1,0 +1,7 @@
+pt-BR:
+  commands:
+    workbench:
+      invalid_subcommand: "Subcomando inválido: '%{name}'"
+      key_not_found: "Chave '%{name}' não encontrada na workbench"
+      key_already_exists: "Chave '%{name}' já existe na workbench"
+      subcommand_needs_positionals: "Este subcomando deve ser chamado com argumentos posicionais"
