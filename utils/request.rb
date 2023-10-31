@@ -28,7 +28,7 @@ class Request
   end
 
   def content_type
-    @content_type ||= response.headers.find do |k, v|
+    @content_type ||= response.headers.find do |k, _v|
       k.downcase == 'content-type'
     end&.[](1)
   end

@@ -23,9 +23,9 @@ describe Style do
     it 'unescapes "&" character succesfully' do
       expect(Style.apply('<box>Something && thing</box>')).to eq(
         <<~TEXT
-         ┌───────────────────┐
-         │ Something & thing │
-         └───────────────────┘
+          ┌───────────────────┐
+          │ Something & thing │
+          └───────────────────┘
         TEXT
       )
     end

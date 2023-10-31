@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'Run command' do
   context 'with valid arguments' do
     it 'saves request to requests list' do
-      response_headers = {"Content-Type"=>"text/html", "Content-Length"=>"349", "Date"=>"Tue, 31 Oct 2023 16:38:41 GMT", "Server"=>"ECSF (agb/A439)"}
+      response_headers = { "Content-Type" => "text/html", "Content-Length" => "349", "Date" => "Tue, 31 Oct 2023 16:38:41 GMT", "Server" => "ECSF (agb/A439)" }
       response_body = <<~JSON
         {
           "title": "foo",
@@ -34,7 +34,7 @@ describe 'Run command' do
     end
 
     it 'display all info' do
-      response_headers = {"Content-Type"=>"application/json;", "Content-Length"=>"349", "Date"=>"Tue, 31 Oct 2023 16:38:41 GMT", "Server"=>"ECSF (agb/A439)"}
+      response_headers = { "Content-Type" => "application/json;", "Content-Length" => "349", "Date" => "Tue, 31 Oct 2023 16:38:41 GMT", "Server" => "ECSF (agb/A439)" }
       response_body = <<~JSON
         {
           "title": "foo",
@@ -98,7 +98,7 @@ describe 'Run command' do
 
     context 'does not break on empty bodies' do
       it 'with no content type' do
-        response_headers = {"Content-Length"=>"349", "Date"=>"Tue, 31 Oct 2023 16:38:41 GMT", "Server"=>"ECSF (agb/A439)"}
+        response_headers = { "Content-Length" => "349", "Date" => "Tue, 31 Oct 2023 16:38:41 GMT", "Server" => "ECSF (agb/A439)" }
         response_body = ''
 
         response = double(:response,
@@ -129,7 +129,7 @@ describe 'Run command' do
       end
 
       it 'with content type json' do
-        response_headers = {"Content-Type"=>"application/json;", "Content-Length"=>"349", "Date"=>"Tue, 31 Oct 2023 16:38:41 GMT", "Server"=>"ECSF (agb/A439)"}
+        response_headers = { "Content-Type" => "application/json;", "Content-Length" => "349", "Date" => "Tue, 31 Oct 2023 16:38:41 GMT", "Server" => "ECSF (agb/A439)" }
         response_body = ''
 
         response = double(:response,
@@ -161,7 +161,7 @@ describe 'Run command' do
       end
 
       it 'with content type xml' do
-        response_headers = {"Content-Type"=>"application/xml; charset=utf-8", "Content-Length"=>"349", "Date"=>"Tue, 31 Oct 2023 16:38:41 GMT", "Server"=>"ECSF (agb/A439)"}
+        response_headers = { "Content-Type" => "application/xml; charset=utf-8", "Content-Length" => "349", "Date" => "Tue, 31 Oct 2023 16:38:41 GMT", "Server" => "ECSF (agb/A439)" }
         response_body = ''
         response = double(:response,
             status: 200,
@@ -192,7 +192,7 @@ describe 'Run command' do
       end
 
       it 'without supported content type' do
-        response_headers = {"Content-Type"=>"unhingedcontenttype; charset=utf-8", "Content-Length"=>"349", "Date"=>"Tue, 31 Oct 2023 16:38:41 GMT", "Server"=>"ECSF (agb/A439)"}
+        response_headers = { "Content-Type" => "unhingedcontenttype; charset=utf-8", "Content-Length" => "349", "Date" => "Tue, 31 Oct 2023 16:38:41 GMT", "Server" => "ECSF (agb/A439)" }
         response_body = ''
         response = double(:response,
             status: 200,
@@ -225,7 +225,7 @@ describe 'Run command' do
 
     context 'hides' do
       it 'almost everything with -nl -nh -nb' do
-        response_headers = {"Content-Type"=>"application/json; charset=utf-8", "Content-Length"=>"349", "Date"=>"Tue, 31 Oct 2023 16:38:41 GMT", "Server"=>"ECSF (agb/A439)"}
+        response_headers = { "Content-Type" => "application/json; charset=utf-8", "Content-Length" => "349", "Date" => "Tue, 31 Oct 2023 16:38:41 GMT", "Server" => "ECSF (agb/A439)" }
         response_body = <<~JSON
           {
             "title": "foo",
@@ -259,7 +259,7 @@ describe 'Run command' do
       end
 
       it 'loaders arguments with -nl' do
-        response_headers = {"Content-Type"=>"application/json;", "Content-Length"=>"349", "Date"=>"Tue, 31 Oct 2023 16:38:41 GMT", "Server"=>"ECSF (agb/A439)"}
+        response_headers = { "Content-Type" => "application/json;", "Content-Length" => "349", "Date" => "Tue, 31 Oct 2023 16:38:41 GMT", "Server" => "ECSF (agb/A439)" }
         response_body = <<~JSON
           {
             "title": "foo",
@@ -308,7 +308,7 @@ describe 'Run command' do
       end
 
       it 'headers with -nh' do
-        response_headers = {"Content-Type"=>"application/json;", "Content-Length"=>"349", "Date"=>"Tue, 31 Oct 2023 16:38:41 GMT", "Server"=>"ECSF (agb/A439)"}
+        response_headers = { "Content-Type" => "application/json;", "Content-Length" => "349", "Date" => "Tue, 31 Oct 2023 16:38:41 GMT", "Server" => "ECSF (agb/A439)" }
         response_body = <<~JSON
           {
             "title": "foo",
@@ -365,7 +365,7 @@ describe 'Run command' do
       end
 
       it 'body with -nb' do
-        response_headers = {"Content-Type"=>"application/json;", "Content-Length"=>"349", "Date"=>"Tue, 31 Oct 2023 16:38:41 GMT", "Server"=>"ECSF (agb/A439)"}
+        response_headers = { "Content-Type" => "application/json;", "Content-Length" => "349", "Date" => "Tue, 31 Oct 2023 16:38:41 GMT", "Server" => "ECSF (agb/A439)" }
         response_body = <<~JSON
           {
             "title": "foo",
