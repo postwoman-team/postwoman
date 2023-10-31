@@ -35,7 +35,7 @@ module Views
     else
       str << '<box><h2>'
       str << I18n.t('request.body')
-      str << " - <highlight>#{request.content_type}</highlight>" if request.content_type
+      str << " - <hl>#{request.content_type}</hl>" if request.content_type
       str << '</h2></box>'
       str << '↓Empty<br>' if request.pretty_body.empty?
       str << '<box>'
