@@ -1,5 +1,5 @@
 module Loaders
-  class AverageLoader < Loaders::Builtin::Base
+  class Average < Loaders::Builtin::Base
     private
 
     def http_method = :POST

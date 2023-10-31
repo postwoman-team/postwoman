@@ -1,13 +1,5 @@
 module Loaders
-  class DefaultTraitChildBaseLoader < Loaders::Builtin::Base
-    trait :default,
-          my_param: 'default value'
-  end
-
-  class DefaultTraitLoaderChild < Loaders::DefaultTraitChildBaseLoader
-    trait :default,
-          my_param: 'default value child'
-
+  class MissingMethod < Loaders::Builtin::Base
     private
 
     def http_method
@@ -20,7 +12,7 @@ module Loaders
 
     def params
       {
-        my_param: true,
+        my_param: not_a_value,
         array: [
           {
             something: true

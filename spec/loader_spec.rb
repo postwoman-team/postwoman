@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'Loaders' do
   it 'returns url, params, and headers properly without extra args' do
-    payload = Loaders::AverageLoader.new(ArgsHandler.parse('c average_loader')).load
+    payload = Loaders::Average.new(ArgsHandler.parse('c average')).load
     expect(payload).to eq(
       headers: {
         auth: 'Basic somethingsomethingimatoken',
@@ -21,12 +21,71 @@ describe 'Loaders' do
     )
   end
 
-  it 'uses pairs and workbench to overwrite payload, giving priority to pairs' do
-    Env.workbench[:my_param] = 'workbench value'
+  context 'payload can change because of' do
+    it 'payload being overwritten by parent loader "default" trait' do
+      ParentLoader = Class.new(Loaders::Average)
+      ParentLoader.trait(:default, my_param: 'parent trait value')
 
-    payload = Loaders::AverageLoader.new(ArgsHandler.parse('c average_loader my_param:"pair value" -wb')).load
+      Loader = Class.new(ParentLoader)
 
-    expect(payload[:params][:my_param]).to eq('pair value')
+      payload = Loader.new(ArgsHandler.parse('c loader')).load
+
+      expect(payload[:params][:my_param]).to eq('parent trait value')
+    end
+
+    it 'parent loader "default" trait being overwritten by loader "default" trait' do
+      ParentLoader = Class.new(Loaders::Average)
+      ParentLoader.trait(:default, my_param: 'parent trait value')
+
+      Loader = Class.new(ParentLoader)
+      Loader.trait(:default, my_param: 'trait value')
+
+      payload = Loader.new(ArgsHandler.parse('c loader')).load
+
+      expect(payload[:params][:my_param]).to eq('trait value')
+    end
+
+    it 'loader "default" trait being overwritten by parent loader custom trait' do
+      ParentLoader = Class.new(Loaders::Average)
+      ParentLoader.trait(:my_trait, my_param: 'parent trait value')
+
+      Loader = Class.new(ParentLoader)
+      Loader.trait(:default, my_param: 'trait value')
+
+      payload = Loader.new(ArgsHandler.parse('c loader my_trait:')).load
+
+      expect(payload[:params][:my_param]).to eq('parent trait value')
+    end
+
+    it 'parent loader custom trait being overwritten by loader custom trait' do
+      ParentLoader = Class.new(Loaders::Average)
+      ParentLoader.trait(:my_trait, my_param: 'parent trait value')
+
+      Loader = Class.new(ParentLoader)
+      Loader.trait(:my_trait, my_param: 'trait value')
+
+      payload = Loader.new(ArgsHandler.parse('c loader my_trait:')).load
+
+      expect(payload[:params][:my_param]).to eq('trait value')
+    end
+
+    it 'loader custom trait being overwritten by workbench' do
+      Loader = Class.new(Loaders::Average)
+      Loader.trait(:my_trait, my_param: 'trait value')
+      Env.workbench[:my_param] = 'workbench value'
+
+      payload = Loader.new(ArgsHandler.parse('c loader my_trait: -wb')).load
+
+      expect(payload[:params][:my_param]).to eq('workbench value')
+    end
+
+    it 'workbench being overwritten by pairs' do
+      Env.workbench[:my_param] = 'workbench value'
+
+      payload = Loaders::Average.new(ArgsHandler.parse('c average my_param:"pair value" -wb')).load
+
+      expect(payload[:params][:my_param]).to eq('pair value')
+    end
   end
 
   context 'will rise warnings if a non-defined method is called and its not in the loaders env' do
@@ -37,7 +96,7 @@ describe 'Loaders' do
       TEXT
 
       output = capture_stdout_from do
-        payload = Loaders::MissingMethodLoader.new(ArgsHandler.parse('c missing_method_loader')).load
+        payload = Loaders::MissingMethod.new(ArgsHandler.parse('c missing_method_loader')).load
       end
 
       expect(payload[:params][:my_param]).to be_nil
@@ -48,7 +107,7 @@ describe 'Loaders' do
       payload = nil
 
       output = capture_stdout_from do
-        payload = Loaders::MissingMethodLoader.new(ArgsHandler.parse('c missing_method_loader not_a_value:"actual value"')).load
+        payload = Loaders::MissingMethod.new(ArgsHandler.parse('c missing_method_loader not_a_value:"actual value"')).load
       end
 
       expect(payload[:params][:my_param]).to eq('actual value')
@@ -56,72 +115,43 @@ describe 'Loaders' do
     end
   end
 
-  context 'with traits' do
-    context 'when only "default" trait is available' do
-      it 'uses "default" trait' do
-        payload = Loaders::DefaultTraitLoader.new(ArgsHandler.parse('c default_trait_loader')).load
+  context 'traits merging' do
+    it 'merges its "default" trait with its parents "default" trait, giving priority to elements defined on the child loader' do
+      ParentLoader = Class.new(Loaders::Average)
+      ParentLoader.trait(:default, my_param: 'parent trait value', array: [{something: 'parent trait value for something'}])
 
-        expect(payload[:params][:my_param]).to eq('default value')
-      end
+      Loader = Class.new(ParentLoader)
+      Loader.trait(:default, my_param: 'trait value')
 
-      it 'merges its "default" trait with its parents "default" trait, giving priority to elements defined on the child loader' do
-        payload = Loaders::DefaultTraitLoaderChild.new(ArgsHandler.parse('c default_trait_child_loader')).load
+      payload = Loader.new(ArgsHandler.parse('c default_trait_child_loader')).load
 
-        expect(payload[:params][:my_param]).to eq('default value child')
-      end
+      expect(payload[:params]).to eq({
+        array: [
+          {
+            something: 'parent trait value for something'
+          }
+        ],
+        my_param: 'trait value'
+      })
     end
 
-    context 'when applying desired trait' do
-      it 'priorities goes as following: parents default, childs default, parents trait, childs trait, workbench, pairs' do
-        Env.workbench[:my_trait] = nil
+    it 'merges its custom trait with its parents custom trait, giving priority to elements defined on the child loader' do
+      ParentLoader = Class.new(Loaders::Average)
+      ParentLoader.trait(:my_trait, my_param: 'parent trait value', array: [{something: 'parent trait value for something'}])
 
-        Env.workbench[:workbench_will_change_on_pair] = '[workbench]>[pair]'
-        Env.workbench[:parent_default_will_change_on_pair] = '[parent_default]>[pair]overwrite fail'
-        Env.workbench[:parent_trait_will_change_on_pair] = '[parent_trait]>[pair]overwrite fail'
-        Env.workbench[:child_default_will_change_on_pair] = '[child_default]>[pair]overwrite fail'
+      Loader = Class.new(ParentLoader)
+      Loader.trait(:my_trait, my_param: 'trait value')
 
-        Env.workbench[:parent_default_will_change_on_workbench] = '[parent_default]>[workbench] REACHED'
-        Env.workbench[:parent_trait_will_change_on_workbench] = '[parent_trait]>[workbench] REACHED'
-        Env.workbench[:child_default_will_change_on_workbench] = '[child_default]>[workbench] REACHED'
-        Env.workbench[:child_trait_will_change_on_workbench] = '[child_trait]>[workbench] REACHED'
-        Env.workbench[:workbench_will_change_on_workbench] = '[workbench]>[workbench] REACHED'
+      payload = Loader.new(ArgsHandler.parse('c default_trait_child_loader my_trait:')).load
 
-        payload = Loaders::CompleteLoader.new(ArgsHandler.parse('c complete_loader parent_default_will_change_on_pair:"[parent_default]>[pair] REACHED" parent_trait_will_change_on_pair:"[parent_trait]>[pair] REACHED" child_default_will_change_on_pair:"[child_default]>[pair] REACHED" child_trait_will_change_on_pair:"[child_trait]>[pair] REACHED" workbench_will_change_on_pair:"[workbench]>[pair] REACHED" pair_will_change_on_pair:"[pair]>[pair] REACHED" -wb')).load
-        trait_params = payload[:params][:trait_params]
-
-        # pairs
-        expect(trait_params[:parent_default_will_change_on_pair]).to eq('[parent_default]>[pair] REACHED')
-        expect(trait_params[:parent_trait_will_change_on_pair]).to eq('[parent_trait]>[pair] REACHED')
-        expect(trait_params[:child_default_will_change_on_pair]).to eq('[child_default]>[pair] REACHED')
-        expect(trait_params[:child_trait_will_change_on_pair]).to eq('[child_trait]>[pair] REACHED')
-        expect(trait_params[:workbench_will_change_on_pair]).to eq('[workbench]>[pair] REACHED')
-        expect(trait_params[:pair_will_change_on_pair]).to eq('[pair]>[pair] REACHED')
-
-        # workbench
-        expect(trait_params[:parent_default_will_change_on_workbench]).to eq('[parent_default]>[workbench] REACHED')
-        expect(trait_params[:parent_trait_will_change_on_workbench]).to eq('[parent_trait]>[workbench] REACHED')
-        expect(trait_params[:child_default_will_change_on_workbench]).to eq('[child_default]>[workbench] REACHED')
-        expect(trait_params[:child_trait_will_change_on_workbench]).to eq('[child_trait]>[workbench] REACHED')
-        expect(trait_params[:workbench_will_change_on_workbench]).to eq('[workbench]>[workbench] REACHED')
-
-        # child_trait
-        expect(trait_params[:parent_default_will_change_on_child_trait]).to eq('[parent_default]>[child_trait] REACHED')
-        expect(trait_params[:parent_trait_will_change_on_child_trait]).to eq('[parent_trait]>[child_trait] REACHED')
-        expect(trait_params[:child_default_will_change_on_child_trait]).to eq('[child_default]>[child_trait] REACHED')
-        expect(trait_params[:child_trait_will_change_on_child_trait]).to eq('[child_trait]>[child_trait] REACHED')
-
-        # parent_trait
-        expect(trait_params[:parent_default_will_change_on_parent_trait]).to eq('[parent_default]>[parent_trait] REACHED')
-        expect(trait_params[:parent_trait_will_change_on_parent_trait]).to eq('[parent_trait]>[parent_trait] REACHED')
-        expect(trait_params[:child_default_will_change_on_parent_trait]).to eq('[child_default]>[parent_trait] REACHED')
-
-        # child_default
-        expect(trait_params[:parent_default_will_change_on_child_default]).to eq('[parent_default]>[child_default] REACHED')
-        expect(trait_params[:child_default_will_change_on_child_default]).to eq('[child_default]>[child_default] REACHED')
-
-        # parent_default
-        expect(trait_params[:parent_default_will_change_on_parent_default]).to eq('[parent_default]>[parent_default] REACHED')
-      end
+      expect(payload[:params]).to eq({
+        array: [
+          {
+            something: 'parent trait value for something'
+          }
+        ],
+        my_param: 'trait value'
+      })
     end
   end
 end
