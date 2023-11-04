@@ -7,10 +7,11 @@ module Views
     workbench_table = Env.workbench.to_a.map do |(k, v)|
       case v
       when NilClass
-        v = 'null'
+        v = 'nil'
       when String
-        v = "'#{v.to_s.yellow}'"
+        v = Style.apply("'<string>#{Style.protect(v.to_s)}</string>'")
       end
+
       [k.to_s, v.to_s]
     end
 

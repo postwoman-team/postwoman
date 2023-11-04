@@ -45,9 +45,9 @@ describe 'Workbench command' do
       Env.workbench[:other_int] = 4
       expect(unstyled_stdout_from { attempt_command('workbench d other_int int') }).to eq(
         <<~TEXT
-          ┌──────────────┬──────┐
-          │ my_nil_value │ null │
-          └──────────────┴──────┘
+          ┌──────────────┬─────┐
+          │ my_nil_value │ nil │
+          └──────────────┴─────┘
         TEXT
       )
 
