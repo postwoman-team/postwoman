@@ -112,7 +112,7 @@ describe 'New command' do
           ┌────────────────────────┐
           │ Creating new loader... │
           └────────────────────────┘
-          Default editor not found to open target file.
+          The environment variable 'EDITOR' has not been set to open the target file
         TEXT
       )
     end
@@ -128,7 +128,7 @@ describe 'New command' do
           ┌───────────────────┐
           │ Editing loader... │
           └───────────────────┘
-          Default editor not found to open target file.
+          The environment variable 'EDITOR' has not been set to open the target file
         TEXT
       )
     end

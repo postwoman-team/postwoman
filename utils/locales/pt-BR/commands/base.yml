@@ -2,6 +2,6 @@ pt-BR:
   commands:
     base:
       missing_positional_argument: "Faltando o argumento posicional #%{index}: '%{name}'"
-      editor_not_found: "Editor padrão não encontrado para abrir o arquivo de destino."
+      editor_not_found: "A variável de ambiente 'EDITOR' não foi definida para abrir o arquivo de destino."
       editing: "Editando %{name}..."
       creating: "Criando novo(a) %{name}..."

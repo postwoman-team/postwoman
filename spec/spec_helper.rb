@@ -1,5 +1,7 @@
 require_relative File.dirname(__FILE__) + '/../utils/dependencies.rb'
+I18n.locale = :en
 Dir[File.dirname(__FILE__) + '/support/**/*.rb'].each { |file| require file }
+default_config = YAML.load_file('utils/default_config.yml')
 
 RSpec.configure do |config|
   config.expect_with :rspec do |c|
@@ -15,8 +17,7 @@ RSpec.configure do |config|
     Env.requests.clear
     Env.workbench.clear
     allow(Readline).to receive(:get_screen_size) { [Float::INFINITY, Float::INFINITY] }
-    allow(YAML).to receive(:load_file).and_call_original
-    allow(YAML).to receive(:load_file).with('config.yml') { {} }
+    allow(Env).to receive(:config) { default_config }
   end
 
   config.mock_framework = :rspec
