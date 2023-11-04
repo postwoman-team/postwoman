@@ -9,4 +9,4 @@ Postwoman is a API Platform which is 100% CLI. **This tool is still on a very ea
 
 ### How to use
 - `$ ./postwoman`
-Type `help` for more information
+- Type `help` for more information
