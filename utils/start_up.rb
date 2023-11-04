@@ -1,17 +1,15 @@
 module StartUp
-  def self.execute
-    setup_autocompletion
-    load_saved_history
-    puts Views.start_up_message
-  end
+  module_function
 
-  def self.setup_autocompletion
+  def execute
     Readline.completion_append_character = ' '
     Readline.completion_proc = Autocompletion.generate_proc
-  end
 
-  def self.load_saved_history
     history = File.open('.postwoman_history', 'a+').readlines.map(&:chomp)
     Readline::HISTORY.push(*history)
+
+    I18n.locale = Env.config[:language]
+
+    puts Views.start_up_message
   end
 end
