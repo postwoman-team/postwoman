@@ -19,7 +19,7 @@ module Commands
         rename_subcommand
       when nil
       else
-        puts Views::Commands::Workbench.invalid_subcommand(subcommand)
+        puts Views::Commands::Base.invalid_subcommand(subcommand)
       end
 
       pairs_to_workbench
@@ -51,7 +51,7 @@ module Commands
     def delete_subcommand
       keys = args.positionals[2..]
 
-      puts Views::Commands::Workbench.subcommand_needs_positionals if keys.empty?
+      puts Views::Commands::Base.subcommand_needs_positionals if keys.empty?
       keys.map(&:to_sym).each do |key|
         puts Views::Commands::Workbench.key_not_found_warning(key) unless workbench.key?(key)
         workbench.delete(key)

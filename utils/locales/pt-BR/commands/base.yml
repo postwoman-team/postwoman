@@ -5,3 +5,5 @@ pt-BR:
       editor_not_found: "A variável de ambiente 'EDITOR' não foi definida para abrir o arquivo de destino."
       editing: "Editando %{name}..."
       creating: "Criando novo(a) %{name}..."
+      invalid_subcommand: "Subcomando inválido: '%{name}'"
+      subcommand_needs_positionals: "Este subcomando deve ser chamado com argumentos posicionais"
