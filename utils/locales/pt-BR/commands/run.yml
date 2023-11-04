@@ -2,4 +2,4 @@ pt-BR:
   commands:
     run:
       not_found: "Nenhum loader encontrado: '%{name}'"
-      couldnt_load: "Seu loader '%{name}' gerou uma exceção:"
+      loader_raised_error: "Seu loader '%{name}' gerou uma exceção:"

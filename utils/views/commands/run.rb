@@ -12,7 +12,7 @@ module Views
 
       def loader_error(name, raised_error)
         str = '<fail>'
-        str << I18n.t('commands.run.couldnt_load', name: name)
+        str << I18n.t('commands.run.loader_raised_error', name: name)
         str << '</fail><br>'
         str << raised_error.full_message
         Style.apply(str)
