@@ -68,10 +68,7 @@ class Request
   end
 
   def params
-    value = @faraday_args[:params]
-    return value if value.instance_of?(String)
-
-    JSON.generate(value)
+    @faraday_args[:params]
   end
 
   private
