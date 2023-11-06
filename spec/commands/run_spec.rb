@@ -19,7 +19,7 @@ describe 'Run command' do
           headers: response_headers,
           success?: true)
 
-      faraday_args = [:get, URI.parse('http://example.org/'), '{}', {}]
+      faraday_args = [:get, URI.parse('http://example.org/'), {}, {}]
       allow(Faraday).to receive(:run_request).with(*faraday_args).and_return(response)
       attempt_command('run base')
       expect(Env.requests.count).to eq(1)
@@ -50,7 +50,7 @@ describe 'Run command' do
                         headers: response_headers,
                         success?: true)
 
-      faraday_args = [:get, URI.parse('http://example.org/'), '{}', {}]
+      faraday_args = [:get, URI.parse('http://example.org/'), {}, {}]
       allow(Faraday).to receive(:run_request).with(*faraday_args).and_return(response)
       expect(unstyled_stdout_from { attempt_command('run base') }).to eq(
         <<~TEXT
@@ -108,7 +108,7 @@ describe 'Run command' do
             headers: response_headers,
             success?: true)
 
-        faraday_args = [:get, URI.parse('http://example.org/'), '{}', {}]
+        faraday_args = [:get, URI.parse('http://example.org/'), {}, {}]
         allow(Faraday).to receive(:run_request).with(*faraday_args).and_return(response)
         expect(unstyled_stdout_from { attempt_command('run base -nh -nl') }).to eq(
           <<~TEXT
@@ -136,7 +136,7 @@ describe 'Run command' do
             headers: response_headers,
             success?: true)
 
-        faraday_args = [:get, URI.parse('http://example.org/'), '{}', {}]
+        faraday_args = [:get, URI.parse('http://example.org/'), {}, {}]
         allow(Faraday).to receive(:run_request).with(*faraday_args).and_return(response)
 
         expect(unstyled_stdout_from { attempt_command('run base -nh -nl') }).to eq(
@@ -164,7 +164,7 @@ describe 'Run command' do
             headers: response_headers,
             success?: true)
 
-        faraday_args = [:get, URI.parse('http://example.org/'), '{}', {}]
+        faraday_args = [:get, URI.parse('http://example.org/'), {}, {}]
         allow(Faraday).to receive(:run_request).with(*faraday_args).and_return(response)
 
         expect(unstyled_stdout_from { attempt_command('run base -nh -nl') }).to eq(
@@ -192,7 +192,7 @@ describe 'Run command' do
             headers: response_headers,
             success?: true)
 
-        faraday_args = [:get, URI.parse('http://example.org/'), '{}', {}]
+        faraday_args = [:get, URI.parse('http://example.org/'), {}, {}]
         allow(Faraday).to receive(:run_request).with(*faraday_args).and_return(response)
 
         expect(unstyled_stdout_from { attempt_command('run base -nh -nl') }).to eq(
@@ -229,7 +229,7 @@ describe 'Run command' do
                           headers: response_headers,
                           success?: true)
 
-        faraday_args = [:get, URI.parse('http://example.org/'), '{}', {}]
+        faraday_args = [:get, URI.parse('http://example.org/'), {}, {}]
         allow(Faraday).to receive(:run_request).with(*faraday_args).and_return(response)
         expect(unstyled_stdout_from { attempt_command('run base -nb -nh -nl') }).to eq(
           <<~TEXT
@@ -263,7 +263,7 @@ describe 'Run command' do
                           headers: response_headers,
                           success?: true)
 
-        faraday_args = [:get, URI.parse('http://example.org/'), '{}', {}]
+        faraday_args = [:get, URI.parse('http://example.org/'), {}, {}]
         allow(Faraday).to receive(:run_request).with(*faraday_args).and_return(response)
         expect(unstyled_stdout_from { attempt_command('run base -nl') }).to eq(
           <<~TEXT
@@ -312,7 +312,7 @@ describe 'Run command' do
                           headers: response_headers,
                           success?: true)
 
-        faraday_args = [:get, URI.parse('http://example.org/'), '{}', {}]
+        faraday_args = [:get, URI.parse('http://example.org/'), {}, {}]
         allow(Faraday).to receive(:run_request).with(*faraday_args).and_return(response)
         expect(unstyled_stdout_from { attempt_command('run base -nh') }).to eq(
           <<~TEXT
@@ -369,7 +369,7 @@ describe 'Run command' do
                           headers: response_headers,
                           success?: true)
 
-        faraday_args = [:get, URI.parse('http://example.org/'), '{}', {}]
+        faraday_args = [:get, URI.parse('http://example.org/'), {}, {}]
         allow(Faraday).to receive(:run_request).with(*faraday_args).and_return(response)
         expect(unstyled_stdout_from { attempt_command('run base -nb') }).to eq(
           <<~TEXT
@@ -436,7 +436,7 @@ describe 'Run command' do
     end
 
     it 'tries to run loader but faraday raises error' do
-      faraday_args = [:get, URI.parse('http://example.org/'), '{}', {}]
+      faraday_args = [:get, URI.parse('http://example.org/'), {}, {}]
       allow(Faraday).to receive(:run_request).with(*faraday_args).and_raise(Exception)
 
       output = unstyled_stdout_from { attempt_command('run base') }
