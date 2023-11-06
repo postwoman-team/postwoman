@@ -97,7 +97,7 @@ describe 'Run command' do
     end
 
     context 'does not break on empty bodies' do
-      it 'with no content type' do
+      it 'has no content type' do
         response_headers = { "Content-Length" => "349", "Date" => "Tue, 31 Oct 2023 16:38:41 GMT", "Server" => "ECSF (agb/A439)" }
         response_body = ''
 
@@ -125,7 +125,7 @@ describe 'Run command' do
         )
       end
 
-      it 'with content type json' do
+      it 'has content type json' do
         response_headers = { "Content-Type" => "application/json;", "Content-Length" => "349", "Date" => "Tue, 31 Oct 2023 16:38:41 GMT", "Server" => "ECSF (agb/A439)" }
         response_body = ''
 
@@ -154,7 +154,7 @@ describe 'Run command' do
         )
       end
 
-      it 'with content type xml' do
+      it 'has content type xml' do
         response_headers = { "Content-Type" => "application/xml; charset=utf-8", "Content-Length" => "349", "Date" => "Tue, 31 Oct 2023 16:38:41 GMT", "Server" => "ECSF (agb/A439)" }
         response_body = ''
         response = double(:response,
@@ -182,7 +182,7 @@ describe 'Run command' do
         )
       end
 
-      it 'without supported content type' do
+      it 'doesnt have supported content type' do
         response_headers = { "Content-Type" => "unhingedcontenttype; charset=utf-8", "Content-Length" => "349", "Date" => "Tue, 31 Oct 2023 16:38:41 GMT", "Server" => "ECSF (agb/A439)" }
         response_body = ''
         response = double(:response,
@@ -211,8 +211,8 @@ describe 'Run command' do
       end
     end
 
-    context 'hides' do
-      it 'almost everything with -nl -nh -nb' do
+    context 'when using flags' do
+      it 'hides almost everything with -nl -nh -nb' do
         response_headers = { "Content-Type" => "application/json; charset=utf-8", "Content-Length" => "349", "Date" => "Tue, 31 Oct 2023 16:38:41 GMT", "Server" => "ECSF (agb/A439)" }
         response_body = <<~JSON
           {
@@ -246,7 +246,7 @@ describe 'Run command' do
         )
       end
 
-      it 'loaders arguments with -nl' do
+      it 'hides loaders arguments with -nl' do
         response_headers = { "Content-Type" => "application/json;", "Content-Length" => "349", "Date" => "Tue, 31 Oct 2023 16:38:41 GMT", "Server" => "ECSF (agb/A439)" }
         response_body = <<~JSON
           {
@@ -295,7 +295,7 @@ describe 'Run command' do
         )
       end
 
-      it 'headers with -nh' do
+      it 'hides headers with -nh' do
         response_headers = { "Content-Type" => "application/json;", "Content-Length" => "349", "Date" => "Tue, 31 Oct 2023 16:38:41 GMT", "Server" => "ECSF (agb/A439)" }
         response_body = <<~JSON
           {
@@ -352,7 +352,7 @@ describe 'Run command' do
         )
       end
 
-      it 'body with -nb' do
+      it 'hides body with -nb' do
         response_headers = { "Content-Type" => "application/json;", "Content-Length" => "349", "Date" => "Tue, 31 Oct 2023 16:38:41 GMT", "Server" => "ECSF (agb/A439)" }
         response_body = <<~JSON
           {
@@ -408,8 +408,8 @@ describe 'Run command' do
     end
   end
 
-  context 'prints out error' do
-    it 'if loader does not exist' do
+  context 'prints out error when' do
+    it 'tries to run non-existent loader' do
       expect(unstyled_stdout_from { attempt_command('run my_loader') }).to eq(
         <<~TEXT
           No loader found: 'MyLoader'
@@ -417,7 +417,7 @@ describe 'Run command' do
       )
     end
 
-    it 'if loader name is not provided' do
+    it 'doesnt receive name' do
       expect(unstyled_stdout_from { attempt_command('run') }).to eq(
         <<~TEXT
           Missing #1 positional argument: 'loader_name'
@@ -425,7 +425,7 @@ describe 'Run command' do
       )
     end
 
-    it 'if loader couldnt be loaded properly' do
+    it 'tries to run loader but raise error' do
       MockLoader = Class.new
 
       allow(Loaders).to receive(:class_eval).with('MockLoader').and_return(MockLoader)
@@ -435,7 +435,7 @@ describe 'Run command' do
       expect(output).to include("wrong number of arguments (given 1, expected 0)")
     end
 
-    it 'if faraday request fails' do
+    it 'tries to run loader but faraday raises error' do
       faraday_args = [:get, URI.parse('http://example.org/'), '{}', {}]
       allow(Faraday).to receive(:run_request).with(*faraday_args).and_raise(Exception)
 

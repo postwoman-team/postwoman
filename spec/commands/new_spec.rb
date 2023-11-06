@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'New command' do
-  it 'when loader does not already exist, creates new loader with template and opens on default editor', :file_mocking do
+  it 'creates new loader with template and opens on default editor when loader does not already exist', :file_mocking do
     template = <<~TEXT
       module Loaders
         class Testing < Base
@@ -40,7 +40,7 @@ describe 'New command' do
     )
   end
 
-  it 'when loader already exists, edits existing loader on default editor', :file_mocking do
+  it 'edits existing loader on default editor when loader already exists', :file_mocking do
     ENV['EDITOR'] = 'emacs'
     command = Commands::New.new(ArgsHandler.parse('new testing'))
     pretend_file_exists('loaders/testing.rb')
@@ -100,8 +100,8 @@ describe 'New command' do
     end
   end
 
-  context 'outputs message when default editor is not set' do
-    it 'when creating' do
+  context 'when default editor is not set' do
+    it 'outputs message after loader creation' do
       ENV['EDITOR'] = nil
       command = Commands::New.new(ArgsHandler.parse('new testing'))
       pretend_file_doesnt_exist('loaders/testing.rb')
@@ -117,7 +117,7 @@ describe 'New command' do
       )
     end
 
-    it 'when editing' do
+    it 'outputs message after trying to edit loader' do
       ENV['EDITOR'] = nil
       command = Commands::New.new(ArgsHandler.parse('new testing'))
       pretend_file_exists('loaders/testing.rb')
