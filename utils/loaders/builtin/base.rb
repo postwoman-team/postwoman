@@ -1,8 +1,6 @@
 module Loaders
   module Builtin
     class Base
-      attr_reader :args, :env # could be removed?
-
       @@trait_variables = {}
 
       def initialize(args)
@@ -10,7 +8,7 @@ module Loaders
         @env = {}
         add_default_trait_to_env
         add_traits_to_env
-        apply_workbench if args.flag?(:apply_workbench)
+        apply_workbench if @args.flag?(:apply_workbench)
         add_pairs_to_env
       end
 
@@ -60,7 +58,7 @@ module Loaders
       end
 
       def params_with_env
-        env.reduce(params) do |final_params, (k, v)|
+        @env.reduce(params) do |final_params, (k, v)|
           next final_params unless final_params.key?(k)
 
           final_params.merge(k => v)
@@ -68,21 +66,21 @@ module Loaders
       end
 
       def method_missing(m, *_args)
-        return env[m] if env.keys.include?(m)
+        return @env[m] if @env.keys.include?(m)
 
         puts Views::Loaders.missing_method(m)
       end
 
       def apply_workbench
-        env.merge!(Env.workbench)
+        @env.merge!(Env.workbench)
       end
 
       def add_pairs_to_env
-        env.merge!(args.pairs.dup)
+        @env.merge!(@args.pairs.dup)
       end
 
       def add_default_trait_to_env
-        env.merge!(traits[:default]) if traits.key?(:default)
+        @env.merge!(traits[:default]) if traits.key?(:default)
       end
 
       def add_traits_to_env
@@ -90,12 +88,12 @@ module Loaders
           next if trait == :default
           next unless input_key?(trait)
 
-          env.merge!(variables)
+          @env.merge!(variables)
         end
       end
 
       def input_key?(key)
-        args.key?(key) || (Env.workbench.key?(key) && args.flag?(:apply_workbench))
+        @args.key?(key) || (Env.workbench.key?(key) && @args.flag?(:apply_workbench))
       end
 
       def url
