@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'Loaders' do
-  it 'returns url, params, and headers properly without extra args' do
+  it 'succesfully returns url, params, and headers' do
     payload = Loaders::Average.new(ArgsHandler.parse('c average')).load
     expect(payload).to eq(
       headers: {
@@ -21,8 +21,8 @@ describe 'Loaders' do
     )
   end
 
-  context 'payload can change because of' do
-    it 'payload being overwritten by parent loader "default" trait' do
+  context 'payload can change because' do
+    it 'has payload being overwritten by parent loader "default" trait' do
       ParentLoader = Class.new(Loaders::Average)
       ParentLoader.trait(:default, my_param: 'parent trait value')
 
@@ -33,7 +33,7 @@ describe 'Loaders' do
       expect(payload[:params][:my_param]).to eq('parent trait value')
     end
 
-    it 'parent loader "default" trait being overwritten by loader "default" trait' do
+    it 'has parent loader "default" trait being overwritten by loader "default" trait' do
       ParentLoader2 = Class.new(Loaders::Average)
       ParentLoader2.trait(:default, my_param: 'parent trait value')
 
@@ -45,7 +45,7 @@ describe 'Loaders' do
       expect(payload[:params][:my_param]).to eq('trait value')
     end
 
-    it 'loader "default" trait being overwritten by parent loader custom trait' do
+    it 'has loader "default" trait being overwritten by parent loader custom trait' do
       ParentLoader3 = Class.new(Loaders::Average)
       ParentLoader3.trait(:my_trait, my_param: 'parent trait value')
 
@@ -57,7 +57,7 @@ describe 'Loaders' do
       expect(payload[:params][:my_param]).to eq('parent trait value')
     end
 
-    it 'parent loader custom trait being overwritten by loader custom trait' do
+    it 'has parent loader custom trait being overwritten by loader custom trait' do
       ParentLoader4 = Class.new(Loaders::Average)
       ParentLoader4.trait(:my_trait, my_param: 'parent trait value')
 
@@ -69,7 +69,7 @@ describe 'Loaders' do
       expect(payload[:params][:my_param]).to eq('trait value')
     end
 
-    it 'loader custom trait being overwritten by workbench' do
+    it 'has loader custom trait being overwritten by workbench' do
       Loader5 = Class.new(Loaders::Average)
       Loader5.trait(:my_trait, my_param: 'trait value')
       Env.workbench[:my_param] = 'workbench value'
@@ -79,7 +79,7 @@ describe 'Loaders' do
       expect(payload[:params][:my_param]).to eq('workbench value')
     end
 
-    it 'workbench being overwritten by pairs' do
+    it 'has workbench being overwritten by pairs' do
       Env.workbench[:my_param] = 'workbench value'
 
       payload = Loaders::Average.new(ArgsHandler.parse('c average my_param:"pair value" -wb')).load
@@ -88,8 +88,8 @@ describe 'Loaders' do
     end
   end
 
-  context 'will rise warnings if a non-defined method is called and its not in the loaders env' do
-    it 'successfully' do
+  context 'when a non-defined method is called and its not in the loaders env' do
+    it 'will rise warnings' do
       payload = nil
       expected_output = "Tried to find 'not_a_value' but failed."
 
@@ -101,7 +101,7 @@ describe 'Loaders' do
       expect(output).to eq(expected_output)
     end
 
-    it 'unless the method has the same name as a given pair' do
+    it 'wont rise warning when the method has the same name as a input pair' do
       payload = nil
 
       output = unstyled_stdout_from do
@@ -113,7 +113,7 @@ describe 'Loaders' do
     end
   end
 
-  context 'traits merging' do
+  context 'when trait merging' do
     it 'merges its "default" trait with its parents "default" trait, giving priority to elements defined on the child loader' do
       ParentLoader6 = Class.new(Loaders::Average)
       ParentLoader6.trait(:default, my_param: 'parent trait value', array: [{something: 'parent trait value for something'}])
