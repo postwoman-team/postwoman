@@ -91,13 +91,11 @@ describe 'Loaders' do
   context 'will rise warnings if a non-defined method is called and its not in the loaders env' do
     it 'successfully' do
       payload = nil
-      expected_output = <<~TEXT
-        #{"Tried to find 'not_a_value' but failed.".yellow}
-      TEXT
+      expected_output = "Tried to find 'not_a_value' but failed."
 
-      output = capture_stdout_from do
+      output = unstyled_stdout_from do
         payload = Loaders::MissingMethod.new(ArgsHandler.parse('c missing_method_loader')).load
-      end
+      end.chomp
 
       expect(payload[:params][:my_param]).to be_nil
       expect(output).to eq(expected_output)
@@ -106,7 +104,7 @@ describe 'Loaders' do
     it 'unless the method has the same name as a given pair' do
       payload = nil
 
-      output = capture_stdout_from do
+      output = unstyled_stdout_from do
         payload = Loaders::MissingMethod.new(ArgsHandler.parse('c missing_method_loader not_a_value:"actual value"')).load
       end
 
