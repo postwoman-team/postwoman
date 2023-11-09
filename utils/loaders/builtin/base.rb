@@ -1,16 +1,17 @@
 module Loaders
   module Builtin
     class Base
-      attr_reader :args, :env
+      attr_reader :args, :env # could be removed?
 
       @@trait_variables = {}
 
       def initialize(args)
-        @failed = false
         @args = args
-        @env = args.pairs.dup
+        @env = {}
+        add_default_trait_to_env
         add_traits_to_env
         apply_workbench if args.flag?(:apply_workbench)
+        add_pairs_to_env
       end
 
       def load
@@ -18,35 +19,44 @@ module Loaders
           http_method: http_method,
           url: checked_url,
           params: params_with_env,
-          headers:
+          headers: headers
         }
       end
 
       def self.trait(name, values)
-        @@trait_variables[name] = {} unless @@trait_variables.key?(name)
-        @@trait_variables[name].merge!(values)
+        traits = self.klass_traits
+        traits[name] = {} unless traits.key?(name)
+        traits[name].merge!(values)
       end
 
-      def failed?
-        @failed
+      def self.klass_traits
+        @@trait_variables[self.name] = {} unless @@trait_variables.key?(self.name)
+        @@trait_variables[self.name]
+      end
+
+      def self.fetch_traits
+        traits = {}
+        self.ancestors.reverse[6..].each do |ancestor|
+          self.merge_traits(traits, ancestor.klass_traits)
+        end
+        self.merge_traits(traits, self.klass_traits)
+        traits
+      end
+
+      def self.merge_traits(traits, new_traits)
+        new_traits.each do |name, values|
+          if traits.key?(name)
+            traits[name].merge!(values)
+          else
+            traits[name] = values
+          end
+        end
       end
 
       private
 
-      def apply_workbench
-        env.merge!(Env.workbench)
-      end
-
-      def checked_url
-        parsed_url = URI.parse(url)
-        return parsed_url if parsed_url.class != URI::Generic
-
-        error("Invalid url from loader: #{url}")
-      end
-
-      def error(message)
-        puts message.red
-        @failed = true
+      def traits
+        @traits ||= self.class.fetch_traits
       end
 
       def params_with_env
@@ -60,12 +70,26 @@ module Loaders
       def method_missing(m, *_args)
         return env[m] if env.keys.include?(m)
 
-        puts "Tried to call missing method '#{m}' but failed.".yellow
+        puts "Tried to find '#{m}' but failed.".yellow
+      end
+
+      def apply_workbench
+        env.merge!(Env.workbench)
+      end
+
+      def add_pairs_to_env
+        env.merge!(args.pairs.dup)
+      end
+
+      def add_default_trait_to_env
+        env.merge!(traits[:default]) if traits.key?(:default)
       end
 
       def add_traits_to_env
-        @@trait_variables.each do |trait, variables|
-          @env = variables.merge(env) if args.key?(trait) || trait == :default
+        traits.each do |trait, variables|
+          next if trait == :default
+          next unless args.key?(trait) || (Env.workbench.key?(trait) && args.flag?(:apply_workbench))
+          env.merge!(variables)
         end
       end
 
