@@ -2,6 +2,7 @@ module Views
   module Commands
     module Workbench
       module_function
+
       def key_not_found_error(name)
         str =  '<fail>'
         str << I18n.t('commands.workbench.key_not_found', name: name)

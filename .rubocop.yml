@@ -1,12 +1,7 @@
 inherit_from: .rubocop_todo.yml
 
 AllCops:
-  Exclude:
-    - 'loaders/**/*'
-
-Metrics/BlockLength:
-  Exclude:
-    - 'spec/**/*'
+  NewCops: disable
 
 Metrics/AbcSize:
   Exclude:
@@ -17,6 +12,10 @@ Metrics/MethodLength:
     - 'utils/views/**/*'
 
 Metrics/PerceivedComplexity:
+  Exclude:
+    - 'utils/views/**/*'
+
+Metrics/CyclomaticComplexity:
   Exclude:
     - 'utils/views/**/*'
 
