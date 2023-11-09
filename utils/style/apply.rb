@@ -1,0 +1,20 @@
+module Style
+  module_function
+
+  def apply(string)
+    tags = Env.config.dig(:theme, :tags)
+    replace = {}
+    tags.each do |tag, values|
+      replace["<#{tag}>"] = values.first
+      replace["</#{tag}>"] = values[1] if values[1]
+    end
+
+    styled = string.gsub(Regexp.union(replace.keys), replace)
+
+    styled.gsub!(Regexp.union(ESCAPE_CHARACTERS.values), ESCAPE_CHARACTERS.invert)
+
+    styled.gsub(%r{<box>(.*?)</box>}im) do
+      table([[::Regexp.last_match(1)]], protect: false)
+    end
+  end
+end

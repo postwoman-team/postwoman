@@ -11,5 +11,5 @@ Postwoman é uma plataforma de APIs 100% CLI. **Esta ferramenta ainda está em u
 
 ### Como usar
 - `$ ./postwoman`
-Use o comando `help`
+- Digite `help` para mais informações
 

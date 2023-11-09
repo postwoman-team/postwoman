@@ -9,7 +9,7 @@ module Commands
     def execute
       pairs_to_workbench
       last_request_to_worbench
-      print_workbench
+      puts Views.workbench
     end
 
     private

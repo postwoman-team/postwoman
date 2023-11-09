@@ -1,1 +1,23 @@
 inherit_from: .rubocop_todo.yml
+
+AllCops:
+  NewCops: disable
+
+Metrics/AbcSize:
+  Exclude:
+    - 'utils/views/**/*'
+
+Metrics/MethodLength:
+  Exclude:
+    - 'utils/views/**/*'
+
+Metrics/PerceivedComplexity:
+  Exclude:
+    - 'utils/views/**/*'
+
+Metrics/CyclomaticComplexity:
+  Exclude:
+    - 'utils/views/**/*'
+
+Style/HashSyntax:
+  Enabled: false

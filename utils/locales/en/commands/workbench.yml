@@ -1,0 +1,5 @@
+en:
+  commands:
+    workbench:
+      key_not_found: "Key '%{name}' not found on workbench"
+      key_already_exists: "Key '%{name}' already exists on workbench"

@@ -2,3 +2,4 @@ loaders/*.rb
 .postwoman_history
 .byebug_history
 .env
+config.yml

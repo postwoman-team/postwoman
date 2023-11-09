@@ -1,3 +1,5 @@
+# DEPRECATED: Dont use anything from this file
+
 def print_table(*rows)
   rows = [rows] if rows.first.instance_of?(String)
   rows = linebreak_rows(rows)
@@ -6,17 +8,6 @@ def print_table(*rows)
     t.style = { border: :unicode }
   end
   puts table
-end
-
-def print_payload(payload)
-  print_table('Loader Arguments'.purple)
-  print_table(JSON.pretty_generate(payload))
-end
-
-def print_workbench
-  return print_table('Currently empty') if Env.workbench.empty?
-
-  print_hash(Env.workbench)
 end
 
 def print_hash(hash)
@@ -42,7 +33,7 @@ def linebreak_rows(rows)
       new_rows += linebroken.map { |line| [line] }
     else
       new_rows << [row.first, linebroken.first]
-      linebroken[1..].each do |line|
+      linebroken[1..]&.each do |line|
         new_rows << ['', line]
       end
     end

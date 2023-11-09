@@ -1,0 +1,5 @@
+pt-BR:
+  request:
+    loader_arguments: 'Argumentos do Loader'
+    headers: 'Headers'
+    body: 'Body'

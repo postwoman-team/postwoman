@@ -1,0 +1,5 @@
+en:
+  commands:
+    run:
+      not_found: "No loader found: '%{name}'"
+      loader_raised_error: "Your loader '%{name}' raised an exception:"

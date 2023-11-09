@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'Debug command' do
-  it 'Calls binding.pry if debugger is binding.pry' do
+  it 'calls binding.pry if debugger is binding.pry' do
     ENV['DEBUGGER'] = 'pry'
     command_obj = Commands::Debug.new(ArgsHandler.parse('debug'))
     command_binding = double('binding', pry: nil)
@@ -12,7 +12,7 @@ describe 'Debug command' do
     expect(command_binding).to have_received(:pry)
   end
 
-  it 'Calls byebug if debugger is byebug' do
+  it 'calls byebug if debugger is byebug' do
     ENV['DEBUGGER'] = 'byebug'
     allow(Byebug).to receive(:attach)
 
@@ -21,7 +21,7 @@ describe 'Debug command' do
     expect(Byebug).to have_received(:attach)
   end
 
-  it 'Calls debug if debugger is debug' do
+  it 'calls debug if debugger is debug' do
     ENV['DEBUGGER'] = 'debug'
     command_obj = Commands::Debug.new(ArgsHandler.parse('debug'))
     command_binding = double('binding', break: nil)

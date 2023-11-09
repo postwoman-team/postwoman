@@ -32,36 +32,8 @@ module Commands
 
     private
 
-    def display_request(request)
-      print_payload(request.payload) unless args.flag?(:no_loader_payload)
-
-      when_not_hidden('Headers'.purple, args.flag?(:no_headers)) do
-        print_table(
-          *request.headers.to_a
-        )
-      end
-
-      when_not_hidden("#{'Body'.purple} - #{request.content_type.yellow}", args.flag?(:no_body)) do
-        puts '↓Empty' if request.pretty_body.empty?
-        print_table(request.pretty_body)
-      end
-
-      print_table("Status: #{request.pretty_status}", "#{request.url}")
-      start_debug if args.flag?(:activate_debugger)
-    end
-
     def workbench
       Env.workbench
-    end
-
-    def when_not_hidden(title, hide_flag)
-      if hide_flag
-        print_table("#{title.uncolorize} (Hidden)".gray)
-        return
-      end
-
-      print_table(title)
-      yield
     end
 
     def edit_loader(name)
@@ -76,19 +48,18 @@ module Commands
       path = "#{path}#{file_name}.rb"
 
       if File.exist?(path)
-        puts("Editing #{label}")
-      else
-        puts("Creating #{'new'.green} #{label}")
-        File.open(path, 'w') do |f|
-          f.write(default_content)
-        end
+        puts Views::Commands::Base.editing(label)
+        return puts Views::Commands::Base.editor_not_found_error if ENV['EDITOR'].nil?
+
+        return system("#{ENV['EDITOR']} #{path}")
       end
 
-      open_in_editor(path)
-    end
+      puts Views::Commands::Base.creating(label)
+      File.open(path, 'w') do |f|
+        f.write(default_content)
+      end
 
-    def open_in_editor(path)
-      return puts "Could not open loader because default editor isn't set.".yellow if ENV['EDITOR'].nil?
+      return puts Views::Commands::Base.editor_not_found_warning if ENV['EDITOR'].nil?
 
       system("#{ENV['EDITOR']} #{path}")
     end
@@ -97,7 +68,7 @@ module Commands
       positional_names = self.class::ARGS.keys
       name = custom_name || positional_names[index]
       value = args[index]
-      return puts("Missing ##{index + 1} positional argument: '#{name}'".red) unless value
+      return puts Views::Commands::Base.missing_positional_argument(index + 1, name) unless value
 
       value
     end

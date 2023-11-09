@@ -28,7 +28,9 @@ class Request
   end
 
   def content_type
-    response.headers['content-type']
+    @content_type ||= response.headers.find do |k, _v|
+      k.downcase == 'content-type'
+    end&.[](1)
   end
 
   def response_json?
@@ -62,15 +64,11 @@ class Request
   end
 
   def pretty_status
-    status = "#{response.status} #{response.reason_phrase}"
-    response.success? ? status.green : status.red
+    "#{response.status} #{response.reason_phrase}"
   end
 
   def params
-    value = @faraday_args[:params]
-    return value if value.instance_of?(String)
-
-    JSON.generate(value)
+    @faraday_args[:params]
   end
 
   private

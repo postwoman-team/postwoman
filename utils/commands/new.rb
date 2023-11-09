@@ -8,7 +8,7 @@ module Commands
 
     def execute
       name = obrigatory_positional_arg(0)&.downcase || return
-      return puts("Invalid loader name '#{name}'.".red) unless is_loader_name?(name)
+      return puts Views::Commands::New.invalid_loader_name(name) unless is_loader_name?(name)
 
       path = "loaders/#{name}.rb"
 

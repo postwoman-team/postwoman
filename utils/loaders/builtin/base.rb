@@ -15,7 +15,7 @@ module Loaders
 
       def load
         {
-          http_method:,
+          http_method: http_method,
           url: checked_url,
           params: params_with_env,
           headers:
@@ -74,7 +74,7 @@ module Loaders
       end
 
       def url
-        'https://api.github.com/users/hikari-desuyoo'
+        'http://example.org/'
       end
 
       def params
