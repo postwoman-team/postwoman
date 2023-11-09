@@ -70,7 +70,7 @@ module Loaders
       def method_missing(m, *_args)
         return env[m] if env.keys.include?(m)
 
-        puts "Tried to find '#{m}' but failed.".yellow
+        puts Views::Loaders.missing_method(m)
       end
 
       def apply_workbench

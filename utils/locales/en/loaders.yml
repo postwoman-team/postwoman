@@ -1,0 +1,3 @@
+en:
+  loaders:
+    missing_method: "Tried to find '%{name}' but failed."
