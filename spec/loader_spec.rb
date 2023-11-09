@@ -34,47 +34,47 @@ describe 'Loaders' do
     end
 
     it 'parent loader "default" trait being overwritten by loader "default" trait' do
-      ParentLoader = Class.new(Loaders::Average)
-      ParentLoader.trait(:default, my_param: 'parent trait value')
+      ParentLoader2 = Class.new(Loaders::Average)
+      ParentLoader2.trait(:default, my_param: 'parent trait value')
 
-      Loader = Class.new(ParentLoader)
-      Loader.trait(:default, my_param: 'trait value')
+      Loader2 = Class.new(ParentLoader2)
+      Loader2.trait(:default, my_param: 'trait value')
 
-      payload = Loader.new(ArgsHandler.parse('c loader')).load
+      payload = Loader2.new(ArgsHandler.parse('c loader')).load
 
       expect(payload[:params][:my_param]).to eq('trait value')
     end
 
     it 'loader "default" trait being overwritten by parent loader custom trait' do
-      ParentLoader = Class.new(Loaders::Average)
-      ParentLoader.trait(:my_trait, my_param: 'parent trait value')
+      ParentLoader3 = Class.new(Loaders::Average)
+      ParentLoader3.trait(:my_trait, my_param: 'parent trait value')
 
-      Loader = Class.new(ParentLoader)
-      Loader.trait(:default, my_param: 'trait value')
+      Loader3 = Class.new(ParentLoader3)
+      Loader3.trait(:default, my_param: 'trait value')
 
-      payload = Loader.new(ArgsHandler.parse('c loader my_trait:')).load
+      payload = Loader3.new(ArgsHandler.parse('c loader my_trait:')).load
 
       expect(payload[:params][:my_param]).to eq('parent trait value')
     end
 
     it 'parent loader custom trait being overwritten by loader custom trait' do
-      ParentLoader = Class.new(Loaders::Average)
-      ParentLoader.trait(:my_trait, my_param: 'parent trait value')
+      ParentLoader4 = Class.new(Loaders::Average)
+      ParentLoader4.trait(:my_trait, my_param: 'parent trait value')
 
-      Loader = Class.new(ParentLoader)
-      Loader.trait(:my_trait, my_param: 'trait value')
+      Loader4 = Class.new(ParentLoader4)
+      Loader4.trait(:my_trait, my_param: 'trait value')
 
-      payload = Loader.new(ArgsHandler.parse('c loader my_trait:')).load
+      payload = Loader4.new(ArgsHandler.parse('c loader my_trait:')).load
 
       expect(payload[:params][:my_param]).to eq('trait value')
     end
 
     it 'loader custom trait being overwritten by workbench' do
-      Loader = Class.new(Loaders::Average)
-      Loader.trait(:my_trait, my_param: 'trait value')
+      Loader5 = Class.new(Loaders::Average)
+      Loader5.trait(:my_trait, my_param: 'trait value')
       Env.workbench[:my_param] = 'workbench value'
 
-      payload = Loader.new(ArgsHandler.parse('c loader my_trait: -wb')).load
+      payload = Loader5.new(ArgsHandler.parse('c loader my_trait: -wb')).load
 
       expect(payload[:params][:my_param]).to eq('workbench value')
     end
@@ -117,13 +117,13 @@ describe 'Loaders' do
 
   context 'traits merging' do
     it 'merges its "default" trait with its parents "default" trait, giving priority to elements defined on the child loader' do
-      ParentLoader = Class.new(Loaders::Average)
-      ParentLoader.trait(:default, my_param: 'parent trait value', array: [{something: 'parent trait value for something'}])
+      ParentLoader6 = Class.new(Loaders::Average)
+      ParentLoader6.trait(:default, my_param: 'parent trait value', array: [{something: 'parent trait value for something'}])
 
-      Loader = Class.new(ParentLoader)
-      Loader.trait(:default, my_param: 'trait value')
+      Loader6 = Class.new(ParentLoader6)
+      Loader6.trait(:default, my_param: 'trait value')
 
-      payload = Loader.new(ArgsHandler.parse('c default_trait_child_loader')).load
+      payload = Loader6.new(ArgsHandler.parse('c default_trait_child_loader')).load
 
       expect(payload[:params]).to eq({
         array: [
@@ -136,13 +136,13 @@ describe 'Loaders' do
     end
 
     it 'merges its custom trait with its parents custom trait, giving priority to elements defined on the child loader' do
-      ParentLoader = Class.new(Loaders::Average)
-      ParentLoader.trait(:my_trait, my_param: 'parent trait value', array: [{something: 'parent trait value for something'}])
+      ParentLoader7 = Class.new(Loaders::Average)
+      ParentLoader7.trait(:my_trait, my_param: 'parent trait value', array: [{something: 'parent trait value for something'}])
 
-      Loader = Class.new(ParentLoader)
-      Loader.trait(:my_trait, my_param: 'trait value')
+      Loader7 = Class.new(ParentLoader7)
+      Loader7.trait(:my_trait, my_param: 'trait value')
 
-      payload = Loader.new(ArgsHandler.parse('c default_trait_child_loader my_trait:')).load
+      payload = Loader7.new(ArgsHandler.parse('c default_trait_child_loader my_trait:')).load
 
       expect(payload[:params]).to eq({
         array: [
