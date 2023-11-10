@@ -116,40 +116,44 @@ describe 'Loaders' do
   context 'when trait merging' do
     it 'merges its "default" trait with its parents "default" trait, giving priority to elements defined on the child loader' do
       ParentLoader6 = Class.new(Loaders::Average)
-      ParentLoader6.trait(:default, my_param: 'parent trait value', array: [{something: 'parent trait value for something'}])
+      ParentLoader6.trait(:default, my_param: 'parent trait value', array: [{ something: 'parent trait value for something' }])
 
       Loader6 = Class.new(ParentLoader6)
       Loader6.trait(:default, my_param: 'trait value')
 
       payload = Loader6.new(ArgsHandler.parse('c default_trait_child_loader')).load
 
-      expect(payload[:params]).to eq({
-        array: [
-          {
-            something: 'parent trait value for something'
-          }
-        ],
-        my_param: 'trait value'
-      })
+      expect(payload[:params]).to eq(
+        {
+          array: [
+            {
+              something: 'parent trait value for something'
+            }
+          ],
+          my_param: 'trait value'
+        }
+      )
     end
 
     it 'merges its custom trait with its parents custom trait, giving priority to elements defined on the child loader' do
       ParentLoader7 = Class.new(Loaders::Average)
-      ParentLoader7.trait(:my_trait, my_param: 'parent trait value', array: [{something: 'parent trait value for something'}])
+      ParentLoader7.trait(:my_trait, my_param: 'parent trait value', array: [{ something: 'parent trait value for something' }])
 
       Loader7 = Class.new(ParentLoader7)
       Loader7.trait(:my_trait, my_param: 'trait value')
 
       payload = Loader7.new(ArgsHandler.parse('c default_trait_child_loader my_trait:')).load
 
-      expect(payload[:params]).to eq({
-        array: [
-          {
-            something: 'parent trait value for something'
-          }
-        ],
-        my_param: 'trait value'
-      })
+      expect(payload[:params]).to eq(
+        {
+          array: [
+            {
+              something: 'parent trait value for something'
+            }
+          ],
+          my_param: 'trait value'
+        }
+      )
     end
   end
 end

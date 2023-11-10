@@ -21,3 +21,7 @@ Metrics/CyclomaticComplexity:
 
 Style/HashSyntax:
   Enabled: false
+
+Lint/ConstantDefinitionInBlock:
+  Exclude:
+    - 'spec/**/*'
