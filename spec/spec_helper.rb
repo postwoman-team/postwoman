@@ -1,4 +1,8 @@
 require_relative File.dirname(__FILE__) + '/../utils/dependencies.rb'
+StartUp.execute
+
+I18n.locale = :en
+
 Dir[File.dirname(__FILE__) + '/support/**/*.rb'].each { |file| require file }
 
 RSpec.configure do |config|
@@ -17,9 +21,6 @@ RSpec.configure do |config|
     Env.workbench.clear
 
     allow(Readline).to receive(:get_screen_size) { [Float::INFINITY, Float::INFINITY] }
-
-    allow(File).to receive(:exist?).and_call_original
-    allow(File).to receive(:exist?).with('config.yml').and_return(false)
   end
 
   config.mock_framework = :rspec

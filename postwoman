@@ -14,6 +14,6 @@ end
 while (line = Readline.readline('> ', true))
   handle_history(line)
 
-  load_loaders
+  DynamicDependencies.load_loaders
   attempt_command(line)
 end

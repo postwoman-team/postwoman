@@ -1,4 +1,6 @@
 :language: en
+:editor: code
+:debugger: pry
 :theme:
   :tags:
     :h1:

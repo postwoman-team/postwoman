@@ -2,7 +2,7 @@ en:
   commands:
     base:
       missing_positional_argument: "Missing #%{index} positional argument: '%{name}'"
-      editor_not_found: "The environment variable 'EDITOR' has not been set to open the target file"
+      editor_not_found: "The setting 'editor' has not been set to open the target file"
       editing: "Editing %{name}..."
       creating: "Creating new %{name}..."
       invalid_subcommand: "Invalid subcommand: '%{name}'"
