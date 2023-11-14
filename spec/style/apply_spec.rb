@@ -41,7 +41,7 @@ describe Style do
                 bottom: '┴'
               }
             }
-          },
+          }
         }
       )
       expect(Style.apply('<box><h1>some text I have<h1></box>')).to eq(
