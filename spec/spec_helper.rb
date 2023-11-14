@@ -1,5 +1,6 @@
 require_relative File.dirname(__FILE__) + '/../utils/dependencies.rb'
 StartUp.execute
+DynamicDependencies.load_loaders
 
 I18n.locale = :en
 
