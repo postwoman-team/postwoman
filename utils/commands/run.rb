@@ -20,8 +20,6 @@ module Commands
         return
       end
 
-      return if loader.failed?
-
       request = Request.new(loader_payload)
       request.execute
       return puts Views.request(args, request) if request.failed?
