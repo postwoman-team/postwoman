@@ -24,3 +24,7 @@ Style/HashSyntax:
 
 Style/NegatedIf:
   Enabled: false
+
+Lint/ConstantDefinitionInBlock:
+  Exclude:
+    - 'spec/**/*'
