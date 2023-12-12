@@ -7,7 +7,8 @@ module ArgsHandler
       no_body: 'nb',
       no_loader_payload: 'nl',
       activate_debugger: 'bb',
-      apply_workbench: 'wb'
+      apply_workbench: 'wb',
+      help: 'h'
     }
 
     def initialize(positionals, pairs, flags)

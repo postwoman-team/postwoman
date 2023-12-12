@@ -3,3 +3,4 @@ pt-BR:
     workbench:
       key_not_found: "Chave '%{name}' não encontrada na workbench"
       key_already_exists: "Chave '%{name}' já existe na workbench"
+      description: "Acessa a workbench, exibindo ela. Pode ser chamado sozinho ou com argumentos para modificá-la. Os pares definem valores."

@@ -3,3 +3,4 @@ pt-BR:
     run:
       not_found: "Nenhum loader encontrado: '%{name}'"
       loader_raised_error: "Seu loader '%{name}' gerou uma exceção:"
+      description: "Executa um loader, fazendo uma requisição usando o payload resultante. Pares sobrescrevem os params."

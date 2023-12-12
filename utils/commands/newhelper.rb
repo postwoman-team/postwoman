@@ -6,7 +6,7 @@ module Commands
       name: 'Loaders helper name in snake case.'
     }.freeze
 
-    def execute
+    def execute_inner
       name = args[0]
       template = File.read('templates/loader_helper.rb')
       new_or_edit(name, 'loaders/utils/', template, 'helper')

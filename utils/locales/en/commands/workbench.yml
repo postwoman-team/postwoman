@@ -3,3 +3,4 @@ en:
     workbench:
       key_not_found: "Key '%{name}' not found on workbench"
       key_already_exists: "Key '%{name}' already exists on workbench"
+      description: "Access workbench, printing it. May be called alone or with args to modify it. Pairs set values."

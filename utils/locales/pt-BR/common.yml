@@ -2,3 +2,6 @@ pt-BR:
   common:
     hidden: 'Oculto'
     empty: 'Vazio'
+    example: 'Exemplo'
+    usage: 'Utilização'
+    description: 'Descrição'

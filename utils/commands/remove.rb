@@ -6,7 +6,7 @@ module Commands
       name: 'Loaders name'
     }.freeze
 
-    def execute
+    def execute_inner
       loader_name = args[0]
       path = "loaders/#{loader_name}.rb"
 

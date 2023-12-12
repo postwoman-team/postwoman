@@ -6,7 +6,7 @@ module Commands
       index: 'Index of the wanted request(1 for last, 2 for second last, etc.).'
     }.freeze
 
-    def execute
+    def execute_inner
       index = (args[0]&.to_i || 1) * -1
       return puts 'Indexes start on #1 ;)'.yellow if index.zero?
       return puts 'No requests made at the moment.'.yellow if Env.requests.empty?

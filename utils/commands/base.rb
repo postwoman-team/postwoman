@@ -3,6 +3,7 @@ module Commands
     ALIASES = [].freeze
     DESCRIPTION = ''.freeze
     ARGS = {}.freeze
+    EXAMPLE = ''
 
     attr_reader :args
 
@@ -10,7 +11,17 @@ module Commands
       @args = args
     end
 
-    def execute; end
+    def execute
+      if args.flag?(:help)
+        return puts Views::Commands::Base.show_command_help(
+          self.class.name, self.class::ALIASES, self.class::ARGS, self.class::EXAMPLE
+        )
+      end
+
+      execute_inner
+    end
+
+    def execute_inner; end
 
     def self.help_rows
       command_name = name.split('::')[1].upcase

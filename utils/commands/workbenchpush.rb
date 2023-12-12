@@ -6,7 +6,7 @@ module Commands
       wanted_keys: '(Can stack) The keys you want to be pulled.'
     }
 
-    def execute
+    def execute_inner
       pairs_to_workbench
       last_request_to_worbench
       puts Views.workbench

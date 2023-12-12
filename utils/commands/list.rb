@@ -3,7 +3,7 @@ module Commands
     ALIASES = %w[ls all loaders].freeze
     DESCRIPTION = 'Lists all loaders'.freeze
 
-    def execute
+    def execute_inner
       puts Views::Commands::List.success(fetch_loader_names)
     end
   end

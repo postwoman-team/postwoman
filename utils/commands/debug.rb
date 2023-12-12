@@ -3,7 +3,7 @@ module Commands
     ALIASES = %w[bindingpry binding.pry byebug bp bb dbg].freeze
     DESCRIPTION = 'Runs debugger in a context that provides some useful variables and methods such as: workbench, last, etc.'.freeze
 
-    def execute
+    def execute_inner
       start_debug
     end
 

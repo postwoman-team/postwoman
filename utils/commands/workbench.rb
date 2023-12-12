@@ -1,14 +1,13 @@
 module Commands
   class Workbench < Base
     ALIASES = %w[wb].freeze
-    DESCRIPTION = 'Access workbench, printing it. May be called alone or with args to modify it. Pairs set values.'.freeze
     ARGS = {
       subcommand: '[d]delete (followed by target key), [cp]copy (followed by target key and new key), [rn]rename (followed by target key and new name)',
       target_key: 'Used on (all) subcommands',
       second_arg: 'Only on subcommands [rename] and [copy]'
     }.freeze
 
-    def execute
+    def execute_inner
       subcommand = args[0]
       case subcommand
       when 'd'

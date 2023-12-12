@@ -1,12 +1,12 @@
 module Commands
   class Run < Base
     ALIASES = %w[c connect r]
-    DESCRIPTION = 'Runs a loader, making a request using the setted payload. Pairs overwrite params.'
+    EXAMPLE = 'run my_loader'.freeze
     ARGS = {
       loader_name: "Wanted loader's name."
     }.freeze
 
-    def execute
+    def execute_inner
       loader_name_arg = obrigatory_positional_arg(0) || return
       loader_name = camelize(loader_name_arg)
 

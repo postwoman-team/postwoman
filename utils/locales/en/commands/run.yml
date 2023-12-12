@@ -3,3 +3,4 @@ en:
     run:
       not_found: "No loader found: '%{name}'"
       loader_raised_error: "Your loader '%{name}' raised an exception:"
+      description: "Runs a loader, making a request using the resulting payload. Pairs overwrite params."

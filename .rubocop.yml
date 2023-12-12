@@ -21,3 +21,6 @@ Metrics/CyclomaticComplexity:
 
 Style/HashSyntax:
   Enabled: false
+
+Style/NegatedIf:
+  Enabled: false

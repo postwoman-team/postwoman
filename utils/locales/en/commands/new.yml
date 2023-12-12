@@ -2,3 +2,4 @@ en:
   commands:
     new:
       invalid_loader_name: "Invalid loader name '%{name}'"
+      description: "Creates new loader, unless it already exists. Also opens the loader on you default editor."

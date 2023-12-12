@@ -3,7 +3,7 @@ module Commands
     ALIASES = %w[exit].freeze
     DESCRIPTION = 'Exits the application'.freeze
 
-    def execute
+    def execute_inner
       exit
     end
   end

@@ -3,7 +3,7 @@ module Commands
     ALIASES = %w[h].freeze
     DESCRIPTION = 'Shows this message.'.freeze
 
-    def execute
+    def execute_inner
       help_page = args[0]
 
       case help_page
