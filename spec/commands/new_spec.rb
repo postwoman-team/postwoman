@@ -25,7 +25,7 @@ describe 'New command' do
         end
       end
     TEXT
-    ENV['EDITOR'] = 'emacs'
+    allow(Env.config).to receive(:[]).with(:editor).and_return('emacs')
     command = Commands::New.new(ArgsHandler.parse('new testing'))
     pretend_file_doesnt_exist('loaders/testing.rb')
 
@@ -41,7 +41,7 @@ describe 'New command' do
   end
 
   it 'edits existing loader on default editor when loader already exists', :file_mocking do
-    ENV['EDITOR'] = 'emacs'
+    allow(Env.config).to receive(:[]).with(:editor).and_return('emacs')
     command = Commands::New.new(ArgsHandler.parse('new testing'))
     pretend_file_exists('loaders/testing.rb')
 
@@ -66,7 +66,7 @@ describe 'New command' do
   end
 
   it 'treats loader name to be downcased', :file_mocking do
-    ENV['EDITOR'] = 'emacs'
+    allow(Env.config).to receive(:[]).with(:editor).and_return('emacs')
     command = Commands::New.new(ArgsHandler.parse('new Testing2'))
     pretend_file_exists('loaders/testing2.rb')
 
@@ -102,7 +102,7 @@ describe 'New command' do
 
   context 'when default editor is not set' do
     it 'outputs message after loader creation' do
-      ENV['EDITOR'] = nil
+      allow(Env.config).to receive(:[]).with(:editor).and_return(nil)
       command = Commands::New.new(ArgsHandler.parse('new testing'))
       pretend_file_doesnt_exist('loaders/testing.rb')
 
@@ -112,13 +112,13 @@ describe 'New command' do
           ┌────────────────────────┐
           │ Creating new loader... │
           └────────────────────────┘
-          The environment variable 'EDITOR' has not been set to open the target file
+          The setting 'editor' has not been set to open the target file
         TEXT
       )
     end
 
     it 'outputs message after trying to edit loader' do
-      ENV['EDITOR'] = nil
+      allow(Env.config).to receive(:[]).with(:editor).and_return(nil)
       command = Commands::New.new(ArgsHandler.parse('new testing'))
       pretend_file_exists('loaders/testing.rb')
 
@@ -128,7 +128,7 @@ describe 'New command' do
           ┌───────────────────┐
           │ Editing loader... │
           └───────────────────┘
-          The environment variable 'EDITOR' has not been set to open the target file
+          The setting 'editor' has not been set to open the target file
         TEXT
       )
     end

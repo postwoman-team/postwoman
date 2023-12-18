@@ -37,11 +37,11 @@ module Commands
     end
 
     def edit_loader(name)
-      system("#{ENV['EDITOR']} loaders/#{name}.rb")
+      system("#{Env.config[:editor]} loaders/#{name}.rb")
     end
 
     def edit_helper(name)
-      system("#{ENV['EDITOR']} loaders/utils/#{name}.rb")
+      system("#{Env.config[:editor]} loaders/utils/#{name}.rb")
     end
 
     def new_or_edit(file_name, path, default_content, label)
@@ -49,9 +49,9 @@ module Commands
 
       if File.exist?(path)
         puts Views::Commands::Base.editing(label)
-        return puts Views::Commands::Base.editor_not_found_error if ENV['EDITOR'].nil?
+        return puts Views::Commands::Base.editor_not_found_error if Env.config[:editor].nil?
 
-        return system("#{ENV['EDITOR']} #{path}")
+        return system("#{Env.config[:editor]} #{path}")
       end
 
       puts Views::Commands::Base.creating(label)
@@ -59,9 +59,9 @@ module Commands
         f.write(default_content)
       end
 
-      return puts Views::Commands::Base.editor_not_found_warning if ENV['EDITOR'].nil?
+      return puts Views::Commands::Base.editor_not_found_warning if Env.config[:editor].nil?
 
-      system("#{ENV['EDITOR']} #{path}")
+      system("#{Env.config[:editor]} #{path}")
     end
 
     def obrigatory_positional_arg(index, custom_name = nil)
@@ -74,7 +74,7 @@ module Commands
     end
 
     def start_debug
-      case ENV['DEBUGGER']
+      case Env.config[:debugger]
       when 'pry'
         binding.pry
       when 'byebug'
