@@ -21,7 +21,7 @@ module StartUp
     return if File.exist?(path)
 
     File.open(path, 'w') do |f|
-      f.write(File.read(template_path))
+      f.write(File.read(Env.src_dir(template_path)))
     end
   end
 end

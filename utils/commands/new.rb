@@ -12,7 +12,7 @@ module Commands
 
       path = "loaders/#{name}.rb"
 
-      template = File.read('templates/loader.rb')
+      template = File.read(Env.src_dir('templates/loader.rb'))
       template.gsub!('DoNotChangeThisClassName', camelize(name))
 
       new_or_edit(name, 'loaders/', template, 'loader')

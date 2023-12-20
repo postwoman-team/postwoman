@@ -1,0 +1,4 @@
+#!/usr/bin/env ruby
+
+require "#{__dir__}/../utils/dependencies.rb"
+Cli.start

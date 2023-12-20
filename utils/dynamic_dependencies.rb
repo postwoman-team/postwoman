@@ -4,7 +4,7 @@ module DynamicDependencies
   def load_loaders
     return unless load_loader('loaders/base.rb')
 
-    Dir["#{File.dirname(__FILE__)}/../loaders/**/*.rb"].each do |file|
+    Dir['loaders/**/*.rb'].each do |file|
       load_loader(file)
     end
   end

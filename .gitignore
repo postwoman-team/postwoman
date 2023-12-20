@@ -3,3 +3,5 @@ loaders/*.rb
 .byebug_history
 .env
 config.yml
+**/*.gem
+/tmp

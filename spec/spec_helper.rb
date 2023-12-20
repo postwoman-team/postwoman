@@ -1,10 +1,16 @@
-require_relative File.dirname(__FILE__) + '/../utils/dependencies.rb'
+require_relative __dir__ + '/../utils/dependencies.rb'
+
+FileUtils.rm_rf('tmp') if Dir.exist?('tmp')
+Dir.mkdir('tmp')
+Dir.mkdir('tmp/loaders')
+Dir.chdir('tmp')
+
 StartUp.execute
 DynamicDependencies.load_loaders
 
 I18n.locale = :en
 
-Dir[File.dirname(__FILE__) + '/support/**/*.rb'].each { |file| require file }
+Dir[__dir__ + '/support/**/*.rb'].each { |file| require file }
 
 RSpec.configure do |config|
   config.include StdoutHelper
