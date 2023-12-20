@@ -19,8 +19,10 @@ RSpec.configure do |config|
     c.syntax = :expect
   end
 
-  config.before(:each, :file_mocking) do
-    config.include FileMocking
+  config.after(:each) do
+    Dir.glob('loaders/*').each do |file|
+      File.delete(file) unless File.basename(file) == 'base.rb'
+    end
   end
 
   config.before(:each) do
