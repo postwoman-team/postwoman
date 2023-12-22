@@ -3,10 +3,8 @@ module Cli
 
   def start
     path = ARGV.find { |arg| !arg.start_with?('-') } || '.'
-    Package.create(path) if ARGV.include?('-n')
-    return puts Views.invalid_package(path) unless Package.valid?(path)
+    return unless Package.load(path, create_flag: ARGV.include?('-n'))
 
-    Dir.chdir(path)
     StartUp.execute
 
     while (line = Readline.readline("#{Package.metainfo(:name)}> ", true))

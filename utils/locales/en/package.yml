@@ -1,0 +1,8 @@
+en:
+  package:
+    invalid:
+      invalid_directory: "Invalid directory: %{path}"
+      help: "Type %{new_command} to create a package or %{interact_command} to interact with a package"
+    creating_missing_file: "Creating missing file: "
+    creating_new: "Creating new package: "
+    already_exists: "Package already exists: "
