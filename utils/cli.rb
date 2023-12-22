@@ -7,7 +7,11 @@ module Cli
 
     StartUp.execute
 
-    while (line = Readline.readline("#{Package.metainfo(:name)}> ", true))
+    pre_input = '<preinput>'
+    pre_input << Package.metainfo(:name)
+    pre_input << '</preinput><pointer>'
+
+    while (line = Readline.readline(Style.apply(pre_input), true))
       if Readline::HISTORY.to_a.empty?
         File.write('.postwoman_history', "#{line}\n", mode: 'a')
       elsif Readline::HISTORY.to_a[-2] == line || /^\s*$/ =~ line

@@ -157,7 +157,7 @@ Naming/PredicateName:
 Style/ClassAndModuleChildren:
   Exclude:
     - 'loaders/utils/helper.rb'
-    - 'templates/loader_helper.rb'
+    - 'utils/templates/loader_helper.rb'
 
 # Offense count: 3
 Style/ClassVars:

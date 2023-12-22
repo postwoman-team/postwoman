@@ -7,7 +7,6 @@ Gem::Specification.new do |s|
   s.email       = 'hikaridesuyoo@gmail.com'
   s.executables = ['postwoman']
   s.files       = Dir['utils/**/*']
-  s.files      += Dir['templates/**/*']
   s.license     = 'GPL-3.0'
   s.add_dependency 'awesome_print'
   s.add_dependency 'byebug'

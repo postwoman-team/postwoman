@@ -24,6 +24,7 @@ require 'yaml'
 require_relative 'postwoman_loader'
 
 Dir["#{__dir__}/**/base.rb"].each { |file| require_relative file }
-Dir["#{__dir__}/**/*.rb"].each { |file| require_relative file }
+Dir["#{__dir__}/**/*.rb"].each { |file| require_relative file unless file.include?('templates') }
 
 I18n.load_path += Dir["#{__dir__}/locales/**/*.yml"]
+I18n.locale = Env.config[:language]

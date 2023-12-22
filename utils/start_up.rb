@@ -10,8 +10,6 @@ module StartUp
     history = File.open('.postwoman_history', 'a+').readlines.map(&:chomp)
     Readline::HISTORY.push(*history)
 
-    I18n.locale = Env.config[:language]
-
     puts Views.start_up_message
   end
 end

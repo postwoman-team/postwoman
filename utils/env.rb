@@ -1,24 +1,32 @@
-class Env
-  @@workbench = {}
-  @@requests = []
+module Env
+  DOTFILE_PATH = File.join(Dir.home, '.postwoman')
+  CONFIG_PATH = File.join(DOTFILE_PATH, 'config.yml')
 
-  def self.requests
-    @@requests
+  module_function
+
+  def requests
+    @requests ||= []
   end
 
-  def self.workbench
-    @@workbench
+  def workbench
+    @workbench ||= {}
   end
 
-  def self.src_dir(path)
-    "#{__dir__}/../#{path}"
+  def src_dir(path)
+    "#{__dir__}/#{path}"
   end
 
-  def self.config
+  def config
     return @config if @config
 
-    default_config = YAML.load_file(src_dir('utils/default_config.yml'))
-    user_config = File.exist?('config.yml') ? YAML.load_file('config.yml') : {}
+    default_config = YAML.load_file(src_dir('default_config.yml'))
+    unless File.exist?(CONFIG_PATH)
+      FileUtils.mkdir_p(DOTFILE_PATH)
+      File.write(CONFIG_PATH, YAML.dump({}))
+    end
+
+    user_config = YAML.load_file(CONFIG_PATH)
+
     merger = proc do |_key, default_value, user_value|
       default_value.is_a?(Hash) && user_value.is_a?(Hash) ? default_value.merge(user_value, &merger) : user_value
     end

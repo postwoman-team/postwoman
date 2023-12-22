@@ -1,0 +1,8 @@
+pt-BR:
+  package:
+    invalid:
+      invalid_directory: "Diretório inválido: %{path}"
+      help: "Digite %{new_command} para criar um pacote ou %{interact_command} para interagir com um pacote"
+    creating_missing_file: "Criando arquivo faltante: "
+    creating_new: "Criando novo pacote: "
+    already_exists: "Pacote já existe: "
