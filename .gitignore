@@ -1,5 +1,4 @@
 loaders/*.rb
 .postwoman_history
-.byebug_history
 **/*.gem
 /tmp

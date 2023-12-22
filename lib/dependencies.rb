@@ -1,7 +1,6 @@
 require 'rubygems'
 require 'io/console'
 require 'awesome_print'
-require 'byebug'
 require 'colorize'
 require 'debug'
 require 'faraday'

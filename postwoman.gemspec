@@ -9,7 +9,6 @@ Gem::Specification.new do |s|
   s.files       = Dir['lib/**/*']
   s.license     = 'GPL-3.0'
   s.add_dependency 'awesome_print'
-  s.add_dependency 'byebug'
   s.add_dependency 'colorize'
   s.add_dependency 'debug'
   s.add_dependency 'faraday'

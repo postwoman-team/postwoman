@@ -77,8 +77,6 @@ module Commands
       case Env.config[:debugger]
       when 'pry'
         binding.pry
-      when 'byebug'
-        byebug
       when 'debug'
         binding.break
       end

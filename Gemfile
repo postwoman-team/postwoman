@@ -9,7 +9,6 @@ gemspec
 # gem 'nokogiri'
 # gem 'nori'
 # gem 'pry-byebug'
-# gem 'byebug', git: 'https://github.com/molvrr/byebug.git'
 # gem 'debug'
 # gem 'readline'
 # gem 'rspec'
