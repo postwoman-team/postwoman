@@ -1,4 +1,4 @@
-require_relative __dir__ + '/../utils/dependencies.rb'
+require_relative __dir__ + '/../lib/dependencies.rb'
 
 FileUtils.rm_rf('tmp') if Dir.exist?('tmp')
 Dir.mkdir('tmp')

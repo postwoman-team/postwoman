@@ -5,19 +5,19 @@ AllCops:
 
 Metrics/AbcSize:
   Exclude:
-    - 'utils/views/**/*'
+    - 'lib/views/**/*'
 
 Metrics/MethodLength:
   Exclude:
-    - 'utils/views/**/*'
+    - 'lib/views/**/*'
 
 Metrics/PerceivedComplexity:
   Exclude:
-    - 'utils/views/**/*'
+    - 'lib/views/**/*'
 
 Metrics/CyclomaticComplexity:
   Exclude:
-    - 'utils/views/**/*'
+    - 'lib/views/**/*'
 
 Style/HashSyntax:
   Enabled: false
