@@ -2,6 +2,11 @@ module Views
   module_function
 
   def invalid_package(path)
-    Style.apply("<fail>Invalid directory: #{path}</fail><br>Type `postwoman -n my_path` to create a package or `postwoman my_path` to interact with a package")
+    str = '<fail>'
+    str << I18n.t('invalid_package.invalid_directory', path: path)
+    str << '</fail><br>'
+    str << I18n.t('invalid_package.help', new_command: '<hl>postwoman -n my_path</hl>', interact_command: '<hl>postwoman my_path</hl>')
+
+    Style.apply(str)
   end
 end

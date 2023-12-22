@@ -1,0 +1,4 @@
+en:
+  invalid_package:
+    invalid_directory: "Invalid directory: %{path}"
+    help: "Type %{new_command} to create a package or %{interact_command} to interact with a package"
