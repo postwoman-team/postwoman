@@ -6,6 +6,7 @@ require 'colorize'
 require 'debug'
 require 'faraday'
 require 'faraday/typhoeus'
+require 'fileutils'
 require 'i18n'
 require 'json'
 require 'nokogiri'
@@ -20,10 +21,9 @@ require 'tabelinha'
 require 'terminal-table'
 require 'yaml'
 
-require_relative 'loaders/builtin/base'
+require_relative 'postwoman_loader'
 
 Dir["#{__dir__}/**/base.rb"].each { |file| require_relative file }
 Dir["#{__dir__}/**/*.rb"].each { |file| require_relative file }
-DynamicDependencies.load_loaders
 
 I18n.load_path += Dir["#{__dir__}/locales/**/*.yml"]

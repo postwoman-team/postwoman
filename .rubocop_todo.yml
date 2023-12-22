@@ -137,7 +137,7 @@ Metrics/PerceivedComplexity:
 # AllowedNames: as, at, by, cc, db, id, if, in, io, ip, of, on, os, pp, to
 Naming/MethodParameterName:
   Exclude:
-    - 'utils/loaders/builtin/base.rb'
+    - 'utils/postwoman_loader.rb'
 
 # Offense count: 1
 # Configuration parameters: NamePrefix, ForbiddenPrefixes, AllowedMethods, MethodDefinitionMacros.
@@ -194,7 +194,7 @@ Style/FrozenStringLiteralComment:
 # Offense count: 1
 Style/MissingRespondToMissing:
   Exclude:
-    - 'utils/loaders/builtin/base.rb'
+    - 'utils/postwoman_loader.rb'
 
 # Offense count: 6
 # This cop supports unsafe autocorrection (--autocorrect-all).

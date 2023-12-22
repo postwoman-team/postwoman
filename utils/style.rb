@@ -1,4 +1,9 @@
 module Style
+  ESCAPE_CHARACTERS = {
+    '&' => '&&',
+    '<' => '&'
+  }.freeze
+
   module_function
 
   def apply(string)
@@ -16,5 +21,15 @@ module Style
     styled.gsub(%r{<box>(.*?)</box>}im) do
       table([[::Regexp.last_match(1)]], protect: false)
     end
+  end
+
+  def protect(obj)
+    obj.to_s.gsub(Regexp.union(ESCAPE_CHARACTERS.keys), ESCAPE_CHARACTERS)
+  end
+
+  def table(rows, protect: true)
+    options = Env.config.dig(:theme, :tables)
+    table = Tabelinha.table(rows, **options, max_width: Readline.get_screen_size[1] - rows.first.length - 1)
+    protect ? Style.protect(table) : table
   end
 end

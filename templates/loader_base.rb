@@ -1,5 +1,5 @@
 module Loaders
-  class Base < Builtin::Base
+  class Base < PostwomanLoader
     trait :default,
           default_headers: { 'content-type': 'application/json' }
   end

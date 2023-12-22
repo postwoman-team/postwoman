@@ -1,5 +1,5 @@
 module Loaders
-  class Average < Loaders::Builtin::Base
+  class Average < PostwomanLoader
     private
 
     def http_method
