@@ -4,7 +4,7 @@ jobs:
   tests:
     strategy:
       matrix:
-        version: [2.7, 3.0, latest]
+        version: [3.0, latest]
     runs-on: ubuntu-latest
     container:
       image: ruby:${{ matrix.version }}
