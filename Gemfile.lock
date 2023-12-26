@@ -2,21 +2,21 @@ PATH
   remote: .
   specs:
     postwoman (0.0.0)
-      awesome_print
-      colorize
-      debug
-      faraday
-      faraday-typhoeus
-      i18n
-      json
-      nokogiri
-      nori
-      pry-byebug
-      readline
-      strscan
+      awesome_print (~> 1.9.2)
+      colorize (~> 1.1.0)
+      debug (~> 1.9.1)
+      faraday (~> 2.7.12)
+      faraday-typhoeus (~> 1.0.0)
+      i18n (~> 1.14.1)
+      json (~> 2.7.1)
+      nokogiri (~> 1.15.5)
+      nori (~> 2.6.0)
+      pry-byebug (~> 3.10.1)
+      readline (~> 0.0.3)
+      strscan (~> 3.0.7)
       tabelinha (~> 1.0)
-      terminal-table
-      yaml
+      terminal-table (~> 3.0.2)
+      yaml (~> 0.2.1)
 
 GEM
   remote: https://rubygems.org/
@@ -80,6 +80,8 @@ GEM
     mini_portile2 (2.8.5)
     nokogiri (1.15.5)
       mini_portile2 (~> 2.8.2)
+      racc (~> 1.4)
+    nokogiri (1.15.5-x86_64-linux)
       racc (~> 1.4)
     nori (2.6.0)
     parallel (1.23.0)

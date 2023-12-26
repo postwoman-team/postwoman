@@ -6,6 +6,7 @@ module Cli
     return unless Package.load(path, create_flag: ARGV.include?('-n'))
 
     StartUp.execute
+    DynamicDependencies.load_loaders
 
     pre_input = '<preinput>'
     pre_input << Package.metainfo(:name)
