@@ -13,7 +13,7 @@ module Views
           end
 
           snakecased
-        end.compact.join(' ')
+        end.compact.sort.join(' ')
 
         str = "<hl>base</hl> #{str}" if has_base
 

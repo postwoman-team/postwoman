@@ -5,7 +5,7 @@ describe 'List command' do
     expect(unstyled_stdout_from { attempt_command('ls') }).to eq(
       <<~TEXT
         ┌─────────────────────────────┐
-        │ base missing_method average │
+        │ base average missing_method │
         └─────────────────────────────┘
       TEXT
     )
