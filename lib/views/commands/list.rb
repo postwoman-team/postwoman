@@ -7,10 +7,13 @@ module Views
         has_base = false
         str = loader_names.map do |loader_name|
           snakecased = snakecase(loader_name)
-          next has_base = true if snakecased == 'base'
+          if snakecased == 'base'
+            has_base = true
+            next
+          end
 
           snakecased
-        end.join(' ')
+        end.compact.join(' ')
 
         str = "<hl>base</hl> #{str}" if has_base
 

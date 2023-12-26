@@ -3,7 +3,6 @@ PATH
   specs:
     postwoman (0.0.0)
       awesome_print
-      byebug
       colorize
       debug
       faraday

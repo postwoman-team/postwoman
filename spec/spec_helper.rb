@@ -1,14 +1,11 @@
 require_relative __dir__ + '/../lib/dependencies.rb'
 
 FileUtils.rm_rf('tmp') if Dir.exist?('tmp')
-Dir.mkdir('tmp')
-Dir.mkdir('tmp/loaders')
-Dir.chdir('tmp')
-
-StartUp.execute
-DynamicDependencies.load_loaders
 
 I18n.locale = :en
+StartUp.execute
+Package.load('./tmp', create_flag: true)
+DynamicDependencies.load_loaders
 
 Dir[__dir__ + '/support/**/*.rb'].each { |file| require file }
 
