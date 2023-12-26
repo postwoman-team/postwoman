@@ -14,8 +14,6 @@ PATH
       pry-byebug
       readline
       rspec
-      rubocop (~> 1.55)
-      rubycritic
       strscan
       tabelinha (~> 1.0)
       terminal-table
@@ -181,6 +179,8 @@ PLATFORMS
 
 DEPENDENCIES
   postwoman!
+  rubocop (~> 1.55)
+  rubycritic
 
 BUNDLED WITH
    2.4.18

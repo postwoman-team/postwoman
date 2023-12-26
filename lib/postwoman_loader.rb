@@ -1,5 +1,5 @@
 class PostwomanLoader
-  @@trait_variables = {}
+  @@trait_variables = {} # rubocop:disable Style/ClassVars
 
   def initialize(args)
     @args = args
