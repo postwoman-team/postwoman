@@ -1,5 +1,5 @@
 module Loaders
-  class MissingMethod < Loaders::Builtin::Base
+  class MissingMethod < PostwomanLoader
     private
 
     def http_method

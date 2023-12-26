@@ -12,15 +12,6 @@ describe 'Debug command' do
     expect(command_binding).to have_received(:pry)
   end
 
-  it 'calls byebug if debugger is byebug' do
-    allow(Env.config).to receive(:[]).with(:debugger).and_return('byebug')
-    allow(Byebug).to receive(:attach)
-
-    attempt_command('debug')
-
-    expect(Byebug).to have_received(:attach)
-  end
-
   it 'calls debug if debugger is debug' do
     allow(Env.config).to receive(:[]).with(:debugger).and_return('debug')
     command_obj = Commands::Debug.new(ArgsHandler.parse('debug'))

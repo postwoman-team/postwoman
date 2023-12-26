@@ -1,10 +1,13 @@
-require_relative File.dirname(__FILE__) + '/../utils/dependencies.rb'
-StartUp.execute
-DynamicDependencies.load_loaders
+require_relative __dir__ + '/../lib/dependencies.rb'
+
+FileUtils.rm_rf('tmp') if Dir.exist?('tmp')
 
 I18n.locale = :en
+StartUp.execute
+Package.load('./tmp', create_flag: true)
+DynamicDependencies.load_loaders
 
-Dir[File.dirname(__FILE__) + '/support/**/*.rb'].each { |file| require file }
+Dir[__dir__ + '/support/**/*.rb'].each { |file| require file }
 
 RSpec.configure do |config|
   config.include StdoutHelper
@@ -13,8 +16,10 @@ RSpec.configure do |config|
     c.syntax = :expect
   end
 
-  config.before(:each, :file_mocking) do
-    config.include FileMocking
+  config.after(:each) do
+    Dir.glob('loaders/*').each do |file|
+      File.delete(file) unless File.basename(file) == 'base.rb'
+    end
   end
 
   config.before(:each) do

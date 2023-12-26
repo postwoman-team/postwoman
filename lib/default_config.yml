@@ -1,0 +1,51 @@
+:language: en
+:editor: code
+:debugger: pry
+:theme:
+  :tags:
+    :h1:
+      - "\e[38;2;227;64;107m\e[1m"
+      - "\e[m"
+    :h2:
+      - "\e[38;2;173;127;168m"
+      - "\e[m"
+    :hl:
+      - "\e[38;2;114;159;207m"
+      - "\e[m"
+    :disabled:
+      - "\e[38;2;130;130;130m"
+      - "\e[m"
+    :success:
+      - "\e[38;2;138;226;52m"
+      - "\e[m"
+    :warning:
+      - "\e[38;2;196;172;102m"
+      - "\e[m"
+    :fail:
+      - "\e[38;2;239;41;41m"
+      - "\e[m"
+    :string:
+      - "\e[38;2;196;172;102m"
+      - "\e[m"
+    :preinput:
+      - "\e[38;2;130;130;130m"
+      - "\e[m"
+    :pointer:
+      - "> "
+    :br:
+      - "\n"
+  :tables:
+    :space_linebroken: true
+    :padding: 1
+    :corners:
+      :top_right: ┌
+      :top_left: ┐
+      :bottom_right: └
+      :bottom_left: ┘
+    :straight:
+      :vertical: │
+      :horizontal: ─
+    :junctions:
+      :top: ┬
+      :middle: ┼
+      :bottom: ┴

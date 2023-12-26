@@ -1,0 +1,3 @@
+pt-BR:
+  loaders:
+    missing_method: "Tentou achar '%{name}' mas falhou."

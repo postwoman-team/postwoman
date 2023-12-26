@@ -2,9 +2,12 @@ name: Pipeline
 on: [push]
 jobs:
   tests:
+    strategy:
+      matrix:
+        version: [3.0, latest]
     runs-on: ubuntu-latest
     container:
-      image: ruby:3.2.0
+      image: ruby:${{ matrix.version }}
     steps:
       - uses: actions/checkout@v3
       - run: bundle install --jobs 4 --retry 3
@@ -12,8 +15,8 @@ jobs:
   rubocop:
     runs-on: ubuntu-latest
     container:
-      image: ruby:3.2.0
+      image: ruby:3.0
     steps:
       - uses: actions/checkout@v3
       - run: bundle install --jobs 4 --retry 3
-      - run: bundle exec rubocop -f markdown --raise-cop-error postwoman **/*.rb >> $GITHUB_STEP_SUMMARY
+      - run: bundle exec rubocop -f markdown --raise-cop-error **/*.rb >> $GITHUB_STEP_SUMMARY
