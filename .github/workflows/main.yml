@@ -19,4 +19,4 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: bundle install --jobs 4 --retry 3
-      - run: bundle exec rubocop -f markdown --raise-cop-error postwoman **/*.rb >> $GITHUB_STEP_SUMMARY
+      - run: bundle exec rubocop -f markdown --raise-cop-error **/*.rb >> $GITHUB_STEP_SUMMARY
