@@ -1,11 +1,10 @@
 name: Pipeline
 on: [push]
 jobs:
-  example_matrix:
+  tests:
     strategy:
       matrix:
         version: [2.7, 3.0, 3.3]
-  tests:
     runs-on: ubuntu-latest
     container:
       image: ruby:${{ matrix.version }}
