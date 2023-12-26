@@ -21,7 +21,7 @@ module Views
 
       def missing_positional_argument(index, name)
         str =  '<fail>'
-        str << I18n.t('commands.base.missing_positional_argument', index:, name: name)
+        str << I18n.t('commands.base.missing_positional_argument', index: index, name: name)
         str << '</fail>'
 
         Style.apply(str)

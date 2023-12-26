@@ -1,6 +1,7 @@
 Gem::Specification.new do |s|
   s.name        = 'postwoman'
   s.version     = '0.0.0'
+  s.required_ruby_version = '>= 2.7.0'
   s.summary     = '100% CLI API platform'
   s.description = 'Make your API requests better with postwoman'
   s.authors     = ['Hikari Luz']
