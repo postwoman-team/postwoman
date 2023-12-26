@@ -13,7 +13,6 @@ PATH
       nori
       pry-byebug
       readline
-      rspec
       strscan
       tabelinha (~> 1.0)
       terminal-table
@@ -179,6 +178,7 @@ PLATFORMS
 
 DEPENDENCIES
   postwoman!
+  rspec
   rubocop (~> 1.55)
   rubycritic
 
