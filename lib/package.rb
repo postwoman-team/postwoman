@@ -9,6 +9,8 @@ module Package
   def load(path, create_flag: false) # rubocop:disable Metrics/MethodLength
     if create_flag
       create(path)
+    elsif !exist?(path)
+      return puts Views::Package.invalid(path)
     else
       package_path = nil
 
