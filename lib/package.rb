@@ -39,6 +39,11 @@ module Package
     true
   end
 
+  def load_sandbox
+    path = File.join(Env::DOTFILE_PATH, 'sandbox')
+    Package.load(path, create_flag: !exist?(path))
+  end
+
   def exist?(path)
     File.exist?("#{path}/#{YML_FILENAME}")
   end

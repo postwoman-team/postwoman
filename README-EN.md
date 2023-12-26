@@ -37,17 +37,23 @@ For now, the gem has not been published on RubyGems, so it's necessary to instal
 $ make install
 ```
 
-### How to Use
-To start using Postwoman, you need to create a package. To do this, use the command:
+### Como usar
+To start using Postwoman, you can use sandbox mode with the command:
+
+```bash
+$ postwoman
+```
+
+Although, you can create a package. In order to make one, use the command:
 
 ```bash
 $ postwoman -n package_directory
 ```
 
 If you already have a package, use the command:
-
 ```bash
 $ postwoman package_directory
 ```
+to interact with it.
 
 Type `help` for more information.

@@ -1,9 +1,15 @@
 module Cli
   module_function
 
-  def start
-    path = ARGV.find { |arg| !arg.start_with?('-') } || '.'
-    return unless Package.load(path, create_flag: ARGV.include?('-n'))
+  def start # rubocop:disable Metrics/MethodLength,Metrics/PerceivedComplexity
+    if ARGV.empty?
+      Package.load_sandbox
+    else
+      return unless Package.load(
+        ARGV.find { |arg| !arg.start_with?('-') } || '.',
+        create_flag: ARGV.include?('-n')
+      )
+    end
 
     StartUp.execute
     DynamicDependencies.load_loaders

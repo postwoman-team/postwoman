@@ -37,7 +37,13 @@ $ make install
 ```
 
 ### Como usar
-Para começar a usar o Postwoman, é necessário criar uma package. Para isso, utilize o comando:
+Para começar a usar o Postwoman, você pode usar o modo sandbox com o comando:
+
+```bash
+$ postwoman
+```
+
+No entanto, é possível criar uma package. Para isso, utilize o comando:
 
 ```bash
 $ postwoman -n diretorio_da_package
@@ -47,6 +53,7 @@ Caso você já tenha uma package, utilize o comando:
 ```bash
 $ postwoman diretorio_da_package
 ```
+para interagir com ela.
 
 Digite `help` para mais informações.
 
