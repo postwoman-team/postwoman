@@ -15,7 +15,7 @@ jobs:
   rubocop:
     runs-on: ubuntu-latest
     container:
-      image: ruby:${{ matrix.version }}
+      image: ruby:3.0
     steps:
       - uses: actions/checkout@v3
       - run: bundle install --jobs 4 --retry 3
