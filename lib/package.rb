@@ -6,25 +6,23 @@ module Package
 
   module_function
 
-  def load(path, create_flag: false) # rubocop:disable Metrics/MethodLength
-    if create_flag
-      create(path)
-    elsif !exist?(path)
-      return puts Views::Package.invalid(path)
-    else
-      package_path = nil
+  def load(input_path, create_flag: false) # rubocop:disable Metrics/MethodLength
+    create(input_path) if create_flag
 
-      Pathname.new(path).realpath.ascend do |possible_path|
+    path = nil
+
+    if exist?(input_path)
+      path = input_path
+    elsif Dir.exist?(input_path)
+      Pathname.new(input_path).realpath.ascend do |possible_path|
         if exist?(possible_path)
-          package_path = possible_path
+          path = possible_path
           break
         end
       end
-
-      return puts Views::Package.invalid(path) if package_path.nil?
-
-      path = package_path
     end
+
+    return puts Views::Package.invalid(input_path) if path.nil?
 
     Dir.chdir(path)
 
