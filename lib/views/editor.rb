@@ -4,7 +4,7 @@ module Views
 
     def editor_not_found_warning
       str =  '<warning>'
-      str << I18n.t('commands.base.editor_not_found')
+      str << I18n.t('editor.editor_not_found')
       str << '</warning>'
 
       Style.apply(str)
@@ -12,7 +12,7 @@ module Views
 
     def editor_not_found_error
       str =  '<fail>'
-      str << I18n.t('commands.base.editor_not_found')
+      str << I18n.t('editor.editor_not_found')
       str << '</fail>'
 
       Style.apply(str)
@@ -20,7 +20,7 @@ module Views
 
     def editing(name)
       str =  '<box>'
-      str << I18n.t('commands.base.editing', name: name)
+      str << I18n.t('editor.editing', name: name)
       str << '</box>'
 
       Style.apply(str)
@@ -28,7 +28,7 @@ module Views
 
     def creating(name)
       str =  '<box><success>'
-      str << I18n.t('commands.base.creating', name: name)
+      str << I18n.t('editor.creating', name: name)
       str << '</success></box>'
 
       Style.apply(str)
