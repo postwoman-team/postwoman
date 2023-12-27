@@ -1,0 +1,5 @@
+pt-BR:
+  editor:
+    editor_not_found: "A configuração 'editor' não foi definida para abrir o arquivo de destino."
+    editing: "Editando %{name}..."
+    creating: "Criando novo(a) %{name}..."

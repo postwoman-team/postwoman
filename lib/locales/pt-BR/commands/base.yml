@@ -2,8 +2,5 @@ pt-BR:
   commands:
     base:
       missing_positional_argument: "Faltando o argumento posicional #%{index}: '%{name}'"
-      editor_not_found: "A configuração 'editor' não foi definida para abrir o arquivo de destino."
-      editing: "Editando %{name}..."
-      creating: "Criando novo(a) %{name}..."
       invalid_subcommand: "Subcomando inválido: '%{name}'"
       subcommand_needs_positionals: "Este subcomando deve ser chamado com argumentos posicionais"
