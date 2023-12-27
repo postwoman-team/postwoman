@@ -15,7 +15,7 @@ module Commands
       template = File.read(Env.src_dir('templates/loader.rb'))
       template.gsub!('DoNotChangeThisClassName', camelize(name))
 
-      new_or_edit(name, 'loaders/', template, 'loader')
+      Editor.create_and_open("loaders/#{name}.rb", template, 'loader')
     end
   end
 end

@@ -26,10 +26,9 @@ describe 'New command' do
       end
     TEXT
     allow(Env.config).to receive(:[]).with(:editor).and_return('emacs')
-    command = Commands::New.new(ArgsHandler.parse('new testing'))
 
-    expect(command).to receive(:system).with('emacs loaders/testing.rb')
-    expect(unstyled_stdout_from { command.execute }).to eq(
+    expect(Editor).to receive(:system).with('emacs loaders/testing.rb')
+    expect(unstyled_stdout_from { attempt_command('new testing') }).to eq(
       <<~TEXT
         ┌────────────────────────┐
         │ Creating new loader... │
@@ -42,13 +41,12 @@ describe 'New command' do
 
   it 'edits existing loader on default editor when loader already exists', :file_mocking do
     allow(Env.config).to receive(:[]).with(:editor).and_return('emacs')
-    command = Commands::New.new(ArgsHandler.parse('new testing'))
     File.write('loaders/testing.rb', 'does not matter')
 
-    expect(command).to receive(:system).with('emacs loaders/testing.rb')
+    expect(Editor).to receive(:system).with('emacs loaders/testing.rb')
     expect(File).to_not receive(:open).with('loaders/testing.rb')
     expect(File).to_not receive(:write).with('loaders/testing.rb')
-    expect(unstyled_stdout_from { command.execute }).to eq(
+    expect(unstyled_stdout_from { attempt_command('new testing') }).to eq(
       <<~TEXT
         ┌───────────────────┐
         │ Editing loader... │
@@ -67,11 +65,10 @@ describe 'New command' do
 
   it 'treats loader name to be downcased', :file_mocking do
     allow(Env.config).to receive(:[]).with(:editor).and_return('emacs')
-    command = Commands::New.new(ArgsHandler.parse('new Testing2'))
     File.write('loaders/testing2.rb', 'does not matter')
 
-    expect(command).to receive(:system).with('emacs loaders/testing2.rb')
-    command.execute
+    expect(Editor).to receive(:system).with('emacs loaders/testing2.rb')
+    attempt_command('new Testing2')
   end
 
   context 'outputs error message when loader name is not valid because' do
@@ -103,9 +100,8 @@ describe 'New command' do
   context 'when default editor is not set' do
     it 'outputs message after loader creation' do
       allow(Env.config).to receive(:[]).with(:editor).and_return(nil)
-      command = Commands::New.new(ArgsHandler.parse('new testing'))
 
-      expect(unstyled_stdout_from { command.execute }).to eq(
+      expect(unstyled_stdout_from { attempt_command('new testing') }).to eq(
         <<~TEXT
           ┌────────────────────────┐
           │ Creating new loader... │
@@ -118,11 +114,10 @@ describe 'New command' do
 
     it 'outputs message after trying to edit loader' do
       allow(Env.config).to receive(:[]).with(:editor).and_return(nil)
-      command = Commands::New.new(ArgsHandler.parse('new testing'))
       File.write('loaders/testing.rb', 'does not matter')
 
-      expect(command).to_not receive(:system)
-      expect(unstyled_stdout_from { command.execute }).to eq(
+      expect(Editor).to_not receive(:system)
+      expect(unstyled_stdout_from { attempt_command('new testing') }).to eq(
         <<~TEXT
           ┌───────────────────┐
           │ Editing loader... │

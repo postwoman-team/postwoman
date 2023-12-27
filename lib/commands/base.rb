@@ -36,34 +36,6 @@ module Commands
       Env.workbench
     end
 
-    def edit_loader(name)
-      system("#{Env.config[:editor]} loaders/#{name}.rb")
-    end
-
-    def edit_helper(name)
-      system("#{Env.config[:editor]} loaders/utils/#{name}.rb")
-    end
-
-    def new_or_edit(file_name, path, default_content, label)
-      path = "#{path}#{file_name}.rb"
-
-      if File.exist?(path)
-        puts Views::Commands::Base.editing(label)
-        return puts Views::Commands::Base.editor_not_found_error if Env.config[:editor].nil?
-
-        return system("#{Env.config[:editor]} #{path}")
-      end
-
-      puts Views::Commands::Base.creating(label)
-      File.open(path, 'w') do |f|
-        f.write(default_content)
-      end
-
-      return puts Views::Commands::Base.editor_not_found_warning if Env.config[:editor].nil?
-
-      system("#{Env.config[:editor]} #{path}")
-    end
-
     def obrigatory_positional_arg(index, custom_name = nil)
       positional_names = self.class::ARGS.keys
       name = custom_name || positional_names[index]
