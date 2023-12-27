@@ -2,3 +2,4 @@ en:
   commands:
     new:
       invalid_loader_name: "Invalid loader name '%{name}'"
+      invalid_category: "Invalid category '%{name}'. Use 'l' or 's'"

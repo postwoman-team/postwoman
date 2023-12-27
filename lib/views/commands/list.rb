@@ -3,9 +3,9 @@ module Views
     module List
       module_function
 
-      def success(loader_names)
+      def success(loader_names, script_names)
         has_base = false
-        str = loader_names.map do |loader_name|
+        formatted_loaders = loader_names.map do |loader_name|
           snakecased = snakecase(loader_name)
           if snakecased == 'base'
             has_base = true
@@ -14,10 +14,14 @@ module Views
 
           snakecased
         end.compact.sort.join(' ')
+        formatted_loaders = "<hl>base</hl> #{formatted_loaders}" if has_base
+        formatted_scripts = script_names.join(' ')
 
-        str = "<hl>base</hl> #{str}" if has_base
+        str = Style.table(
+          [[formatted_loaders], [formatted_scripts]]
+        )
 
-        Style.apply("<box>#{str}</box>")
+        Style.apply(str)
       end
     end
   end

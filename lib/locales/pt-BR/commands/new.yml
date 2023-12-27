@@ -2,3 +2,4 @@ pt-BR:
   commands:
     new:
       invalid_loader_name: "Nome de loader inválido: '%{name}'"
+      invalid_category: "Categoria inválida '%{name}'. Use 'l' ou 's'"
