@@ -15,7 +15,7 @@ module Commands
       begin
         loader = Loaders.class_eval(loader_name).new(args)
         loader_payload = loader.load
-      rescue Exception => e
+      rescue Exception => e # rubocop:disable Lint/RescueException
         puts Views::Commands::Connect.loader_error(loader_name, e)
         return
       end

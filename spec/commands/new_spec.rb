@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'New command' do
   context 'when creating loaders' do
-    it 'creates new loader with template and opens on default editor when loader does not already exist', :file_mocking do
+    it 'creates new loader with template and opens on default editor when loader does not already exist' do
       template = <<~TEXT
         module Loaders
           class Testing < Base
@@ -26,7 +26,10 @@ describe 'New command' do
           end
         end
       TEXT
-      allow(Env.config).to receive(:[]).with(:editor).and_return('emacs')
+
+      Dir.mkdir(File.join(Dir.home, '.postwoman'))
+      File.write(File.join(Dir.home, '.postwoman/config.yml'), YAML.dump({ editor: 'emacs' }))
+      Env.refresh_config
 
       expect(Editor).to receive(:system).with('emacs loaders/testing.rb')
       expect(unstyled_stdout_from { attempt_command('new l testing') }).to eq(
@@ -40,8 +43,11 @@ describe 'New command' do
       expect(File.read('loaders/testing.rb')).to eq(template)
     end
 
-    it 'edits existing loader on default editor when loader already exists', :file_mocking do
-      allow(Env.config).to receive(:[]).with(:editor).and_return('emacs')
+    it 'edits existing loader on default editor when loader already exists' do
+      Dir.mkdir(File.join(Dir.home, '.postwoman'))
+      File.write(File.join(Dir.home, '.postwoman/config.yml'), YAML.dump({ editor: 'emacs' }))
+      Env.refresh_config
+
       File.write('loaders/testing.rb', 'does not matter')
 
       expect(Editor).to receive(:system).with('emacs loaders/testing.rb')
@@ -64,8 +70,11 @@ describe 'New command' do
       )
     end
 
-    it 'treats loader name to be downcased', :file_mocking do
-      allow(Env.config).to receive(:[]).with(:editor).and_return('emacs')
+    it 'treats loader name to be downcased' do
+      Dir.mkdir(File.join(Dir.home, '.postwoman'))
+      File.write(File.join(Dir.home, '.postwoman/config.yml'), YAML.dump({ editor: 'emacs' }))
+      Env.refresh_config
+
       File.write('loaders/testing2.rb', 'does not matter')
 
       expect(Editor).to receive(:system).with('emacs loaders/testing2.rb')
@@ -100,7 +109,9 @@ describe 'New command' do
 
     context 'when default editor is not set' do
       it 'outputs message after loader creation' do
-        allow(Env.config).to receive(:[]).with(:editor).and_return(nil)
+        Dir.mkdir(File.join(Dir.home, '.postwoman'))
+        File.write(File.join(Dir.home, '.postwoman/config.yml'), YAML.dump({ editor: nil }))
+        Env.refresh_config
 
         expect(unstyled_stdout_from { attempt_command('new l testing') }).to eq(
           <<~TEXT
@@ -114,7 +125,10 @@ describe 'New command' do
       end
 
       it 'outputs message after trying to edit loader' do
-        allow(Env.config).to receive(:[]).with(:editor).and_return(nil)
+        Dir.mkdir(File.join(Dir.home, '.postwoman'))
+        File.write(File.join(Dir.home, '.postwoman/config.yml'), YAML.dump({ editor: nil }))
+        Env.refresh_config
+
         File.write('loaders/testing.rb', 'does not matter')
 
         expect(Editor).to_not receive(:system)

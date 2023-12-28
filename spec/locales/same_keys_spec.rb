@@ -6,7 +6,7 @@ def nullified(hash)
   end
 end
 
-RSpec.describe I18n do
+describe I18n do
   it 'has same keys on all locales' do
     key_groups = {}
     I18n.available_locales.each do |locale|
