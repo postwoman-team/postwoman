@@ -11,9 +11,8 @@ module Views
       str << exception.message
       str << '</fail>'
       str << ' <br> <br>'
-      if exception.backtrace
-        str << (minimal_backtrace ? exception.backtrace[0] : exception.backtrace.join("\n"))
-      end
+      str << exception.backtrace.join("\n") if exception.backtrace
+
       str << '</box>'
       Style.apply(str)
     end

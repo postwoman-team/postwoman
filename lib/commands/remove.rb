@@ -23,7 +23,7 @@ module Commands
       return puts Views::Commands::Remove.file_not_found(name, category) unless File.exist?("#{category}s/#{name}.rb")
 
       File.delete("#{category}s/#{name}.rb")
-      puts puts Views::Commands::Remove.success(name, category)
+      puts Views::Commands::Remove.success(name, category)
     end
   end
 end
