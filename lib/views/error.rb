@@ -2,7 +2,7 @@ module Views
   module Error
     module_function
 
-    def tracing(exception)
+    def show(exception)
       str =  '<box><h2>'
       str << exception.class.name
       str << '</h2></box>'
@@ -10,8 +10,10 @@ module Views
       str << '<fail>'
       str << exception.message
       str << '</fail>'
-      str << ' <br>'
-      str << exception.backtrace.join("\n") if exception.backtrace
+      str << ' <br> <br>'
+      if exception.backtrace
+        str << (minimal_backtrace ? exception.backtrace[0] : exception.backtrace.join("\n"))
+      end
       str << '</box>'
       Style.apply(str)
     end

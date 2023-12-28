@@ -1,5 +1,5 @@
 pt-BR:
   commands:
-    run:
+    connect:
       not_found: "Nenhum loader encontrado: '%{name}'"
       loader_raised_error: "Seu loader '%{name}' gerou uma exceção:"

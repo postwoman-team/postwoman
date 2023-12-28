@@ -1,0 +1,4 @@
+pt-BR:
+  commands:
+    play:
+      not_found: "Nenhum script encontrado: '%{name}'"

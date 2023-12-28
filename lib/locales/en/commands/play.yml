@@ -1,0 +1,4 @@
+en:
+  commands:
+    play:
+      not_found: "No script found: '%{name}'"

@@ -10,20 +10,20 @@ module Commands
     def execute
       category_char = positional_arg(0)&.downcase || return
       name = positional_arg(1)&.downcase || return
-      return puts Views::Commands::New.invalid_category(name) unless 'ls'.include?(category_char)
+      return puts Views::Commands::New.invalid_category(category_char) unless 'ls'.include?(category_char)
 
       if category_char == 'l'
-        return puts "Please don't delete base.".yellow if name == 'base'
+        return puts Views::Commands::Remove.dont_delete_base if name == 'base'
 
         category = 'loader'
       else
         category = 'script'
       end
 
-      return puts "Could not find #{category} #{name}".yellow unless File.exist?("#{category}s/#{name}.rb")
+      return puts Views::Commands::Remove.file_not_found(name, category) unless File.exist?("#{category}s/#{name}.rb")
 
       File.delete("#{category}s/#{name}.rb")
-      puts "Successfully removed #{category} #{name}".green
+      puts puts Views::Commands::Remove.success(name, category)
     end
   end
 end

@@ -8,13 +8,12 @@ module Commands
 
     def execute
       name = positional_arg(0) || return
-      eval(File.read("scripts/#{name}.rb"), eval_binding, __FILE__, __LINE__) # rubocop:disable Security/Eval
-    rescue Exception => e # rubocop:disable Lint/RescueException
-      puts Views::Error.tracing(e)
-    end
+      path = "scripts/#{name}.rb"
+      return puts Views::Commands::Play.script_not_found(name) unless File.exist?(path)
 
-    def eval_binding
-      binding
+      eval(File.read(path), binding, path, 1) # rubocop:disable Security/Eval
+    rescue Exception => e # rubocop:disable Lint/RescueException
+      puts Views::Error.show(e)
     end
   end
 end
