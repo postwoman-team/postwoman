@@ -1,4 +1,5 @@
 require_relative __dir__ + '/../lib/dependencies.rb'
+require 'pty'
 
 FileUtils.rm_rf('tmp') if Dir.exist?('tmp')
 
