@@ -12,6 +12,7 @@ class IO
 
       loop do
         result_char = read_nonblock(1)
+        p result_char
         result << result_char
 
         return result if end_index == (string.length - 1)
