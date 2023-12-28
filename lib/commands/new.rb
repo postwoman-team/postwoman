@@ -8,8 +8,8 @@ module Commands
     }.freeze
 
     def execute
-      category_char = obrigatory_positional_arg(0)&.downcase || return
-      name = obrigatory_positional_arg(1)&.downcase || return
+      category_char = positional_arg(0)&.downcase || return
+      name = positional_arg(1)&.downcase || return
 
       return puts Views::Commands::New.invalid_loader_name(name) unless is_loader_name?(name)
 

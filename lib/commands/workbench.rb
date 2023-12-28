@@ -29,8 +29,8 @@ module Commands
     private
 
     def rename_subcommand
-      original_key = obrigatory_positional_arg(1, 'key to rename')&.to_sym
-      new_name = obrigatory_positional_arg(2, 'new name')&.to_sym
+      original_key = positional_arg(1, 'key to rename')&.to_sym
+      new_name = positional_arg(2, 'new name')&.to_sym
       return unless original_key && new_name
       return puts Views::Commands::Workbench.key_not_found_error(original_key) unless workbench.key?(original_key)
       return puts Views::Commands::Workbench.key_already_exists(new_name) if workbench.key?(new_name)
@@ -40,8 +40,8 @@ module Commands
     end
 
     def copy_subcommand
-      copy_key = obrigatory_positional_arg(1, 'key to copy')&.to_sym
-      resulting_key = obrigatory_positional_arg(2, 'resulting key')&.to_sym
+      copy_key = positional_arg(1, 'key to copy')&.to_sym
+      resulting_key = positional_arg(2, 'resulting key')&.to_sym
       return unless copy_key && resulting_key
       return puts Views::Commands::Workbench.key_not_found_error(copy_key) unless workbench.key?(copy_key)
 

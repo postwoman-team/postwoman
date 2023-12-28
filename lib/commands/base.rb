@@ -36,7 +36,7 @@ module Commands
       Env.workbench
     end
 
-    def obrigatory_positional_arg(index, custom_name = nil)
+    def positional_arg(index, custom_name = nil)
       positional_names = self.class::ARGS.keys
       name = custom_name || positional_names[index]
       value = args[index]

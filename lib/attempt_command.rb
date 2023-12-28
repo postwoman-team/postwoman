@@ -10,4 +10,4 @@ def attempt_command(line)
   command_klass.new(args).execute
 end
 
-alias x attempt_command
+alias run attempt_command

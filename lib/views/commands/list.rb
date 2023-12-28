@@ -15,13 +15,17 @@ module Views
           snakecased
         end.compact.sort.join(' ')
         formatted_loaders = "<hl>base</hl> #{formatted_loaders}" if has_base
-        formatted_scripts = script_names.join(' ')
+        formatted_scripts = script_names.empty? ? "<fail>(#{I18n.t('common.empty')})</fail>" : script_names.join(' ')
 
-        str = Style.table(
-          [[formatted_loaders], [formatted_scripts]]
-        )
-
-        Style.apply(str)
+        table = [
+          ['<h2>Loaders</h2>'],
+          [formatted_loaders],
+          [' '],
+          ['<h2>Scripts</h2>'],
+          [formatted_scripts]
+        ]
+        table.map! { |a| [Style.apply(a[0])] }
+        Style.table(table)
       end
     end
   end
