@@ -8,17 +8,14 @@ module Commands
     }.freeze
 
     def execute
-      category_char = positional_arg(0)&.downcase
+      category = category_arg(0)
       name = positional_arg(1)&.downcase
 
-      valid_category = false
-      return puts Views::Argument.invalid_category(category_char) if category_char && !'ls'.include?(category_char)
-
-      return unless category_char && name
+      return unless category && name
 
       return puts Views::Commands::New.invalid_loader_name(name) unless is_loader_name?(name)
 
-      if category_char == 'l'
+      if category == 'loader'
         template = File.read(Env.src_dir('templates/loader.rb'))
         template.gsub!('DoNotChangeThisClassName', camelize(name))
 

@@ -8,17 +8,12 @@ module Commands
     }.freeze
 
     def execute
-      category_char = positional_arg(0)&.downcase || return
-      name = positional_arg(1)&.downcase || return
-      return puts Views::Argument.invalid_category(category_char) unless 'ls'.include?(category_char)
+      category = category_arg(0)
+      name = positional_arg(1)&.downcase
 
-      if category_char == 'l'
-        return puts Views::Commands::Remove.dont_delete_base if name == 'base'
+      return unless category && name
 
-        category = 'loader'
-      else
-        category = 'script'
-      end
+      return puts Views::Commands::Remove.dont_delete_base if name == 'base' && category == 'loader'
 
       return puts Views::Commands::Remove.file_not_found(name, category) unless File.exist?("#{category}s/#{name}.rb")
 

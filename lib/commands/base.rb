@@ -45,6 +45,14 @@ module Commands
       value
     end
 
+    def category_arg(index)
+      category_char = positional_arg(index)&.downcase
+
+      return puts Views::Argument.invalid_category(category_char) if category_char && !'ls'.include?(category_char)
+
+      category_char == 'l' ? 'loader' : 'script'
+    end
+
     def start_debug
       case Env.config[:debugger]
       when 'pry'
