@@ -10,14 +10,6 @@ module Views
 
         Style.apply(str)
       end
-
-      def invalid_category(name)
-        str =  '<fail>'
-        str << I18n.t('commands.new.invalid_category', name: name)
-        str << '</fail>'
-
-        Style.apply(str)
-      end
     end
   end
 end

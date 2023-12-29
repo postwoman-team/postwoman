@@ -10,7 +10,7 @@ module Commands
     def execute
       category_char = positional_arg(0)&.downcase || return
       name = positional_arg(1)&.downcase || return
-      return puts Views::Commands::New.invalid_category(category_char) unless 'ls'.include?(category_char)
+      return puts Views::Argument.invalid_category(category_char) unless 'ls'.include?(category_char)
 
       if category_char == 'l'
         return puts Views::Commands::Remove.dont_delete_base if name == 'base'

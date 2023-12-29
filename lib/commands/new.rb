@@ -23,7 +23,7 @@ module Commands
         FileUtils.mkdir_p('scripts')
         Editor.create_and_open("scripts/#{name}.rb", '', 'script')
       else
-        puts Views::Commands::New.invalid_category(name)
+        puts Views::Argument.invalid_category(name)
       end
     end
   end

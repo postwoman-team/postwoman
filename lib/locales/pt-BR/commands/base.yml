@@ -1,6 +1,0 @@
-pt-BR:
-  commands:
-    base:
-      missing_positional_argument: "Faltando o argumento posicional #%{index}: '%{name}'"
-      invalid_subcommand: "Subcomando inválido: '%{name}'"
-      subcommand_needs_positionals: "Este subcomando deve ser chamado com argumentos posicionais"

@@ -40,7 +40,7 @@ module Commands
       positional_names = self.class::ARGS.keys
       name = custom_name || positional_names[index]
       value = args[index]
-      return puts Views::Commands::Base.missing_positional_argument(index + 1, name) unless value
+      return puts Views::Argument.missing_positional_argument(index + 1, name) unless value
 
       value
     end
