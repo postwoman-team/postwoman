@@ -77,7 +77,7 @@ class Request
     Faraday.run_request(http_method.downcase, url, params, @faraday_args[:headers])
   rescue Exception => e
     puts 'Faraday requisition failed:'.red
-    puts e.full_message
+    puts Views::Error.show(e)
     @failed = true
   end
 end

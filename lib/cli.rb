@@ -12,13 +12,14 @@ module Cli
     end
 
     StartUp.execute
-    DynamicDependencies.load_loaders
 
     pre_input = '<preinput>'
     pre_input << Package.metainfo(:name)
     pre_input << '</preinput><pointer>'
 
     while (line = Readline.readline(Style.apply(pre_input), true))
+      DynamicDependencies.load_loaders
+
       if Readline::HISTORY.to_a.empty?
         File.write('.postwoman_history', "#{line}\n", mode: 'a')
       elsif Readline::HISTORY.to_a[-2] == line || /^\s*$/ =~ line
@@ -27,7 +28,6 @@ module Cli
         File.write('.postwoman_history', "#{line}\n", mode: 'a')
       end
 
-      DynamicDependencies.load_loaders
       attempt_command(line)
     end
   end

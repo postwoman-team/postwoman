@@ -3,18 +3,22 @@ module Commands
     ALIASES = %w[rm delete del].freeze
     DESCRIPTION = 'Delete loader'.freeze
     ARGS = {
-      name: 'Loaders name'
+      category: "Category of the file. 's' for script, 'l' for loader",
+      name: 'File name in snake case.'
     }.freeze
 
     def execute
-      loader_name = args[0]
-      path = "loaders/#{loader_name}.rb"
+      category = category_arg(0)
+      name = positional_arg(1)&.downcase
 
-      return puts "Could not find loader #{loader_name}".yellow unless File.exist?(path)
-      return puts "Please don't delete base.".yellow if loader_name == 'base'
+      return unless category && name
 
-      File.delete(path)
-      puts "Successfully removed loader #{loader_name}".green
+      return puts Views::Commands::Remove.dont_delete_base if name == 'base' && category == 'loader'
+
+      return puts Views::Commands::Remove.file_not_found(name, category) unless File.exist?("#{category}s/#{name}.rb")
+
+      File.delete("#{category}s/#{name}.rb")
+      puts Views::Commands::Remove.success(name, category)
     end
   end
 end

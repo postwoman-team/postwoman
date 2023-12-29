@@ -9,3 +9,5 @@ def attempt_command(line)
 
   command_klass.new(args).execute
 end
+
+alias run attempt_command

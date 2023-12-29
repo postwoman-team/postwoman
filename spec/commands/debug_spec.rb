@@ -2,7 +2,10 @@ require 'spec_helper'
 
 describe 'Debug command' do
   it 'calls binding.pry if debugger is binding.pry' do
-    allow(Env.config).to receive(:[]).with(:debugger).and_return('pry')
+    Dir.mkdir(File.join(Dir.home, '.postwoman'))
+    File.write(File.join(Dir.home, '.postwoman/config.yml'), YAML.dump({ debugger: 'pry' }))
+    Env.refresh_config
+
     command_obj = Commands::Debug.new(ArgsHandler.parse('debug'))
     command_binding = double('binding', pry: nil)
     allow(command_obj).to receive(:binding) { command_binding }
@@ -13,7 +16,10 @@ describe 'Debug command' do
   end
 
   it 'calls debug if debugger is debug' do
-    allow(Env.config).to receive(:[]).with(:debugger).and_return('debug')
+    Dir.mkdir(File.join(Dir.home, '.postwoman'))
+    File.write(File.join(Dir.home, '.postwoman/config.yml'), YAML.dump({ debugger: 'debug' }))
+    Env.refresh_config
+
     command_obj = Commands::Debug.new(ArgsHandler.parse('debug'))
     command_binding = double('binding', break: nil)
     allow(command_obj).to receive(:binding) { command_binding }

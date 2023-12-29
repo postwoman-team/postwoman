@@ -1,0 +1,6 @@
+en:
+  argument:
+    missing_positional_argument: "Missing #%{index} positional argument: '%{name}'"
+    invalid_subcommand: "Invalid subcommand: '%{name}'"
+    subcommand_needs_positionals: "This subcommand should be called with positionals"
+    invalid_category: "Invalid category '%{name}'. Use 'l' or 's'"

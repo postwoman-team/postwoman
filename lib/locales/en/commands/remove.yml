@@ -1,0 +1,6 @@
+en:
+  commands:
+    remove:
+      success: "Successfully removed %{category} %{name}"
+      file_not_found: "Could not find %{category} %{name}"
+      dont_delete_base: "Please don't delete base."
