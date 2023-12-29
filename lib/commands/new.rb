@@ -8,23 +8,26 @@ module Commands
     }.freeze
 
     def execute
-      category_char = positional_arg(0)&.downcase || return
-      name = positional_arg(1)&.downcase || return
+      category_char = positional_arg(0)&.downcase
+      name = positional_arg(1)&.downcase
+
+      valid_category = false
+      return puts Views::Argument.invalid_category(category_char) if category_char && !'ls'.include?(category_char)
+
+      return unless category_char && name
 
       return puts Views::Commands::New.invalid_loader_name(name) unless is_loader_name?(name)
 
-      case category_char
-      when 'l'
+      if category_char == 'l'
         template = File.read(Env.src_dir('templates/loader.rb'))
         template.gsub!('DoNotChangeThisClassName', camelize(name))
 
         Editor.create_and_open("loaders/#{name}.rb", template, 'loader')
-      when 's'
-        FileUtils.mkdir_p('scripts')
-        Editor.create_and_open("scripts/#{name}.rb", '', 'script')
-      else
-        puts Views::Argument.invalid_category(name)
+        return
       end
+
+      FileUtils.mkdir_p('scripts')
+      Editor.create_and_open("scripts/#{name}.rb", '', 'script')
     end
   end
 end
