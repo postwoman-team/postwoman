@@ -21,12 +21,18 @@ module Env
     Env.config
   end
 
+  def dotfile_path
+    File.join(Dir.home, DOTFILE_FOLDER)
+  end
+
+  def config_path
+    File.join(dotfile_path, CONFIG_FILE)
+  end
+
   def config
     return @config if @config
 
     @default_config ||= YAML.load_file(src_dir('default_config.yml'))
-    dotfile_path = File.join(Dir.home, DOTFILE_FOLDER)
-    config_path = File.join(dotfile_path, CONFIG_FILE)
 
     unless File.exist?(config_path)
       FileUtils.mkdir_p(dotfile_path)

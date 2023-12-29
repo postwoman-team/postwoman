@@ -40,7 +40,7 @@ module Package
   end
 
   def load_sandbox
-    path = File.join(Env::DOTFILE_PATH, 'sandbox')
+    path = File.join(Env.dotfile_path, 'sandbox')
     Package.load(path, create_flag: !exist?(path))
   end
 

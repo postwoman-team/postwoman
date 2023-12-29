@@ -13,6 +13,6 @@ module DynamicDependencies
     load loader_path
   rescue Exception => e # rubocop:disable Lint/RescueException
     puts "Loader '#{loader_path.split('/').last[..-4]}' has syntax errors and couldn't be loaded:".red
-    puts e.full_message
+    puts Views::Error.show(e)
   end
 end
