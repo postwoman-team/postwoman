@@ -33,6 +33,9 @@ RSpec.configure do |config|
     Dir.glob('loaders/*').each do |file|
       File.delete(file) unless File.basename(file) == 'base.rb'
     end
+    Dir.glob('scripts/*').each do |file|
+      File.delete(file) unless File.basename(file) == 'base.rb'
+    end
     FileUtils.rm_rf(dotfile_path)
   end
 
