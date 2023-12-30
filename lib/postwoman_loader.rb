@@ -56,6 +56,8 @@ class PostwomanLoader
   end
 
   def params_with_env
+    return params if params.is_a?(String)
+
     @env.reduce(params) do |final_params, (k, v)|
       next final_params unless final_params.key?(k)
 
