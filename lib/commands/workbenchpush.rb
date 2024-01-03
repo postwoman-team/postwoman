@@ -7,55 +7,20 @@ module Commands
     }
 
     def execute
-      pairs_to_workbench
-      last_request_to_worbench
+      workbench.merge!(args.pairs)
+      request = Env.requests.last
+      return unless request
+
+      selector = positional_arg(0)
+      query = positional_arg(1)
+      return unless query && selector
+
+      result = request.response_query(selector, query)
+      return unless result
+
+      workbench['test'] = result
+
       puts Views.workbench
-    end
-
-    private
-
-    def last_request_to_worbench
-      return if args.positionals.length == 1
-      return puts 'Cant pull desired values because no requests were made at the moment.'.yellow if Env.requests.empty?
-
-      request = Env.requests[-1]
-
-      body = if request.response_json?
-               request.parsed_body
-             else
-               Nori.new.parse(request.body)
-             end
-
-      args.positionals[1..].each do |positional|
-        if find_key_value_recursive(body, positional)
-          puts "Pulled \"#{positional}\" :>".green
-        else
-          puts "Couldnt pull \"#{positional}\" :<".yellow
-        end
-      end
-    end
-
-    def find_key_value_recursive(hash, key)
-      if hash[key]
-        Env.workbench[key.to_sym] = hash[key]
-        return true
-      end
-
-      hash.each do |_, value|
-        if value.instance_of?(Hash)
-          subhash = value
-          return true if find_key_value_recursive(subhash, key)
-        elsif value.instance_of?(Array)
-          value.each do |array_element|
-            return true if array_element.instance_of?(Hash) && find_key_value_recursive(array_element, key)
-          end
-        end
-      end
-      false
-    end
-
-    def pairs_to_workbench
-      Env.workbench.merge!(args.pairs)
     end
   end
 end

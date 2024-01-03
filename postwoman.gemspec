@@ -16,6 +16,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'faraday-typhoeus', '~> 1.0.0'
   s.add_dependency 'i18n', '~> 1.14.1'
   s.add_dependency 'json', '~> 2.7.1'
+  s.add_dependency 'jsonpath', '~> 0.5.8'
   s.add_dependency 'nokogiri', '~> 1.15.5'
   s.add_dependency 'nori', '~> 2.6.0'
   s.add_dependency 'pry-byebug', '~> 3.10.1'

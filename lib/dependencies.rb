@@ -8,14 +8,15 @@ require 'faraday/typhoeus'
 require 'fileutils'
 require 'i18n'
 require 'json'
-require 'nokogiri'
-require 'nori'
 require 'pry-byebug'
 require 'readline'
 require 'strscan'
 require 'tabelinha'
 require 'terminal-table'
 require 'yaml'
+
+autoload(:Nokogiri, 'nokogiri')
+autoload(:JsonPath, 'jsonpath')
 
 require_relative 'postwoman_loader'
 

@@ -33,25 +33,68 @@ class Request
     end&.[](1)
   end
 
+  def response_query(selector, query)
+    if %w[css xpath].include?(selector)
+      return unless response_actual_xml? || response_actual_html?
+
+      results = selector == 'css' ? parsed_body.css(query) : parsed_body.xpath(query)
+
+      return if results.empty?
+
+      return results[0].text
+    end
+
+    if selector == 'jsonpath'
+      return unless response_actual_json?
+
+      json_path = JsonPath.new(query)
+      results = json_path.on(parsed_body)
+
+      return if results.empty?
+
+      return results[0]
+    end
+
+    puts 'ai n'
+  end
+
+  def response_actual_json?
+    parsed_body.is_a?(Hash)
+  end
+
+  def response_actual_html?
+    parsed_body.is_a?(Nokogiri::HTML::Document)
+  end
+
+  def response_actual_xml?
+    parsed_body.is_a?(Nokogiri::XML::Document)
+  end
+
   def response_json?
-    content_type =~ /json/
+    content_type.downcase.include?('json')
+  end
+
+  def response_html?
+    content_type.downcase.include?('html')
   end
 
   def response_xml?
-    content_type =~ /html|xml/
+    content_type.downcase.include?('xml')
   end
 
   def parse_body
-    case content_type
-    when /html|xml/
-      @parsed_body = Nokogiri::XML(body, &:noblanks)
-      @pretty_body = @parsed_body.to_xhtml(encoding: 'utf-8')
-    when /json/
-      @parsed_body = JSON.parse(body.empty? ? '{}' : body)
-      @pretty_body = @parsed_body.empty? ? '' : JSON.pretty_generate(@parsed_body)
-    else
-      @parsed_body = body
-      @pretty_body = body
+    @parsed_body = body
+    @pretty_body = body
+
+    if response_json?
+      @parsed_body = JSON.parse(body.empty? ? '{}' : body) rescue JSON::ParserError # rubocop:disable Style/RescueModifier
+      @pretty_body = JSON.pretty_generate(@parsed_body) unless @parsed_body.empty?
+    elsif response_html?
+      @parsed_body = Nokogiri::HTML(body)
+      @pretty_body = @parsed_body.to_html(encoding: 'utf-8') unless @parsed_body.errors.any?
+    elsif response_xml?
+      @parsed_body = Nokogiri::XML(body)
+      @pretty_body = @parsed_body.to_xml(encoding: 'utf-8') unless @parsed_body.errors.any?
     end
   end
 

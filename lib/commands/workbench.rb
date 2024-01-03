@@ -22,7 +22,7 @@ module Commands
         puts Views::Argument.invalid_subcommand(subcommand)
       end
 
-      pairs_to_workbench
+      workbench.merge!(args.pairs)
       puts Views.workbench
     end
 
@@ -56,10 +56,6 @@ module Commands
         puts Views::Commands::Workbench.key_not_found_warning(key) unless workbench.key?(key)
         workbench.delete(key)
       end
-    end
-
-    def pairs_to_workbench
-      workbench.merge!(args.pairs)
     end
   end
 end
